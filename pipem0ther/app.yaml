@@ -1,0 +1,23 @@
+application: pipem0ther
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /admin/makeuser
+  script: makeuser.py
+  secure: always
+  login: admin
+
+- url: /api/identity
+  script: identityAPI.py
+- url: /api/areyouthere
+  script: identityAPI.py
+- url: /api/service
+  script: ServiceAPI.py
+- url: /api/connect
+  script: ServiceAPI.py
+- url: /api/otp
+  script: ServiceAPI.py
+- url: /api/moresvc
+  script: ServiceAPI.py
