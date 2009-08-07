@@ -34,12 +34,25 @@ namespace pipette
 			{
 				throw new Exception("This person is not allowed.");
 			}
-			c.Connect(remoteAddress,port);
+			
+			System.Threading.Thread t = new System.Threading.Thread(superStart);
+			t.Start();
+			DateTime started = DateTime.Now;
+			while(true)
+			{
+				if ((DateTime.Now - started).TotalSeconds >=2)
+					throw new Exception("Connection timed out.");
+				if (!t.IsAlive) break;
+			}
 			deepID d = new deepID();
 			d.internal_use = c;
 			d.plaintextStream = c.GetStream();
 			d.readZeroBytes += readZeroBytes;
 			this.raiseEndpointEstablishedHandler(d,related);
+		}
+		private void superStart()
+		{
+			c.Connect(remoteAddress,port);
 		}
 
 		void readZeroBytes (deepID d)

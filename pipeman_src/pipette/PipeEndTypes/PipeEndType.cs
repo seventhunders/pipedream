@@ -33,10 +33,23 @@ namespace pipette
 		{
 			byte[] b = authenticationType.readBuffer(local);
 			if (b.Length!=0)
-				remotep.authenticationType.writeBuffer(b,b.Length,remote);
+			{
+				try
+				{
+					remotep.authenticationType.writeBuffer(b,b.Length,remote);
+				}
+				catch (System.IO.IOException ex){
+					logger.logger.warn("Something bad happened: " + ex.Message);
+					if (ex.InnerException != null)
+					{
+						logger.logger.warn(ex.InnerException.Message);
+					}
+					System.Threading.Thread.CurrentThread.Abort();
+				}
+			}
 			else //somebody should investigate why this is 0
 			{
-				
+				logger.logger.warn("WTF?");
 			}
 		}
 		public delegate void connectionClosedHandler(deepID d);

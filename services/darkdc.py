@@ -33,10 +33,17 @@ def search_svc(key,param):
     (port,kill) = connect_to(key)
     import socket
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    s.settimeout(5)
     s.connect(("localhost",port))
     s.send("search %s\n" % param)
     file = s.makefile("rb")
-    lines = int(file.readline())
+    try:
+        l = file.readline()
+    except Exception as ex:
+        print "Connecting to this %s failed " % key,ex
+        return []
+    if l=="": return []#
+    lines = int(l)
     result = []
     for i in range(0,lines):
         result.append(file.readline().strip())
