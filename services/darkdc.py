@@ -57,7 +57,7 @@ def do_get(filename,file):
     while True:
         data = file.read(1024)
         writefile.write(data)
-        if data=="":
+        if not data:
             writefile.close()
             import sys
             sys.exit(0)
@@ -160,7 +160,7 @@ def client_thread(clientsocket,nothing):
                 while True:
                     data = file.read(512)
                     writefile.write(data)
-                    if data=="":
+                    if not data:
                         clientsocket.shutdown(0)
                         clientsocket.close()
         elif cmd.startswith("search"):
