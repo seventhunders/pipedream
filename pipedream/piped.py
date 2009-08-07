@@ -200,7 +200,9 @@ def up_svc(name):
     if extern != None:
         (rhost,rport) = extern.split(" ")
     elif launch != None:
-        svc.other_proc=Popen(launch.split(" "),stdout=PIPE,stderr=PIPE)
+        from argparse import parse
+        cmd = parse(launch)
+        svc.other_proc=Popen(cmd,stdout=PIPE,stderr=PIPE)
         import thread
         thread.start_new_thread(redirect,(svc.other_proc.stderr,None))
         thread.start_new_thread(redirect,(svc.other_proc.stderr,None))
