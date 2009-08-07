@@ -20,9 +20,10 @@ def cli_mode(host,port):
         s.send(cmd + "\n")
         if cmd.startswith("get"):
             do_get(cmd[4:],file)
-        lines = int(file.readline())
-        for line in range(0,lines):
-            print file.readline(),
+        else:
+            lines = int(file.readline())
+            for line in range(0,lines):
+                print file.readline(),
 def find_all_darkdc():
     from pipedream.search import slowsearch
     result = eval(slowsearch())
@@ -55,7 +56,12 @@ def search_svc(key,param):
 def do_get(filename,file):
     writefile = open(filename,"wb")
     while True:
-        data = file.read(1024)
+        size = file.readline()
+        data = ""
+        print "reading %s" % size
+        while len(data) < int(size):
+            data += file.read(int(size))
+        
         writefile.write(data)
         if not data:
             writefile.close()
@@ -157,12 +163,16 @@ def client_thread(clientsocket,nothing):
             if super_check(where,daemon_dir,my_chdir,clientsocket):
                 file = open(super_path(where,my_chdir),"rb")
                 writefile = clientsocket.makefile("wb")
+                
                 while True:
                     data = file.read(512)
+                    print "writing %s" % str(len(data))
+                    writefile.write(str(len(data)) + "\n")
                     writefile.write(data)
                     if not data:
-                        clientsocket.shutdown(0)
-                        clientsocket.close()
+                        pass
+                        #clientsocket.shutdown(0)
+                        #clientsocket.close()
         elif cmd.startswith("search"):
             what = cmd[7:]
             result = search_for(what,my_chdir)
