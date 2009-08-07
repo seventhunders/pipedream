@@ -7,6 +7,8 @@ def check_dir():
 def get_setting(setting):
     check_dir()
     file = setting_dir + "/" + setting
+    if not os.path.exists(file):
+        return None
     f = open(file)
     t = f.read()
     f.close()
@@ -30,5 +32,7 @@ def expect_arg(str):
         raise Exception("Don't have argument %s; try with --%s=something" % (str,str))
     return a
 def get_lan_addr():
+    if get_setting("override-ip")!=None:
+        return get_setting("override-ip")
     import socket
     return socket.gethostbyname(socket.gethostname())
