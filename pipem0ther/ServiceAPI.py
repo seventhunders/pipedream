@@ -32,6 +32,17 @@ class MainHandler(webapp.RequestHandler):
     if permission!="":
         p = get_permission(self)
         result.append(find_svcs_for_permission(p))
+    #give them public services
+    public = Service.all().filter("visibility =",VISIBILITY_PUBLIC).fetch(limit=1000)
+    result += public
+    #no duplicates
+    r = {}
+    for re in result:
+        if not r.has_key(re.key()):
+            r[re.key()]=re
+    result = []
+    for re in r:
+        result.append(r[re])
     self.response.out.write(safe_props(result))
     
   def options(self): #get more permissions
@@ -60,7 +71,7 @@ class MainHandler(webapp.RequestHandler):
         elif vis=="PUBLIC":
             service.visibility = VISIBILITY_PUBLIC
         else:
-            raise Exception("Bad visibility.")
+            raise Exception("Bad visibility: %s" % vis)
     online = self.request.get("online")
     if online=="YES":
         service.online = True

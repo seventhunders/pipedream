@@ -36,7 +36,7 @@ namespace pipette
 		/// 
 		public virtual bool shouldAllowPerson(System.Net.IPEndPoint p)
 		{
-			if (!p.Address.ToString().StartsWith("10.") && p.Address.ToString()!="127.0.0.1" && !iChopYourDollar)
+			if (!p.Address.ToString().StartsWith("10.") && p.Address.ToString()!="127.0.0.1" && !iChopYourDollar && !p.Address.ToString().StartsWith("192.168"))
 			{
 				logger.logger.warn("Not acceping a connection from " + p.Address.ToString() + " because it doesn't begin with 10.x.  To let this connection through, use --I-CHOP-YOUR-DOLLAR next time.");
 				return false;
