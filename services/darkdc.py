@@ -150,9 +150,9 @@ def client_thread(clientsocket,nothing):
                     files.append(base)
             clientsocket.send(str(len(dirs)+len(files))+"\n")
             for dir in dirs:
-                clientsocket.send(dir+"/\n")
+                clientsocket.send('"%s" d %d\n' % (dir,os.path.getsize(os.path.join(my_chdir,dir))))
             for file in files:
-                clientsocket.send(file+"\n")
+                clientsocket.send('"%s" f %d\n' % (file,os.path.getsize(os.path.join(my_chdir,file))))
         elif cmd.startswith("chdir"):
             where=cmd[6:]
             if super_check(where,daemon_dir,my_chdir,clientsocket):

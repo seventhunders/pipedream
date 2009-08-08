@@ -44,9 +44,20 @@ namespace pipette
 					throw new Exception("Connection timed out.");
 				if (!t.IsAlive) break;
 			}
+			while(!c.Connected)
+			{
+				logger.logger.debug("It's not immediately clear how this situation could occur.");
+			}
 			deepID d = new deepID();
 			d.internal_use = c;
+			try{
 			d.plaintextStream = c.GetStream();
+			} catch (Exception ex)
+			{
+				logger.logger.warn("There was an error getting the stream: " + ex.Message);
+				logger.logger.warn(ex.StackTrace.ToString());
+				return start(related);
+			}
 			d.readZeroBytes += readZeroBytes;
 			this.raiseEndpointEstablishedHandler(d,related);
 		}

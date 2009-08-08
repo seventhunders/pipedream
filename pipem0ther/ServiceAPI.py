@@ -14,6 +14,8 @@ class moreSvcHandler(webapp.RequestHandler):
     #for making a new service
   def post(self):
     id = get_identity(self)
+    if Service.all().filter("shortname =",self.request.get("shortname")).get() != None:
+        raise Exception("needs unique shortname")
     s = Service(shortname=self.request.get("shortname"),
                 protocol = self.request.get("protocol"),
                 description = self.request.get("description"),
