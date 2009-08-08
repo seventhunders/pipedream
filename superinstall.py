@@ -123,13 +123,24 @@ def upgrade_launchd():
     please_dont_fail("su -l %s -c 'launchctl start com.defycensorship.pipedream.piped'" % real_user)
     #please_dont_fail("")
     print "done"
-    
+def install_init():
+	import os
+	pass
+	os.system("rm -f /etc/init.d/pipe")
+	os.system("cp ./scripts/pipe /etc/init.d/pipe")
+	os.system("chmod 744 /etc/init.d/pipe")
+	print "I install it (the /etc/init.d/pipe file should be there)"
     
 def upgrade_piped():
     import sys
     if sys.platform=="darwin":
         print "You're running mac, assuming you want to use launchd..."
         upgrade_launchd()
+    elif sys.platform=="linux2":
+    	 import os
+	 if os.path.exists("/etc/init.d"):
+		print "Looks like init to me..."
+		install_init()
     else:
         print "I don't know how to install piped on dubious platforms like '%s'" % sys.platform
         print "Perhaps you can tell me how?"
