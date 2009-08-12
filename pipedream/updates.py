@@ -6,7 +6,7 @@ def whats_new():
     from sys import path
     from os import chdir
     from commands import getstatusoutput
-    (status,lines) = system("git log public..origin/public --format='%s'")
+    (status,lines) = getstatusoutput("git log public..origin/public --format='%s'")
     return lines.split("\n")
 def needs_update():
     from sys import path
