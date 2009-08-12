@@ -35,3 +35,4 @@ def do_update():
     status = system("./superinstall.py")
     if status != 0:
         raise Exception("That didn't work")
+#
