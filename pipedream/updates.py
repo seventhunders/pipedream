@@ -15,7 +15,7 @@ def needs_update():
     chdir(path[0])
     (status,whatever) = getstatusoutput("git fetch origin")
     (status,local) = getstatusoutput("git ls-remote . heads/public | cut -f 1")
-    (status,remote) = getstatusoutput("git ls-remote . heads/public | cut -f 1")
+    (status,remote) = getstatusoutput("git ls-remote . origin/public | cut -f 1")
     if local != remote:
         print local, remote
     return local!=remote
