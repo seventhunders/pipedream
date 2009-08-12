@@ -25,4 +25,6 @@ def do_update():
     if status != 0:
         raise Exception(output)
     (status,output) = getstatusoutput("superinstall.py")
+    if status != 0:
+        raise Exception(output)
     

@@ -53,7 +53,11 @@ def install_path():
     print "Special fix just for malcom...",
     #os.system("cp %s/pipe.py %s/pipe" % (path,path))
     if not os.path.exists("/opt/local/bin/pipe"):
-        os.system("ln -s %s/pipe.py /opt/local/bin/pipe" % path)
+        try:
+            os.system("ln -s %s/pipe.py /opt/local/bin/pipe" % path)
+        except Exception, ex:
+            print "Had a problem:"
+            print ex
     os.system("chmod -R 755 %s" % path)
     os.system("chmod -R 777 %s/.git" % path)
     os.system("chmod 755 /opt/local/bin/pipe")
