@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+#test
 def needs_update():
     from sys import path
     from os import chdir
