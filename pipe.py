@@ -12,6 +12,8 @@ def usage():
     print "slowsearch"
     print "selftest"
     print "piped"
+    print "chat"
+    print "selfupdate"
     exit(1)
 import sys
 if len(sys.argv)==1:
@@ -65,6 +67,9 @@ elif cmd=="slowsearch":
 elif cmd=="selftest":
     from pipedream.hello_m0ther import areyouthere
     print areyouthere()
+elif cmd=="selfupdate":
+    from pipedream.updates import do_update
+    do_update()
     
 else:
     usage()

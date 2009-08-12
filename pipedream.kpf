@@ -2,6 +2,11 @@
 <!-- Komodo Project File - DO NOT EDIT -->
 <project id="7220b084-8332-014e-a842-5bf50d83a62c" kpf_version="4" name="pipedream.kpf">
 <preference-set idref="7220b084-8332-014e-a842-5bf50d83a62c">
+  <string id="import_exclude_matches">*.*~;*.bak;*.tmp;CVS;.#*;*.pyo;*.pyc;.svn;*%*;tmp*.html;.DS_Store</string>
+  <string id="import_include_matches"></string>
   <boolean id="import_live">1</boolean>
+  <boolean id="import_recursive">1</boolean>
+  <string id="import_type">useFolders</string>
+  <string id="pythonExtraPaths">/Volumes/y/drew/dprophet/trunk/hogwarts/__3rd_party:/Volumes/y/drew/Dropbox/Code/pipedream/pipem0ther</string>
 </preference-set>
 </project>
