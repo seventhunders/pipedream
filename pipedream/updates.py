@@ -7,7 +7,9 @@ def needs_update():
     chdir(path[0])
     (status,local) = getstatusoutput("git ls-remote . heads/public | cut -f 1")
     (status,remote) = getstatusoutput("git ls-remote . heads/public | cut -f 1")
-    return local==remote
+    if local != remote:
+        print local, remote
+    return local!=remote
 def do_update():
     from commands import getstatusoutput
     (status,output) = getstatusoutput("whoami")
