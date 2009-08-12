@@ -20,7 +20,7 @@ namespace pipette
 		{
 			//todo: run through this with a bunch of gateways
 			logger.logger.push("mother-find");
-			string GATEWAY_STR = "63.223.114.50";
+			string GATEWAY_STR = "69.197.162.44";
 			int GATEWAY_PORT = 12345;
 			
 			port = magic.random_port();
