@@ -24,7 +24,8 @@ def do_update():
     (status,output) = getstatusoutput("git pull --rebase")
     if status != 0:
         raise Exception(output)
-    (status,output) = getstatusoutput("./superinstall.py")
+    from os import system
+    status = system("./superinstall.py")
     if status != 0:
-        raise Exception(output)
+        raise Exception("That didn't work")
     
