@@ -1,13 +1,13 @@
 <html>
   <head>
-    <link type="text/css" rel="stylesheet" href="/css/main.css" />
+    <link type="text/css" rel="stylesheet" href="/chat/css/main.css" />
   </head>
   <body>
 {% block title %}User Info{% endblock %}
 {% block content %}
 <h1>My User Profile</h1>
 <p>Email: {{ queried_user.greeting_user.email }}</p>
-<form action="/edituser/{{ queried_user.greeting_user.email }}" method="POST" enctype="multipart/form-data">
+<form action="/chat/edituser/{{ queried_user.greeting_user.email }}" method="POST" enctype="multipart/form-data">
 Avatar URL (around 48*48px): <br/>
 <input type="text" name="user_picture" value="{{ queried_user.picture }}"><br>
 Website: <br/>

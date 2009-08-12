@@ -10,20 +10,38 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.api import memcache
 
+from Identity import Identity, get_identity
+
 # Set the debug level
 _DEBUG = True
 
+
+def get_greeting_user(identity):
+  return GreetingUser.all().filter("greeting_user =",identity).get()
+def intersperse(greetings,greetingsuser):
+  result = []
+  coreyross = Greeting.all().filter("author =",None).filter("super_secret_coreyross_for =",greetingsuser).order('date').fetch(limit=5)
+  logging.info("coreyross %d" % len(coreyross))
+  for i in range(0,len(greetings)):
+    if len(coreyross) > 0:
+      if coreyross[0].date < greetings[i].date:
+        result.append(coreyross[0])
+        del coreyross[0]
+    result.append(greetings[i])
+  return result + coreyross
+    
+    
 class GreetingUser(db.Model):
-  greeting_user = db.UserProperty()
+  greeting_user = db.ReferenceProperty(reference_class=Identity)
   joined = db.DateTimeProperty(auto_now_add=True)
-  picture = db.StringProperty()
-  seated = db.StringProperty()
-  website = db.StringProperty()
+  nickname = db.StringProperty(required=True)
   
 class Greeting(db.Model):
-  author = db.UserProperty()
+  author = db.ReferenceProperty(reference_class=GreetingUser,collection_name="author")
   content = db.StringProperty(multiline=True)
   date = db.DateTimeProperty(auto_now_add=True)
+  room = db.StringProperty()
+  super_secret_coreyross_for = db.ReferenceProperty(reference_class=GreetingUser,collection_name="coreyross")
 
 class BaseRequestHandler(webapp.RequestHandler):
   """Base request handler extends webapp.Request handler
@@ -63,59 +81,72 @@ class BaseRequestHandler(webapp.RequestHandler):
     
 class MainRequestHandler(BaseRequestHandler):
   def get(self):
-    if users.get_current_user():
-      url = users.create_logout_url(self.request.uri)
-      url_linktext = 'Logout'
-    else:
-      url = users.create_login_url(self.request.uri)
-      url_linktext = 'Login'
+ 
 
-    template_values = {
-      'url': url,
-      'url_linktext': url_linktext,
-      }
-
-    self.generate('index.html', template_values);
+    self.generate('index.html', {"identity":self.request.get("identity"),"room":self.request.get("room")});
 
 class ChatsRequestHandler(BaseRequestHandler):
-  def renderChats(self):
-    greetings_query = Greeting.all().order('date')
+  def renderChats(self,greetinguser,room=None):
+    if room != None and room.startswith("pm"):
+      userList=room[2:]
+      users = userList.split("$")
+      logging.info(users)
+      allowed = False
+      for user in users:
+        if greetinguser.nickname==user:
+          allowed = True
+          break
+      if not allowed: raise Exception("You're not allowed.")
+    
+    greetings_query = Greeting.all().order('date').filter("room =",room).filter("super_secret_coreyross_for =",None)
     greetings = greetings_query.fetch(1000)
-
     template_values = {
       'greetings': greetings,
     }
-    return self.generate('chats.html', template_values)
+    return greetings
       
-  def getChats(self, useCache=True):
-    if useCache is False:
-      greetings = self.renderChats()
-      if not memcache.set("chat", greetings, 10):
+  def getChats(self, greetinguser,room=None,cache=True):
+    if cache:
+      greetings = memcache.get("chat"+str(room))
+    else: greetings = None
+    if greetings is None:
+      logging.info("gotta query db chat"+str(room))
+      greetings = self.renderChats(greetinguser,room)
+      if greetings==None: greetings = []
+      logging.info("greetings are %s" % greetings)
+      if not memcache.set("chat"+str(room), greetings, 10):
         logging.error("Memcache set failed:")
-      return greetings
-      
-    greetings = memcache.get("chats")
-    if greetings is not None:
-      return greetings
-    else:
-      greetings = self.renderChats()
-      if not memcache.set("chat", greetings, 10):
-        logging.error("Memcache set failed:")
-      return greetings
+    if room==None:
+        greetings = intersperse(greetings,greetinguser)
+    return self.generate('chats.html',{'greetings':greetings,'greetinguser':greetinguser})
     
   def get(self):
-    self.getChats()
+    identity = get_identity(self)
+    greetinguser= get_greeting_user(identity)
+    room = self.request.get("room")
+    if room=="": room=None
+    self.getChats(greetinguser,room)
 
   def post(self):
+    identity = get_identity(self)
+    greetinguser = get_greeting_user(identity)
+    room = self.request.get("room")
+    if room=="": room=None
     greeting = Greeting()
-
-    if users.get_current_user():
-      greeting.author = users.get_current_user()
-
+    greeting.author = greetinguser
     greeting.content = self.request.get('content')
+    greeting.room = room
     greeting.put()
-    
-    self.getChats(False)
+    if room != None and room.startswith("pm"):
+      users = room.split("$")
+      for user in users[1:]:
+        g = Greeting()
+        g.author = None
+        g.content = "You've got a new PM from %s" % users[0][2:]
+        g.room = None
+        g.super_secret_coreyross_for = greetinguser
+        g.put()
+    self.getChats(greetinguser,room,cache=False)
 
     
 class EditUserProfileHandler(BaseRequestHandler):
@@ -173,13 +204,31 @@ class UserProfileHandler(BaseRequestHandler):
 
     # Generate the user profile
     self.generate('user.html', template_values={'queried_user': greeting_user})
+class NickNameHandler(webapp.RequestHandler):
+  def get(self):
+    identity = get_identity(self)
+    if get_greeting_user(identity)==None:
+      self.response.out.write("NOTSET")
+    else:
+      self.response.out.write("SET")
+  def post(self):
+    identity = get_identity(self)
+    if get_greeting_user(identity)!=None:
+      raise Exception("nickname already set for this identity")
+    if GreetingUser.all().filter("nickname =",self.request.get("nickname")).get()!=None:
+      raise Exception("nickname already taken; nice try")
+    g = GreetingUser(greeting_user=identity,nickname=self.request.get("nickname"))
+    g.put()
+    
 
                                                 
 application = webapp.WSGIApplication(
-                                     [('/', MainRequestHandler),
-                                      ('/getchats', ChatsRequestHandler),
-                                      ('/user/([^/]+)', UserProfileHandler),
-                                      ('/edituser/([^/]+)', EditUserProfileHandler)],
+                                     [('/chat', MainRequestHandler),
+                                      ('/chat/',MainRequestHandler),
+                                      ('/chat/getchats', ChatsRequestHandler),
+                                      ('/chat/user/([^/]+)', UserProfileHandler),
+                                      ('/chat/edituser/([^/]+)', EditUserProfileHandler),
+                                      ('/chat/nickname',NickNameHandler)],
                                      debug=True)
 
 def main():

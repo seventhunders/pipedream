@@ -29,6 +29,23 @@ def machine_readable_regex(id):
     compilestr = "(?<=<%s>).+?(?=</%s>)" % (id,id)
     print compilestr
     return re.compile(compilestr)
+def bind_chat():
+    #transparent_mother()
+    import urllib2
+    from environment import get_setting
+    
+    identity = get_setting("identity")
+    if api_get("/chat/nickname",{"identity":identity})=="NOTSET":
+        print "You don't have a nickname set.  Choose one below.  This is PERMANENT and cannot be changed"
+        nickname = raw_input("Nickname: ")
+        print api_post("/chat/nickname",data={"identity":identity,"nickname":nickname})
+    openurl = "http://localhost:3547/chat/?identity=%s" % identity
+    import thread
+    print "Right, try connecting to %s" % openurl
+    from environment import super_open
+    super_open(openurl)
+    transparent_mother()
+        
 def bind_mother():
     
     args = ["m0ther",
@@ -94,3 +111,29 @@ def api_body(apiurl,data,method):
 
 def areyouthere():
     print api_get("/api/areyouthere",{})
+    
+from BaseHTTPServer import BaseHTTPRequestHandler
+class TransparentMother(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type','text/html')
+        self.end_headers()
+        import urlparse
+        o = urlparse.urlparse(self.path)
+        data = urlparse.parse_qs(o.query)
+        self.wfile.write(api_get(o.path,data))
+        print self.path
+    def do_POST(self):
+        self.send_response(200)
+        self.send_header('Content-type','text/html')
+        self.end_headers()
+        length = int(self.headers.getheader('content-length'))
+        import cgi
+        pdict = cgi.parse_qs(self.rfile.read(length))
+        print pdict
+        import urlparse
+        #self.wfile.write(api_get(self.path))
+def transparent_mother():
+    from BaseHTTPServer import HTTPServer
+    server = HTTPServer(('127.0.0.1',3547),TransparentMother)
+    server.serve_forever()

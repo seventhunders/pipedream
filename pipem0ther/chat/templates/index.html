@@ -1,15 +1,15 @@
 <html>
   <head>
-    <link type="text/css" rel="stylesheet" href="/css/main.css" />
-    <script src="/js/util.js"></script>
+    <link type="text/css" rel="stylesheet" href="/chat/css/main.css" />
+    <script src="/chat/js/util.js"></script>
     <script>
     function updateChat() {
-	    downloadUrl("/getchats", "GET", null, onChatsReturned);
+	    downloadUrl("/chat/getchats?identity={{identity}}&room={{room}}", "GET", null, onChatsReturned);
 	}
 	
 	function sendChat(form) {
 		
-		downloadUrl("/getchats", "POST", "content=" + encodeURI(document.getElementById("chattext").value), onChatsReturned);
+		downloadUrl("/chat/getchats", "POST", "content=" + encodeURI(document.getElementById("chattext").value) + "&identity={{identity}}&room={{room}}", onChatsReturned);
 		document.getElementById("chattext").value = "";
 	}
 
@@ -32,7 +32,7 @@
   <body onload="setup()">
   	{% if user %}
     	<div align="right">Logged in as {{ user.nickname }} - 
-          <a href="/edituser/{{ user.email }}">Edit My Profile</a> -
+          <a href="/chat/edituser/{{ user.email }}">Edit My Profile</a> -
     	  <a href="{{log_in_out_url}}">Log out</a> </div>
    	{% else %}
     	<div align="right"><a href="{{log_in_out_url}}">Log in</a></div>

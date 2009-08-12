@@ -21,3 +21,11 @@ handlers:
   script: ServiceAPI.py
 - url: /api/moresvc
   script: ServiceAPI.py
+  
+  #chat
+- url: /chat/css
+  static_dir: chat/css
+- url: /chat/js
+  static_dir: chat/js
+- url: /chat.*
+  script: chat/devchat.py

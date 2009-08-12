@@ -42,6 +42,10 @@ elif cmd=="makesvc":
     identity = get_setting("identity")
     from pipedream.hello_m0ther import api_post
     print api_post("/api/moresvc",{"shortname":shortname,"protocol":protocol,"description":description,"identity":identity})
+elif cmd=="chat":
+    from pipedream.hello_m0ther import bind_chat
+    
+    bind_chat()
 elif cmd=="piped":
     from pipedream.piped import piped
     piped(sys.argv[2:])

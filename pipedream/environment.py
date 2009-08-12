@@ -31,6 +31,14 @@ def expect_arg(str):
     if a==None:
         raise Exception("Don't have argument %s; try with --%s=something" % (str,str))
     return a
+def super_open(file):
+    import sys, os
+    if sys.platform=="darwin":
+        os.system("open %s" % file)
+    elif sys.platform=="linux2":
+        os.system("xdg-open %s" % file)
+    else:
+        os.startfile(file)
 def get_lan_addr():
     if get_setting("override-ip")!=None:
         return get_setting("override-ip")
