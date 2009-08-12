@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
 #test
+
+def whats_new():
+    from sys import path
+    from os import chdir
+    from os import system
+    lines = system("git log public..origin/public --format='%s'")
+    return lines.split("\n")
 def needs_update():
     from sys import path
     from os import chdir
