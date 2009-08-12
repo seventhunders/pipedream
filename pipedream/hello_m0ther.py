@@ -115,24 +115,46 @@ def areyouthere():
 from BaseHTTPServer import BaseHTTPRequestHandler
 class TransparentMother(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
+        if self.path=="/favico.ico":
+            self.send_response(404)
+        else:
+            self.send_response(200)
         self.send_header('Content-type','text/html')
         self.end_headers()
         import urlparse
-        o = urlparse.urlparse(self.path)
-        data = urlparse.parse_qs(o.query)
-        self.wfile.write(api_get(o.path,data))
+        from cgi import parse_qs
+        #o = urlparse.urlparse(self.path)
+        #print o
         print self.path
+        pathparts = self.path.split("?")
+        if len(pathparts)>=2:
+            data = parse_qs(self.path.split("?")[1])
+            real_data = {}
+            for key in data:
+                real_data[key]=(data[key][0])
+            data = real_data
+        else:
+            data = {}
+        print data
+        print "about tu query"
+        self.wfile.write(api_get(pathparts[0],data))
+        print "done"
+        #print self.path
     def do_POST(self):
         self.send_response(200)
         self.send_header('Content-type','text/html')
         self.end_headers()
         length = int(self.headers.getheader('content-length'))
         import cgi
+            
         pdict = cgi.parse_qs(self.rfile.read(length))
+        real_data = {}
+        for key in pdict:
+            real_data[key]=(pdict[key][0])
+        pdict = real_data
         print pdict
         import urlparse
-        #self.wfile.write(api_get(self.path))
+        self.wfile.write(api_post(self.path,pdict))
 def transparent_mother():
     from BaseHTTPServer import HTTPServer
     server = HTTPServer(('127.0.0.1',3547),TransparentMother)
