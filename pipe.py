@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import logging
 logging.basicConfig(level=logging.DEBUG)
-
+from pipedream.updates import needs_update
+if needs_update():
+    print "Your pipedream version is out of date.  Please update ASAP.  Just run pipe selfupdate!"
 def usage():
     print "pipedream 0.1 Copyright 2009 DefyCensorship.com.  Released under MIT license."
     print "set"
