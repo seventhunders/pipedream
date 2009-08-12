@@ -46,18 +46,15 @@ def install_path():
     if not os.path.exists(path):
         os.mkdir(path)
     import commands
-    (status,output) = commands.getstatusoutput("cp -R . %s" % (path + "/"))
-    if status != 0:
-        print output
-        raise Exception("That didn't work.")
+    if path != ".":
+        (status,output) = commands.getstatusoutput("cp -R . %s" % (path + "/"))
+        if status != 0:
+            print output
+            raise Exception("That didn't work.")
     print "Special fix just for malcom...",
     #os.system("cp %s/pipe.py %s/pipe" % (path,path))
     if not os.path.exists("/opt/local/bin/pipe"):
-        try:
-            os.system("ln -s %s/pipe.py /opt/local/bin/pipe" % path)
-        except Exception, ex:
-            print "Had a problem:"
-            print ex
+        os.system("ln -s %s/pipe.py /opt/local/bin/pipe" % path)
     os.system("chmod -R 755 %s" % path)
     os.system("chmod -R 777 %s/.git" % path)
     os.system("chmod 755 /opt/local/bin/pipe")
