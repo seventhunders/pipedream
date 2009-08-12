@@ -55,6 +55,7 @@ def install_path():
     if not os.path.exists("/opt/local/bin/pipe"):
         os.system("ln -s %s/pipe.py /opt/local/bin/pipe" % path)
     os.system("chmod -R 755 %s" % path)
+    os.system("chmod -R 777 %s/.git" % path)
     os.system("chmod 755 /opt/local/bin/pipe")
     print "Got your root password! (j/k)"
     os.system("chmod +x %s/pipe.py" % path)
