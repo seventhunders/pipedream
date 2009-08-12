@@ -16,7 +16,7 @@ def needs_update():
     (status,whatever) = getstatusoutput("git fetch origin")
     (status,local) = getstatusoutput("git ls-remote . heads/public | cut -f 1")
     (status,remote) = getstatusoutput("git ls-remote . origin/public | cut -f 1")
-    if local != remote:
+    if local == remote:
         print local, remote
     return local!=remote
 def do_update():
