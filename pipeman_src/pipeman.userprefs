@@ -3,10 +3,10 @@
   <MonoDevelop.Ide.DebuggingService>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService>
-  <MonoDevelop.Ide.Workbench ActiveDocument="pipette/PipeEndTypes/PipeEndType.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workbench ActiveDocument="pipette/AuthenticationTypes/AuthenticationTypeAESLike.cs" ctype="Workbench">
     <Files>
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeServiceAccept.cs" Line="71" Column="3" />
-      <File FileName="pipette/pipe.cs" Line="140" Column="5" />
+      <File FileName="pipette/pipe.cs" Line="75" Column="5" />
       <File FileName="pipette/m0ther/m0therpipe.cs" Line="26" Column="31" />
       <File FileName="pipette/magic.cs" Line="15" Column="20" />
       <File FileName="pipette/PipeEndTypes/PipeEndTypeLocalBind.cs" Line="27" Column="4" />
@@ -15,12 +15,13 @@
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeSpecialBackhaul.cs" Line="22" Column="16" />
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeNone.cs" Line="18" Column="34" />
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeServiceConnect.cs" Line="28" Column="49" />
-      <File FileName="pipette/PipeEndTypes/PipeEndTypeTCPClient.cs" Line="46" Column="1" />
+      <File FileName="pipette/PipeEndTypes/PipeEndTypeTCPClient.cs" Line="60" Column="12" />
       <File FileName="logger/logger.cs" Line="93" Column="18" />
       <File FileName="pipette/msgBase.cs" Line="53" Column="33" />
       <File FileName="pipette/PipeEndTypes/deepID.cs" Line="26" Column="46" />
       <File FileName="pipette/m0ther_api_request.cs" Line="20" Column="1" />
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeSpecialGateway.cs" Line="1" Column="1" />
+      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeAESLike.cs" Line="85" Column="21" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,11 +30,11 @@
           <Node name="logger" expanded="True" />
           <Node name="pipeman" expanded="True" />
           <Node name="pipette" expanded="True">
-            <Node name="AuthenticationTypes" expanded="True" />
-            <Node name="m0ther" expanded="True" />
-            <Node name="PipeEndTypes" expanded="True">
-              <Node name="PipeEndType.cs" selected="True" />
+            <Node name="AuthenticationTypes" expanded="True">
+              <Node name="AuthenticationTypeAESLike.cs" selected="True" />
             </Node>
+            <Node name="m0ther" expanded="True" />
+            <Node name="PipeEndTypes" expanded="True" />
           </Node>
         </State>
       </Pad>

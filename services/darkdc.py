@@ -166,11 +166,14 @@ def client_thread(clientsocket,nothing):
                 
                 while True:
                     data = file.read(512)
-                    print "writing %s" % str(len(data))
-                    writefile.write(str(len(data)) + "\n")
-                    writefile.write(data)
-                    if not data:
+                    if len(data)==0:
+                        writefile.write("-1\n")
                         pass
+                    else:
+                        print "writing %s" % str(len(data))
+                        writefile.write(str(len(data)) + "\n")
+                        writefile.write(data)
+
                         #clientsocket.shutdown(0)
                         #clientsocket.close()
         elif cmd.startswith("search"):

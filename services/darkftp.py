@@ -13,6 +13,7 @@ def passive_th(s,none):
     file = clientsocket.makefile("rb")
     s = file.readline()
     print "pasv got %s" % s
+cache_services = {}
 def client_thread(clientsocket,none):
     file = clientsocket.makefile("rb")
     clientsocket.send("220 Hello there, darkftp here\n")
@@ -21,7 +22,8 @@ def client_thread(clientsocket,none):
     passive_port=None
     pasv_socket = None
     data_socket = clientsocket
-    cache_services = {}
+    global cache_services
+    #cache_services = {}
     while True:
         cmd = file.readline()
         print "Got %s" % cmd
@@ -49,6 +51,60 @@ def client_thread(clientsocket,none):
             clientsocket.send("500 SCREW YOU FIREFOX\r\n")
         elif cmd.startswith("MDTM"):
             clientsocket.send("500 SCREW YOU FIREFOX\r\n")
+        elif cmd.startswith("RETR"):
+            what = cmd[5:].strip()
+            import os
+            if my_chdir=="/": #firefox just RETRs random crap
+                clientsocket.send("500 I hate you firefox\r\n")
+            else:
+                # figure out what service
+                print ("150 Here's that file you wanted\r\n")
+                print cache_services
+                service_key = cache_services[my_chdir.split("/")[1].strip()]
+                from pipedream.client import connect_to
+                retrieve_path = os.path.join(my_chdir,what)
+                print "I should really retrieve %s" % retrieve_path
+                (port,kill) = connect_to(service_key)
+                s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+                s.connect(('127.0.0.1',port))
+                r = s.makefile("rb")
+                pathsegments = retrieve_path.split("/")
+                for pathitem in pathsegments:
+                    if pathitem=="": continue #maybe it starts with /
+                    elif pathitem==my_chdir.split("/")[1].strip(): continue #move past the svc part of the pat
+                    if pathsegments[len(pathsegments)-1]==pathitem:
+                        print "Sending get %s" % pathitem
+                        s.send("get %s\n" % pathitem)
+                        go_rounds=0
+                        while True:
+                            go_rounds += 1
+                            print "reading size"
+                            size = int(r.readline())
+                            print "read size"
+                            if size != -1:
+                                buf = ""
+                                while len(buf) != size:
+                                    print "Going to read %d bytes" % size
+                                    buf += r.read(size)
+                                    print "#%d Read %d bytes" % (go_rounds,len(buf))
+                                data_socket.send(buf) #why is this hanging?
+                            else:
+                                print "Done with this madness"
+                                break
+                        kill.kill()
+                        data_socket.shutdown(0)
+                        data_socket.close()
+                        s.send("226 There's the file you wanted\r\n")
+                        
+                    else:
+                        print "chdiring to %s" % pathitem
+                        s.send("chdir %s\n" % pathitem)
+                        t = r.readline()
+                        if t != "0":
+                            raise Exception ("Read %s" % t )
+                        
+                    
+                #s.send("GET %s" % )
         elif cmd.startswith("PORT"):
             clientsocket.shutdown(0)
             clientsocket.close()
@@ -89,7 +145,7 @@ def client_thread(clientsocket,none):
                 for line in lines:
                     q = parse(line)
                     print q
-                    name = q[0].replace(" ","_").replace("-","_").replace("*","_").replace("/","_")
+                    name = q[0]
                     type = q[1]
                     size = int(q[2])
                     if type=="d":
@@ -98,7 +154,7 @@ def client_thread(clientsocket,none):
                     elif type=="f":
                         pass
                         files.append((name,size))
-            dirs.append(("testdir",1024))
+            #dirs.append(("testdir",1024))
             clientsocket.send("150 have some files\r\n")
             #if data_socket == None:
             #    print "accepting new connection"
@@ -159,7 +215,7 @@ def which_sock(active,passiveport):
         return passive_socket
 import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('127.0.0.1',2059))
+s.bind(('127.0.0.1',1408))
 s.listen(5)
 
 while True:

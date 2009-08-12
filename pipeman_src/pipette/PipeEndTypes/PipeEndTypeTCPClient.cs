@@ -56,7 +56,8 @@ namespace pipette
 			{
 				logger.logger.warn("There was an error getting the stream: " + ex.Message);
 				logger.logger.warn(ex.StackTrace.ToString());
-				return start(related);
+				start(related);
+				return;
 			}
 			d.readZeroBytes += readZeroBytes;
 			this.raiseEndpointEstablishedHandler(d,related);
