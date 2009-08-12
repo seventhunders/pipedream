@@ -48,9 +48,9 @@ def install_path():
     import commands
     if os.getcwd()!=path:
         print os.getcwd(),path
-        (status,output) = commands.getstatusoutput("cp -R . %s" % (path + "/"))
+        status = os.system("cp -R . %s" % (path + "/"))
+        #(status,output) = commands.getstatusoutput()
         if status != 0:
-            print output
             raise Exception("That didn't work.")
     print "Special fix just for malcom...",
     #os.system("cp %s/pipe.py %s/pipe" % (path,path))
