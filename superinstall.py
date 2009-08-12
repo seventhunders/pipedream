@@ -46,7 +46,8 @@ def install_path():
     if not os.path.exists(path):
         os.mkdir(path)
     import commands
-    if path != ".":
+    if os.getcwd()!=path:
+        print os.getcwd(),path
         (status,output) = commands.getstatusoutput("cp -R . %s" % (path + "/"))
         if status != 0:
             print output
