@@ -7,6 +7,8 @@ if needs_update():
     print "You're missing out on great stuff like " + ", ".join(whats_new())+"."
 def usage():
     print "pipedream 0.1 Copyright 2009 DefyCensorship.com.  Released under MIT license."
+    from pipedream.updates import what_branch, get_local_version
+    print "You're running the '%s' version, commit %s" % (what_branch(),get_local_version())
     print "set"
     print "get"
     print "pipeman"
