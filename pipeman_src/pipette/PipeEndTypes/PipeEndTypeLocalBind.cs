@@ -89,7 +89,7 @@ namespace pipette
 				l = p.l; //yes, this is redundant, but you never know...
 
 				Socket c = l.EndAcceptSocket(ar);
-
+				c.ReceiveTimeout = 5000;
 
 				//do a sanity check
 				if (!authenticationType.shouldAllowPerson(c.RemoteEndPoint as IPEndPoint))

@@ -30,6 +30,7 @@ namespace pipette
 		public override void start (deepID related)
 		{
 			c = new TcpClient();
+			c.ReceiveTimeout = 5000;
 			if (!authenticationType.shouldAllowPerson(new IPEndPoint(remoteAddress,port)))
 			{
 				throw new Exception("This person is not allowed.");
