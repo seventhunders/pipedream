@@ -109,6 +109,9 @@ namespace pipette
 					logger.logger.info("To connection was forcibly closed.");
 				logger.logger.debug(new System.Diagnostics.StackTrace().ToString());
 				//	fromID.read_thread.Abort();
+				//hang up from connection
+				fromID.read_thread.Abort();
+				from.closeConnection(fromID);
 				if (superAbort != null) superAbort();
 					d.read_thread.Abort(); //this is us... otherewise we'll keep reading a closed socket
 				});
