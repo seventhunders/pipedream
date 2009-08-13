@@ -97,10 +97,10 @@ namespace pipette
 					logger.logger.info("From connection was forcibly closed.");
 
 					//toID.read_thread.Abort();
-					//to.closeConnection(toID);
+					to.closeConnection(toID);
 					if (superAbort != null) superAbort();
 					d.read_thread.Abort();
-					//ft.Abort(); //this is our thread... yeah it's convoluted
+					ft.Abort(); //this is our thread... yeah it's convoluted
 
 				});
 			logger.logger.debug("Registering to handler...");
