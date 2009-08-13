@@ -128,7 +128,12 @@ namespace pipette
 			if (s.Poll(1000,SelectMode.SelectRead)) //well this is awkward
 			{
 				if (s.Available==0)
-					d.raiseConnectionClosed();
+					
+					if (!d.raiseConnectionClosed())
+				{
+					closeConnection(d);
+				}
+						
 
 			}
 		}

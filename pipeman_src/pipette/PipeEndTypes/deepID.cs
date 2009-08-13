@@ -41,13 +41,17 @@ namespace pipette
 		public deepID ()
 		{
 		}
-		public void raiseConnectionClosed()
+		public bool raiseConnectionClosed()
 		{
 			if (connectionClosed != null)
+			{
 				this.connectionClosed(this);
+				return true;
+			}
 			else
 			{
 				logger.logger.warn("Nobody cares that this connection was closed (WTF?)");
+				return false;
 			}
 		}
 	}

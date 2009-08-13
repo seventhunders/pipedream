@@ -48,6 +48,7 @@ namespace pipette
 			{
 				logger.logger.debug("reading...");
 				byte a = (byte) s.ReadByte();
+				if (a==-1) return new byte[0];
 				if (a==special_reserved)
 				{
 					logger.logger.debug("HI!");

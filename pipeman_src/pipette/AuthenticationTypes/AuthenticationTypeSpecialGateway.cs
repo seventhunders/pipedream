@@ -24,6 +24,7 @@ namespace pipette
 		{
 
 			byte[] b = msgBase.read(d.plaintextStream);
+			if (b.Length==0) d.raiseReadZeroBytes();
 			logger.logger.info(xmlPrivateKey);
 			byte[] decrypted = new byte[1];
 			decrypted = cryptlib.RSA.decrypt(b,xmlPrivateKey);
