@@ -91,6 +91,7 @@ def api_url(apiurl,data,method):
     logging.critical("invoking method %s" % method)
     request.request(method=method,url=apiurl,headers={"host":"pipem0ther.appspot.com"})
     response = request.getresponse().read()
+    request.close()
     kill.terminate()
     return response
 def api_put(apiurl,data):
@@ -107,6 +108,7 @@ def api_body(apiurl,data,method):
     request.request(method,apiurl,realdata,headers)
     response = request.getresponse().read()
     kill.kill()
+    request.close()
     return response
 
 def areyouthere():
