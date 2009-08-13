@@ -96,7 +96,7 @@ namespace pipette
 				from.addconnectionClosedHandler(delegate(deepID d) {
 					logger.logger.info("From connection was forcibly closed.");
 
-					//toID.read_thread.Abort();
+					toID.read_thread.Abort();
 					to.closeConnection(toID);
 					if (superAbort != null) superAbort();
 					d.read_thread.Abort();
