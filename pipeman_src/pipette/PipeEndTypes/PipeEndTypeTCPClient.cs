@@ -75,7 +75,7 @@ namespace pipette
 			if (c.Client.Poll(1000,SelectMode.SelectRead))
 			{
 				if (c.Client.Available==0)
-					raiseConnectionClosed(d);
+					d.raiseConnectionClosed();
 			}
 		}
 		public override void stop ()
@@ -93,7 +93,6 @@ namespace pipette
 			TcpClient c = (TcpClient) d.internal_use;
 			//c.GetStream().Close();
 			c.Client.Close();
-			base.closeConnection(d);
 		}
 
 

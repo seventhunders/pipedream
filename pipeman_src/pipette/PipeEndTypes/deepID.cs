@@ -24,7 +24,7 @@ namespace pipette
 			readZeroBytes(this);
 		}
 		public System.Threading.Thread read_thread;
-		
+		public deepID related;
 		/// <summary>
 		/// This is a plain text stream for the underlying protocol.  The authenticationTypes
 		/// make use of this, and it's also used for any other unencrypted traffic or before
@@ -36,9 +36,14 @@ namespace pipette
 		/// AuthenticationType's verifyIdentity call
 		/// </summary>
 		public byte[] aeskey;
-
+		public delegate void  connectionClosedHandler (deepID who);
+		public event connectionClosedHandler connectionClosed;
 		public deepID ()
 		{
+		}
+		public void raiseConnectionClosed()
+		{
+			this.connectionClosed(this);
 		}
 	}
 }

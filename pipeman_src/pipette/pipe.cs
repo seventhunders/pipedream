@@ -73,7 +73,6 @@ namespace pipette
 			}
 				logger.logger.info("Pipe seems to be up.");
 				
-				
 				//from->to
 				copyStart fromTo = new copyStart();
 				fromTo.fromDeepId = fromID;
@@ -93,7 +92,7 @@ namespace pipette
 				tf.Start(toFrom);
 				toID.read_thread = tf;
 			
-				from.addconnectionClosedHandler(delegate(deepID d) {
+				fromID.connectionClosed += (delegate(deepID d) {
 					logger.logger.info("From connection was forcibly closed.");
 
 					toID.read_thread.Abort();
@@ -104,7 +103,7 @@ namespace pipette
 
 				});
 			logger.logger.debug("Registering to handler...");
-				to.addconnectionClosedHandler(delegate(deepID d) {
+				toID.connectionClosed += delegate(deepID d) {
 				
 					logger.logger.info("To connection was forcibly closed.");
 				logger.logger.debug(new System.Diagnostics.StackTrace().ToString());
@@ -114,7 +113,7 @@ namespace pipette
 				from.closeConnection(fromID);
 				if (superAbort != null) superAbort();
 					d.read_thread.Abort(); //this is us... otherewise we'll keep reading a closed socket
-				});
+				};
 		}
 		void establishedFrom(deepID fromID, deepID related)
 		{

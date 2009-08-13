@@ -61,7 +61,6 @@ namespace pipette
 		{
 			Socket s = (Socket) d.internal_use;
 			s.Close();
-		base.closeConnection(d);
 		}
 		
 
@@ -129,7 +128,7 @@ namespace pipette
 			if (s.Poll(1000,SelectMode.SelectRead)) //well this is awkward
 			{
 				if (s.Available==0)
-					this.raiseConnectionClosed(d);
+					d.raiseConnectionClosed();
 
 			}
 		}
