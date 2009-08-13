@@ -46,7 +46,12 @@ namespace pipette
 			bool reserve_flag = false;
 			while(true)
 			{
-				logger.logger.debug("reading...");
+				if (b.Count > (1024*1024))
+				{
+					logger.logger.warn("Message > 1MB.  Pretending like the client disconnected, since this data is obviously invalid.");
+					return new byte[0];
+				}
+				logger.logger.debug("msgbase reading...");
 				byte a = (byte) s.ReadByte();
 				if (a==-1) return new byte[0];
 				if (a==special_reserved)
