@@ -19,7 +19,8 @@ def get_local_version():
     from os import chdir
     from commands import getstatusoutput
     chdir(path[0])
-    (status,local) = getstatusoutput("git ls-remote . HEAD | cut -f 1").split("\n")[0]
+    (status,local) = getstatusoutput("git ls-remote . HEAD | cut -f 1")
+    local = local.split("\n")[0]
     return local
 def needs_update():
     from sys import path
