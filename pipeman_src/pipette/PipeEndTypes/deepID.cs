@@ -43,7 +43,12 @@ namespace pipette
 		}
 		public void raiseConnectionClosed()
 		{
-			this.connectionClosed(this);
+			if (connectionClosed != null)
+				this.connectionClosed(this);
+			else
+			{
+				logger.logger.warn("Nobody cares that this connection was closed (WTF?)");
+			}
 		}
 	}
 }
