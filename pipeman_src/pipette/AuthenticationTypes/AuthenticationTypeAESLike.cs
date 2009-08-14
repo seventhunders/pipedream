@@ -10,6 +10,23 @@ namespace pipette
 	/// </summary>
 	public abstract class AuthenticationTypeAESLike: AuthenticationType
 	{
+		//cake-is-a-lie msgs
+		 public const int remote_end_hungup = -1;
+		 public const int remote_end_resumed = -2;
+		
+		private void handle_cake_is_a_lie_msg(int msg, deepID who)
+		{
+			switch(msg)
+			{
+			case remote_end_hungup:
+				who.raiseCakeIsALie_remoteEndHungup();
+				break;
+			default:
+				logger.logger.FAIL("I got this cakeisaliemsg: " + msg);
+				break;
+			}
+		}
+		
 		static int max_msg_size = 8192;
 		static int int_32_size = 32/8;
 		public AuthenticationTypeAESLike (bool iChopYourDollar): base(iChopYourDollar)
@@ -37,32 +54,15 @@ namespace pipette
 		}
 		public override byte[] readBuffer (deepID d)
 		{
-			//wait for an entire AES block
-			
-			//read an int into the first buffer
-			byte[] intbuf = new byte[int_32_size];
-			int offset = 0;
-			while (offset < int_32_size)
+			int msg_size = readSize (d);
+			if (msg_size < 0)
 			{
-				int read = 0;
-				try
-				{
-					read = d.plaintextStream.Read(intbuf,offset,int_32_size - offset);
-				}
-				catch(System.IO.IOException ex)
-				{
-					if (ex.InnerException is System.Threading.ThreadAbortException) {} //swallow
-					else throw ex;
-				}
-				if (read==0)
-					d.raiseReadZeroBytes();
-				offset += read;
-
+				handle_cake_is_a_lie_msg(msg_size,d);
+				return readBuffer(d);
 			}
-			int msg_size = System.BitConverter.ToInt32(intbuf,0);
 			//allocate a new buffer to fill the message
 			byte[] msg_buffer = new byte[msg_size];
-			offset = 0;
+			int offset = 0;
 			while (offset < msg_size)
 			{
 				int read = 0;
@@ -93,6 +93,42 @@ namespace pipette
 			}
 			
 			return plaintext;
+		}
+
+		int readSize (pipette.deepID d)
+		{
+			byte[] intbuf = new byte[int_32_size];
+			int offset = 0;
+			while (offset < int_32_size) {
+				int read = 0;
+				try {
+					read = d.plaintextStream.Read (intbuf, offset, int_32_size - offset);
+				} catch (System.IO.IOException ex) {
+					if (ex.InnerException is System.Threading.ThreadAbortException) {
+					} else
+						throw ex;
+				}
+				if (read == 0)
+					d.raiseReadZeroBytes ();
+				offset += read;
+			}
+		return System.BitConverter.ToInt32(intbuf,0);
+
+		}
+		public void sendCakeIsALieMsg(int msg,deepID d)
+		{
+			logger.logger.debug("Sending cakeisaliemsg: " + msg);
+			byte[] length = System.BitConverter.GetBytes(msg);
+			d.plaintextStream.Write(length,0,length.Length);
+			d.plaintextStream.Flush();
+		}
+		public void spinForResumeMsg(deepID d)
+		{
+			int a = readSize(d);
+			if (a != AuthenticationTypeAESLike.remote_end_resumed)
+			{
+				logger.logger.FAIL("I got some message, but it wasn't the resume I was expecting: " + a);
+			}
 		}
 		public override void writeBuffer (byte[] b, int length,deepID d)
 		{

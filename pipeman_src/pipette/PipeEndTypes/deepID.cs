@@ -36,6 +36,26 @@ namespace pipette
 		/// AuthenticationType's verifyIdentity call
 		/// </summary>
 		public byte[] aeskey;
+		
+		public void unregisterallCakeIsALie_remoteEndHungupHandlers()
+		{
+			logger.logger.debug("Unregistering remotendhungup");
+			cakeisalie_remoteEndHungup = null;
+		}
+		
+		public delegate void cakeisalie_remoteEndHungupHandler(deepID who);
+		public event cakeisalie_remoteEndHungupHandler cakeisalie_remoteEndHungup;
+		public void raiseCakeIsALie_remoteEndHungup()
+		{
+			this.cakeisalie_remoteEndHungup(this);
+		}
+		
+		
+		public void unregisterAllConnectionClosedHandlers()
+		{
+			logger.logger.debug("unregistering connection closed");
+			connectionClosed = null;
+		}
 		public delegate void  connectionClosedHandler (deepID who);
 		public event connectionClosedHandler connectionClosed;
 		public deepID ()

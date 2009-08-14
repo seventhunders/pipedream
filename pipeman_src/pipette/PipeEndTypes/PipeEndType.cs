@@ -12,7 +12,7 @@ namespace pipette
 	/// </summary>
 	public abstract class PipeEndType
 	{
-		protected AuthenticationType authenticationType;
+		public AuthenticationType authenticationType;
 		public PipeEndType (AuthenticationType authenticationType)
 		{
 			this.authenticationType = authenticationType;
@@ -23,7 +23,6 @@ namespace pipette
 		
 		public delegate void endpointEstablishedHandler(deepID d, deepID related);
 		public event endpointEstablishedHandler endpointEstablished;
-
 		public abstract void performAuthentication(deepID d);
 		protected void raiseEndpointEstablishedHandler(deepID d,deepID related)
 		{
