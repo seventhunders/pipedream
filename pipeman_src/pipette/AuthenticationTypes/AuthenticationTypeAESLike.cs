@@ -75,12 +75,22 @@ namespace pipette
 					if (ex.InnerException is System.Threading.ThreadAbortException) {} //swallow
 					else throw ex;
 				}
+				
 				if (read==0)
 					d.raiseReadZeroBytes();
 				offset += read;
 			}
 			//logArray(msg_buffer,"ciphertext");
-			byte[] plaintext = cryptlib.AES.decrypt(msg_buffer,d.aeskey);
+			byte[] plaintext = new byte[0];
+			try
+			{
+				plaintext = cryptlib.AES.decrypt(msg_buffer,d.aeskey);
+			}
+			catch (System.Security.Cryptography.CryptographicException e)
+			{
+				logger.logger.warn("Had a problem decrypting the data.  Acting like the connection was closed.");
+				d.raiseReadZeroBytes();
+			}
 			
 			return plaintext;
 		}
