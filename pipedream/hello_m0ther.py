@@ -22,6 +22,7 @@ def redirect(f,none):
             i+=1
         if i==5:
             logging.debug( "REDIRECT DIED")
+            f.close()
             break
         logging.warning( "REDIRECT:%s" % line)
 def machine_readable_regex(id):
