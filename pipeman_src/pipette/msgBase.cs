@@ -40,7 +40,7 @@ namespace pipette
 
 			s.Write(b.ToArray(),0,b.Count);
 		}
-		public static byte[] read(System.IO.Stream s)
+		public static byte[] read(System.IO.Stream s, deepID d)
 		{
 			List<byte> b = new List<byte>();
 			bool reserve_flag = false;
@@ -53,7 +53,7 @@ namespace pipette
 				}
 				//logger.logger.debug("msgbase reading...");
 				byte a = (byte) s.ReadByte();
-				if (a==-1) return new byte[0];
+				if (a==-1) d.raiseReadZeroBytes();
 				if (a==special_reserved)
 				{
 					logger.logger.debug("HI!");

@@ -51,7 +51,7 @@ namespace pipette
 		public override void shouldVerifyIdentity (deepID d)
 		{
 			logger.logger.push("shouldVerifyIdentityAccept");
-			byte[] bkey = msgBase.read(d.plaintextStream);
+			byte[] bkey = msgBase.read(d.plaintextStream,d);
 			string otpkey = System.Text.Encoding.ASCII.GetString(bkey,0,bkey.Length);
 			//need the otp
 			int mport;

@@ -23,7 +23,7 @@ namespace pipette
 		public override void shouldVerifyIdentity (deepID d)
 		{
 
-			byte[] b = msgBase.read(d.plaintextStream);
+			byte[] b = msgBase.read(d.plaintextStream,d);
 			if (b.Length==0) d.raiseReadZeroBytes();
 			logger.logger.info(xmlPrivateKey);
 			byte[] decrypted = new byte[1];
