@@ -125,7 +125,7 @@ namespace pipette
 		void dReadZeroBytes (deepID d)
 		{
 			Socket s = (Socket) d.internal_use;
-			if (s.Poll(1000,SelectMode.SelectRead)) //well this is awkward
+			if (s.Poll(5000,SelectMode.SelectRead)) //well this is awkward
 			{
 				if (s.Available==0)
 					

@@ -72,7 +72,7 @@ namespace pipette
 		{
 			TcpClient c = (TcpClient) d.internal_use;
 			logger.logger.debug("client read zero bytes...");
-			if (c.Client.Poll(1000,SelectMode.SelectRead))
+			if (c.Client.Poll(5000,SelectMode.SelectRead))
 			{
 				if (c.Client.Available==0)
 					d.raiseConnectionClosed();
