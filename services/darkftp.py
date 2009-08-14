@@ -145,7 +145,7 @@ def client_thread(clientsocket,none):
                 for line in lines:
                     q = parse(line)
                     print q
-                    name = q[0].replace(" ","_")
+                    name = q[0]
                     type = q[1]
                     size = int(q[2])
                     if type=="d":
