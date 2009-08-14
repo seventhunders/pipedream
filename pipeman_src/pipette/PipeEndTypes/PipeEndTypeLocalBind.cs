@@ -125,16 +125,24 @@ namespace pipette
 		void dReadZeroBytes (deepID d)
 		{
 			Socket s = (Socket) d.internal_use;
-			if (s.Poll(5000,SelectMode.SelectRead)) //well this is awkward
+			try
 			{
-				if (s.Available==0)
-					
-					if (!d.raiseConnectionClosed())
+				if (s.Poll(5000,SelectMode.SelectRead)) //well this is awkward
 				{
-					closeConnection(d);
-				}
-						
-
+					if (s.Available==0)
+					
+						if (!d.raiseConnectionClosed())
+					{
+						closeConnection(d);
+					}
+				}	
+			}
+			catch(Exception ex)
+			{
+					logger.logger.warn("Encountered an error while polling to see if the socket is closed.  Specifically:");
+					logger.logger.warn(e.Message);
+					logger.logger.warn("Assuming that the connection is closed.");
+					d.raiseConnectionClosed();
 			}
 		}
 	}
