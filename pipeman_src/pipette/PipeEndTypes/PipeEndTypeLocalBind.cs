@@ -112,7 +112,7 @@ namespace pipette
 					logger.logger.warn(ex.Message);
 
 				logger.logger.warn(ex.StackTrace);
-				if (! ex is System.Threading.ThreadAbortException)
+				if (! (ex is System.Threading.ThreadAbortException))
 					logger.logger.FAIL("gotClient mono bug workaround exception time!");
 			}
 			
