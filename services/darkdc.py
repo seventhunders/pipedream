@@ -94,7 +94,11 @@ def index_stuff(walk_dir):
         
     
 def daemon_mode():
+    import logging
+    
+    logging.basicConfig(level=logging.DEBUG)
     logging.info("darkdc starting up...")
+    
     import os
     global daemon_dir
     daemon_dir = expect_arg("share-folder")

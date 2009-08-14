@@ -137,6 +137,13 @@ def client_thread(clientsocket,none):
                 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
                 s.connect(('127.0.0.1',port))
                 r = s.makefile("rb")
+                cd_dirs = my_chdir.split("/")[2:]
+                for dir in cd_dirs:
+                    print "chdirng to %s" % dir.strip()
+                    s.send("chdir %s" % dir.strip())
+                    r.readline()
+                    r.readline()
+                    print "done"
                 s.send("ls\n")
                 items = int(r.readline())
                 lines = []
@@ -210,7 +217,7 @@ def client_thread(clientsocket,none):
     pass
 import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-port = 1419
+port = 1420
 s.bind(('127.0.0.1',port))
 s.listen(5)
 print "Bound on %d" % port

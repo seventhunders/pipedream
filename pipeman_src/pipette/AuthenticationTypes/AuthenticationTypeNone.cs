@@ -38,7 +38,7 @@ namespace pipette
 			catch(System.IO.IOException ex)
 			{
 					if (ex.InnerException is System.Threading.ThreadAbortException) {} //swallow
-					else throw ex;
+					else d.raiseReadZeroBytes();
 			}
 			logger.logger.debug("plain read " + lengthRead + " bytes.");
 			byte[] total = new byte[lengthRead];
