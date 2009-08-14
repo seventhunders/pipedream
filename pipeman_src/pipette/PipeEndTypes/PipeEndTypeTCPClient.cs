@@ -84,8 +84,11 @@ namespace pipette
 				{
 					logger.logger.warn("Encountered an error while polling to see if the socket is closed.  Specifically:");
 					logger.logger.warn(e.Message);
+				if (!(e is System.Threading.ThreadAbortException))
+				{
 					logger.logger.warn("Assuming that the connection is closed.");
 					d.raiseConnectionClosed();
+				}
 				}
 		}
 		public override void stop ()
