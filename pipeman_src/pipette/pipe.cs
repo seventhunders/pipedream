@@ -132,8 +132,16 @@ namespace pipette
 				logger.logger.warn("Verification on 'from' end failed.  Goodbye.");
 				from.closeConnection(fromID);
 				return;
+			}try
+			{
+				to.start(fromID);
 			}
-			to.start(fromID);
+			catch(Exception ex)
+			{
+				logger.logger.warn("An error ocurred establishing the 'to' end.  Closing connection...");
+				from.closeConnection(fromID);
+				
+			}
 		}
 		public void copyThread(object o)
 		{
