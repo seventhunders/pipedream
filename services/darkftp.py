@@ -58,7 +58,7 @@ def client_thread(clientsocket,none):
                 clientsocket.send("500 I hate you firefox\r\n")
             else:
                 # figure out what service
-                print ("150 Here's that file you wanted\r\n")
+                print ("125 Here's that file you wanted\r\n")
                 print cache_services
                 service_key = cache_services[my_chdir.split("/")[1].strip()]
                 from pipedream.client import connect_to
@@ -145,7 +145,7 @@ def client_thread(clientsocket,none):
                 for line in lines:
                     q = parse(line)
                     print q
-                    name = q[0]
+                    name = q[0].replace(" ","_")
                     type = q[1]
                     size = int(q[2])
                     if type=="d":
@@ -171,6 +171,7 @@ def client_thread(clientsocket,none):
             for (name,size) in files:
                 str = "%s 1 coreyross letu %13d Jan  8  1986 %s\r\n" % (file_type,size,name)
                 data_socket.send(str)
+                print "send this %s" % str
 
             clientsocket.send("226 there you go\r\n")
             data_socket.shutdown(0)
@@ -215,7 +216,7 @@ def which_sock(active,passiveport):
         return passive_socket
 import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('127.0.0.1',1408))
+s.bind(('127.0.0.1',1412))
 s.listen(5)
 
 while True:
