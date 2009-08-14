@@ -72,11 +72,21 @@ namespace pipette
 		{
 			TcpClient c = (TcpClient) d.internal_use;
 			logger.logger.debug("client read zero bytes...");
-			if (c.Client.Poll(5000,SelectMode.SelectRead))
+			try
 			{
-				if (c.Client.Available==0)
-					d.raiseConnectionClosed();
+				if (c.Client.Poll(5000,SelectMode.SelectRead))
+				{
+					if (c.Client.Available==0)
+						d.raiseConnectionClosed();
+				}
 			}
+				catch (Exception e)
+				{
+					logger.logger.warn("Encountered an error while polling to see if the socket is closed.  Specifically:");
+					logger.logger.warn(e.Message);
+					logger.logger.warn("Assuming that the connection is closed.");
+					d.raiseConnectionClosed();
+				}
 		}
 		public override void stop ()
 		{
