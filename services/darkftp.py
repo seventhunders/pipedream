@@ -58,7 +58,7 @@ def client_thread(clientsocket,none):
                 clientsocket.send("500 I hate you firefox\r\n")
             else:
                 # figure out what service
-                print ("125 Here's that file you wanted\r\n")
+                clientsocket.send ("125 Here's that file you wanted\r\n")
                 print cache_services
                 service_key = cache_services[my_chdir.split("/")[1].strip()]
                 from pipedream.client import connect_to
@@ -91,10 +91,15 @@ def client_thread(clientsocket,none):
                             else:
                                 print "Done with this madness"
                                 break
-                        kill.kill()
-                        data_socket.shutdown(0)
+                        print "Killing runaway processes"
+                        kill.terminate()
+                        print "Shutting down socket"
+                        from socket import SHUT_RDWR
+                        data_socket.shutdown(SHUT_RDWR)
+                        print "Closing socket"
                         data_socket.close()
-                        s.send("226 There's the file you wanted\r\n")
+                        print "Socket closed"
+                        clientsocket.send("226 There's the file you wanted\r\n")
                         
                     else:
                         print "chdiring to %s" % pathitem
@@ -124,6 +129,8 @@ def client_thread(clientsocket,none):
              #   sleep(5)
             
                 from pipedream.client import connect_to
+                if not my_chdir.startswith("/"): #prepend with a /, makes things more standardsey
+                    my_chdir = "/"+my_chdir 
                 service_key = cache_services[my_chdir.split("/")[1].strip()]
                 print "I should connect to %s" % service_key
                 (port,kill) = connect_to(service_key) #why does this line break everything?
@@ -201,23 +208,12 @@ def client_thread(clientsocket,none):
             clientsocket.close()
         
     pass
-
-def which_sock(active,passiveport):
-    if passiveport==None:
-        return active
-    else:
-        import socket
-        print "binding on %d" % passiveport
-        s.bind(('127.0.0.1',passiveport))
-        s.listen(1)
-        print "waiting for passive"
-        (passive_socket,throwaway) = s.accept()
-        print "got passive"
-        return passive_socket
 import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('127.0.0.1',1412))
+port = 1419
+s.bind(('127.0.0.1',port))
 s.listen(5)
+print "Bound on %d" % port
 
 while True:
     (clientsocket,address) = s.accept()
