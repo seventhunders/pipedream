@@ -134,6 +134,7 @@ namespace pipette
 						if (!d.raiseConnectionClosed())
 					{
 						closeConnection(d);
+						System.Threading.Thread.CurrentThread.Abort();
 					}
 				}	
 			}
