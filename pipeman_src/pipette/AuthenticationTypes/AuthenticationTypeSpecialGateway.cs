@@ -27,7 +27,15 @@ namespace pipette
 			if (b.Length==0) d.raiseReadZeroBytes();
 			logger.logger.info(xmlPrivateKey);
 			byte[] decrypted = new byte[1];
-			decrypted = cryptlib.RSA.decrypt(b,xmlPrivateKey);
+			try
+			{
+				decrypted = cryptlib.RSA.decrypt(b,xmlPrivateKey);
+			}
+			catch (System.Security.Cryptography.CryptographicException e)
+			{
+				logger.logger.warn("Couldn't decrypt this data.  Pretending that the sender hung up.");
+				d.raiseReadZeroBytes();
+			}
 			string plaintext = System.Text.Encoding.ASCII.GetString(decrypted);
 			string[] parts = plaintext.Split('\n');
 			string b64identity = parts[0];
