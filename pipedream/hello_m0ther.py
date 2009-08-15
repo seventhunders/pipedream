@@ -1,16 +1,17 @@
 #!/usr/bin/env python
-
+mother_bind_port=1337
+known_gateways = [("69.197.162.44",1234)]
 #first, we should find pipeman
 import logging
 import sys, os
 for p in sys.path:
-    tryt = os.path.realpath(os.path.join(p,"pipeman_src/pipeman/bin/Debug/pipeman.exe"))
+    tryt = os.path.realpath(os.path.join(p,"zebedee_src/zebedee-2.4.1A/zebedee"))
   #  print tryt
     if os.path.exists(tryt):
-        pipeman_path = tryt
+        zebedee_path = tryt
         break
-if pipeman_path==None:
-    raise Exception("Can't find pipeman...")
+if zebedee_path==None:
+    raise Exception("Can't find zebedee...")
 
 from environment import get_setting
 def redirect(f,none):
@@ -25,7 +26,61 @@ def redirect(f,none):
             f.close()
             break
         logging.warning( "REDIRECT:%s" % line)
-def machine_readable_regex(id):
+
+
+    
+def try_gateway(ip,port):
+    import os, signal
+    logging.info("Trying %s %d" % (ip,port))
+    from environment import get_setting, set_setting
+    try:
+        lastpid = int(get_setting("last-mother-pid"))
+        os.kill(lastpid,signal.SIGKILL)
+    except:
+        logging.warning("Couldn't shutdown last mother pid.")
+    from subprocess import Popen
+    args = [
+        zebedee_path,
+        "-T %d" % port,
+        '-x',
+        "checkidfile %s" % os.path.expanduser("~/.pipedream/m0ther-key"),
+        ip,
+        "1337:pipem0ther.appspot.com:80"
+    ]
+    motherpid = Popen(args)
+    set_setting("last-mother-pid",str(motherpid.pid))
+    try:
+        return api_get("/api/areyouthere",{}=="YES")
+    except:
+        pass
+    print "That gateway wouldn't work"
+    motherpid.kill()
+    return False
+def ensure_m0thers_there():
+    try:
+        if api_get("/api/areyouthere",{})=="YES": return True
+    except:
+        logging.info("Unable to connect right off the bat.")
+    for (ip,port) in known_gateways:
+        if try_gateway(ip,port): return True
+    pass
+
+def api_get(apiurl,data):
+    return api_url(apiurl,data,"GET")
+def get_mother_request():
+    import httplib
+    return httplib.HTTPConnection(host="localhost",port=mother_bind_port)
+def api_url(apiurl,data,method,request=None):
+    request = get_mother_request()
+    import urllib
+    apiurl += "?" + urllib.urlencode(data)
+    logging.critical("invoking method %s" % method)
+    request.request(method=method,url=apiurl,headers={"host":"pipem0ther.appspot.com"})
+    response = request.getresponse().read()
+    request.close()
+    return response
+    
+"""def machine_readable_regex(id):
     import re
     compilestr = "(?<=<%s>).+?(?=</%s>)" % (id,id)
     print compilestr
@@ -161,4 +216,4 @@ class TransparentMother(BaseHTTPRequestHandler):
 def transparent_mother():
     from BaseHTTPServer import HTTPServer
     server = HTTPServer(('127.0.0.1',3547),TransparentMother)
-    server.serve_forever()
+    server.serve_forever()"""

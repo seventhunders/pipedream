@@ -11,7 +11,7 @@ def usage():
     print "You're running the '%s' version, commit %s" % (what_branch(),get_local_version())
     print "set"
     print "get"
-    print "pipeman"
+    print "zebedee"
     print "makesvc"
     print "connect"
     print "slowsearch"
@@ -19,6 +19,7 @@ def usage():
     print "piped"
     print "chat"
     print "selfupdate"
+    print "rungateway"
     exit(1)
 import sys
 if len(sys.argv)==1:
@@ -34,13 +35,21 @@ if cmd=="set":
 elif cmd=="get":
     from pipedream.environment import get_setting
     print get_setting(sys.argv[2])
-elif cmd=="pipeman":
-    from pipedream.hello_m0ther import pipeman_path
+elif cmd=="rungateway":
+    from pipedream.hello_m0ther import zebedee_path
+    from pipedream.environment import expect_arg, get_setting
+    import os
+    config_file = """privatekey %s""" % (get_setting("gateway-key"))
+    execute = zebedee_path + " -T " + expect_arg("port") + " -x 'privatekey %s' -s pipem0ther.appspot.com:80" % get_setting("gateway-key")
+    os.system(execute)
+    print execute
+elif cmd=="zebedee":
+    from pipedream.hello_m0ther import zebedee_path
     argstr = ""
     for arg in sys.argv[2:]:
         argstr += "'" + arg + "' "
     import os
-    os.system(pipeman_path + " " + argstr)
+    os.system(zebedee_path + " " + argstr)
 elif cmd=="makesvc":
     from pipedream.environment import expect_arg, get_setting
     shortname = expect_arg("shortname")
@@ -70,8 +79,8 @@ elif cmd=="slowsearch":
         print format % (item["shortname"],item["protocol"],item["description"],item["key"])
     #print items
 elif cmd=="selftest":
-    from pipedream.hello_m0ther import areyouthere
-    print areyouthere()
+    from pipedream.hello_m0ther import ensure_m0thers_there
+    print ensure_m0thers_there()
 elif cmd=="selfupdate":
     from pipedream.updates import do_update
     do_update()
