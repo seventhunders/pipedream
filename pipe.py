@@ -40,7 +40,7 @@ elif cmd=="rungateway":
     from pipedream.environment import expect_arg, get_setting
     import os
     config_file = """privatekey %s""" % (get_setting("gateway-key"))
-    execute = zebedee_path + " -s -o /tmp/gateway.log -T " + expect_arg("port") + " -x 'privatekey %s' 0.0.0.0/0:80" % get_setting("gateway-key")
+    execute = zebedee_path + " -s -o /tmp/gateway.log -T " + expect_arg("port") + " -x 'privatekey %s' 0.0.0.0/0:80 letu.edu:80" % get_setting("gateway-key")
     os.system(execute)
     print execute
 elif cmd=="zebedee":
