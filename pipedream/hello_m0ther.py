@@ -47,6 +47,7 @@ def try_gateway(ip,port):
         ip,
         "1337:pipem0ther.appspot.com:80"
     ]
+    print " ".join(args)
     motherpid = Popen(args)
     set_setting("last-mother-pid",str(motherpid.pid))
     try:
