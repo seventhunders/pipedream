@@ -1,0 +1,12 @@
+This is a slightly mofified repackaging of the Blowfish library code taken
+from OpenSSL-0.9.5a (hence the version of the library). All of the assembler
+code has been removed and the Makefile simplified. One or two files have been
+"tweaked" to remove dependencies on the OpenSLL environment.
+
+To build, make whatever changes you need to the Makefile (nothing if you
+use gcc) and build the library. After doing that do a "make optimize" to
+rebuild it with the best compiler flags for your platform.
+
+Neil Winton
+2000/09/28
+
