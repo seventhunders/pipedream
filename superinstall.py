@@ -16,25 +16,36 @@ def warn(why):
     print "Are you sure you want to continue?"
     import sys
     if (raw_input("Y/N: ")!="Y"): sys.exit(1)
-def build_mono(str):
+def make(str):
     import os
     print "Building %s..." % str,
     os.chdir(str)
     import commands
-    (status,output)=commands.getstatusoutput("xbuild")
+    (status,output)=commands.getstatusoutput("make")
     if status != 0:
         print output
         raise Exception("That didn't work")
     print "OK"
     os.chdir("../")
-def build_pipeman():
-    print "Right, let's build pipeman"
+def build_zebedee():
+    print "Right, let's build zebedee"
     import os
-    os.chdir("pipeman_src")
-    build_mono("logger")
-    build_mono("cryptlib")
-    build_mono("pipette")
-    build_mono("pipeman")
+    os.chdir("zebedee_src")
+    make("bzip2-1.0.3")
+    make("blowfish-0.9.5a")
+    make("zlib-1.2.3")
+    os.chdir("zebedee-2.4.1A")
+    print "Building zebedee...",
+    import commands
+    import sys
+    if sys.platform=="darwin":
+        what_os = "macosx"
+    elif sys.platform=="linux2":
+        what_os = "linux"
+    else:
+        raise Exception("Can't make zebedee on platform %s" % sys.platform)
+    please_dont_fail("make OS=%s" % what_os)
+    os.chdir("../")
     os.chdir("../")
     print "Well, that was swell"
 def install_path():
@@ -146,9 +157,9 @@ def upgrade_piped():
         print "In the meantime, make either 'pipe piped start' (preferred) or 'pipe piped daemon-mode' a startup item on your system."
         print "Also, it would be a good idea to start one of those right now..."
 
-require_mono()
+#require_mono()
 require_python()
-build_pipeman()
+build_zebedee()
 install_path()
 upgrade_piped()
 
