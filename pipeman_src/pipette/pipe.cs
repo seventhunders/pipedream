@@ -139,6 +139,8 @@ namespace pipette
 			catch(Exception ex)
 			{
 				logger.logger.warn("An error ocurred establishing the 'to' end.  Closing connection...");
+				logger.logger.warn(ex.Message);
+				if (ex.InnerException != null) logger.logger.warn("Also " + ex.InnerException.Message);
 				from.closeConnection(fromID);
 				
 			}

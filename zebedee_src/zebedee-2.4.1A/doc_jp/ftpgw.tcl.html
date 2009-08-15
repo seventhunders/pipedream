@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ftpgw.tcl: A simple FTP tunnelling gateway</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:drew@drewcrawford.apt12.students.letnet.net" />
+</head>
+
+<body style="background-color: white">
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+<!--
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#_ñ__">½ñ¼°</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+</ul>
+
+-->
+
+
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>ftpgw.tcl &#151; ¥È¥ó¥Í¥ê¥ó¥°¤ò²ÄÇ½¤Ë¤¹¤ë FTP¥²¡¼¥È¥¦¥¨¥¤¥¹¥¯¥ê¥×¥È</p>
+<p>
+</p>
+<hr />
+<h1><a name="_ñ__">½ñ¼°</a></h1>
+<p><strong>ftpgw.tcl</strong> [<strong>-p</strong> &lt;port-range&gt;] [<strong>-v</strong>] [<em>listen-port</em> [<em>ftpd-host</em> [<em>ftpd-port</em>]]]</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>¤³¤Î¥×¥í¥°¥é¥à¤ÏÃ±½ã¤ÊFTP¥²¡¼¥È¥¦¥¨¥¤¤Ç¤¢¤ê¡¢
+PORT¥³¥Þ¥ó¥É¤È¥Ñ¥Ã¥·¥Ö¥â¡¼¥É¤Î¥ì¥¹¥Ý¥ó¥¹¤Ë´³¾Ä¤·¡¢
+´ØÏ¢¤Å¤±¤é¤ì¤¿¥Ç¡¼¥¿¥¹¥È¥ê¡¼¥à¤ò°·¤¨¤ë¥Ï¥ó¥É¥é¤òµ¯Æ°¤¹¤ë¡£
+¤½¤ì¤«¤é¡¢¥³¥ó¥È¥í¡¼¥ë¥³¥Þ¥ó¥É¤ò½ñ´¹¤¨¤Æ¡¢
+¤¢¤¿¤«¤â¡¢FTP¥µ¡¼¥Ð¤Ø¤Î¥È¥é¥Õ¥£¥Ã¥¯¤¬¥²¡¼¥È¥¦¥¨¥¤¥×¥í¥»¥¹¤«¤éÍè¤Æ¤¤¤ë¤«¤Î¤è¤¦¤Ë¸«¤»¤ë¡£
+Æ±ÍÍ¤Ë¡¢¥¯¥é¥¤¥¢¥ó¥È¤Ï¥Ñ¥Ã¥·¥Ö¥â¡¼¥É¤ÎÄÌ¿®¤¬²ÄÇ½¤Ê¥ê¥â¡¼¥È¥Ý¡¼¥È¤ò¸«¤ë¤³¤È¤Ë¤Ê¤ë¡£
+¤³¤ÎÊýË¡¤Ç¡¢FTP¤Î¥³¥ó¥È¥í¡¼¥ë¥Á¥ã¥ó¥Í¥ë¤Ï°Å¹æ²½¤µ¤ì¤Æ¥È¥ó¥Í¥ë¤µ¤ì¤ë
+(¤¿¤À¤·¡¢¥Ç¡¼¥¿¥Á¥ã¥Í¥ë¤Ï¤½¤¦¤Ç¤Ï¤Ê¤¤)¡£</p>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢¤³¤Î¥×¥í¥°¥é¥à¤Ï2121ÈÖ¥Ý¡¼¥È¤òlisten¤·¤Æ¡¢
+¥í¡¼¥«¥ë¤Î21ÈÖ¥Ý¡¼¥È¤Ë¤¤¤ëFTP¥µ¡¼¥Ð¤Ë¥ê¥À¥¤¥ì¥¯¥È¤¹¤ë¡£
+¤³¤ì¤é¤ÎÃÍ¤Ï¥³¥Þ¥ó¥É¥é¥¤¥ó¤«¤éÊÑ¹¹¤Ç¤­¤ë¡£
+<strong>-v</strong>¥ª¥×¥·¥ç¥ó¤Ï¥á¥Ã¥»¡¼¥¸¥í¥°¤òÉ¸½à¥¨¥é¡¼½ÐÎÏ¤ËÀÚ¤êÂØ¤¨¤ë¡£</p>
+<p>¤â¤·<strong>-p</strong>¥ª¥×¥·¥ç¥ó¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤é¡¢
+°ú¿ô¤Ï<em>xxx</em>-<em>yyy</em>¤È¤¤¤¦·Á¼°¤Î¥Ý¡¼¥ÈÈÖ¹æ¤ÎÈÏ°Ï¤Ë¤Ê¤ë¡£
+Á´¤Æ¤Î¥Ñ¥Ã¥·¥Ö¥â¡¼¥É¤Î¥Ç¡¼¥¿¥Ý¡¼¥È¤Ï<em>xxx</em> ¤«¤é <em>yyy</em> ¤ÎÃæ¤Ë¤Ê¤ë¡£
+¤½¤·¤Æ¡¢¥¯¥é¥¤¥¢¥ó¥È¤Ø¤Î¥ì¥¹¥Ý¥ó¥¹¥é¥¤¥ó¤Ï127.0.0.1(localhost)¤ÎÂÐ±þ¤¹¤ë¥Ý¡¼¥È¤Ë¤Ê¤ë¡£
+¤³¤ÎÊýË¡¤Ç¡¢¥³¥ó¥È¥í¡¼¥ë¥³¥Í¥¯¥·¥ç¥ó¤Ë²Ã¤¨¤Æ¡¢
+¥Ñ¥Ã¥·¥Ö¥â¡¼¥É¤Î¥Ç¡¼¥¿¥³¥Í¥¯¥·¥ç¥ó¤â¥È¥ó¥Í¥ë¤¹¤ë¤³¤È¤¬²ÄÇ½¤Ç¤¢¤ë¡£</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>Copyright (c) 2000 by Neil Winton. All Rights Reserved.</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
+USA.</p>
+
+</body>
+
+</html>

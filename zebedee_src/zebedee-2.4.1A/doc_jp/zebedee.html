@@ -1,0 +1,1800 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Zebedee: A simple, secure IP tunnel</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:drew@drewcrawford.apt12.students.letnet.net" />
+</head>
+
+<body style="background-color: white">
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+<!--
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#_ñ__">½ñ¼°</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#ì_á__îí_íè_ï_what_s_in_a_name_">Ì¾Á°¤ÎÍ³Íè¤Ï?(What&#146;s in a name?)</a></li>
+		<li><a href="#_ðëüåª_ê_è__êý_basic_usage_">´ðËÜÅª¤Ê»È¤¤Êý(Basic Usage)</a></li>
+		<li><a href="#udp_è_ó_í_ê_ó___udp_tunnelling_">UDP¥È¥ó¥Í¥ê¥ó¥°(UDP Tunnelling)</a></li>
+		<li><a href="#_àíõ_îäêµá_some_terminology_">¸ÀÍÕ¤ÎÄêµÁ(Some Terminology)</a></li>
+		<li><a href="#ê__ô_î_______ã_è_multiple_destinations_">Ê£¿ô¤Î¥¿¡¼¥²¥Ã¥È(Multiple Destinations)</a></li>
+		<li><a href="#_µ___ð_çæ__îàüâ__server_initiated_connections_">¥µ¡¼¥Ð¼çÆ³¤ÎÀÜÂ³(Server-Initiated Connections)</a></li>
+		<li><a href="#àßäê_õ_____ë_configuration_file_">ÀßÄê¥Õ¥¡¥¤¥ë(Configuration File)</a></li>
+		<ul>
+
+			<li><a href="#___é_____ó_èàìíñ_____ï___é_client_only_keywords_">¥¯¥é¥¤¥¢¥ó¥ÈÀìÍÑ¥­¡¼¥ï¡¼¥É(Client-Only Keywords)</a></li>
+			<li><a href="#_µ___ðàìíñ_____ï___é_server_only_keywords_">¥µ¡¼¥ÐÀìÍÑ¥­¡¼¥ï¡¼¥É(Server-Only Keywords)</a></li>
+			<li><a href="#_µ_ì_è_å_æ___øï__î_____ï___é_compression_and_encryption_keywords_">°µ½Ì¤È°Å¹æ²½´ØÏ¢¤Î¥­¡¼¥ï¡¼¥É(Compression and Encryption Keywords)</a></li>
+			<li><a href="#íí___ê_____ï___é_miscellaneous_keywords_">ÍÍ¡¹¤Ê¥­¡¼¥ï¡¼¥É(Miscellaneous Keywords)</a></li>
+			<li><a href="#çñ_ß_µ_ì_______ï___é_obsolete_keywords_">ÇÑ»ß¤µ¤ì¤¿¥­¡¼¥ï¡¼¥É(Obsolete Keywords)</a></li>
+			<li><a href="#___îâ__î_ª_____ç_ó_other_options_">¤½¤ÎÂ¾¤Î¥ª¥×¥·¥ç¥ó(Other Options)</a></li>
+			<li><a href="#_____ã___ê_õ___ì_ó___quick_reference_summary_">¥¯¥¤¥Ã¥¯¥ê¥Õ¥¡¥ì¥ó¥¹(Quick-Reference Summary)</a></li>
+		</ul>
+
+		<li><a href="#identity_checking">Identity Checking</a></li>
+		<li><a href="#___îâ__î_____å_ê_æ___øï__îãíµ__notes_on_other_security_issues_">¤½¤ÎÂ¾¤Î¥»¥­¥å¥ê¥Æ¥£´ØÏ¢¤ÎÃíµ­(Notes on Other Security Issues)</a></li>
+	</ul>
+
+	<li><a href="#_è_é_ö_ë___å___æ___ó___troubleshooting_">¥È¥é¥Ö¥ë¥·¥å¡¼¥Æ¥£¥ó¥°(TROUBLESHOOTING)</a></li>
+	<li><a href="#examples">EXAMPLES</a></li>
+	<ul>
+
+		<li><a href="#_µ___ðàßäê_îîã_example_server_configuration_">¥µ¡¼¥ÐÀßÄê¤ÎÎã(Example Server Configuration)</a></li>
+		<li><a href="#vnc_î_èíñîã_use_with_vnc_">VNC¤Î»ÈÍÑÎã(Use with VNC)</a></li>
+		<li><a href="#x_window_system_î_èíñîã_use_with_the_x_window_system_">X Window System¤Î»ÈÍÑÎã(Use with the X Window System)</a></li>
+		<li><a href="#http_îäì___ò_âá__ë___ë_securing_http_traffic_">HTTP¤ÎÄÌ¿®¤ò°ÂÁ´¤Ë¤¹¤ë(Securing HTTP traffic)</a></li>
+		<li><a href="#ftp_îäì___ò_âá__ë___ë_securing_ftp_traffic_">FTP¤ÎÄÌ¿®¤ò°ÂÁ´¤Ë¤¹¤ë(Securing FTP traffic)</a></li>
+	</ul>
+
+	<li><a href="#credits_and_legalities">CREDITS AND LEGALITIES</a></li>
+	<ul>
+
+		<li><a href="#thanks">Thanks</a></li>
+	</ul>
+
+</ul>
+
+-->
+
+
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>Zebedee &#151; ¥·¥ó¥×¥ë¤Ç¥Õ¥ê¡¼¤Ç¥»¥­¥å¥¢¤Ê¥È¥ó¥Í¥ë¥×¥í¥°¥é¥à</p>
+<p>
+</p>
+<hr />
+<h1><a name="_ñ__">½ñ¼°</a></h1>
+<dl>
+<dt><strong><a name="server" class="item">Server:</a></strong></dt>
+
+<dd>
+<p><strong>zebedee</strong> <strong>-s</strong> [<strong>-dDtu</strong>] [<strong>-c</strong> <em>host</em>] [<strong>-f</strong> <em>file</em>] [<strong>-k</strong>
+<em>keybits</em>] [<strong>-n</strong> <em>name</em>] [<strong>-o</strong> <em>logfile</em>] [<strong>-r</strong> <em>ports</em>]
+[<strong>-T</strong> <em>port</em>] [<strong>-v</strong> <em>level</em>] [<strong>-x</strong> <em>config</em>] [<strong>-z</strong> <em>level</em>]
+[<em>target</em> ...]</p>
+</dd>
+<dt><strong><a name="client" class="item">Client:</a></strong></dt>
+
+<dd>
+<p><strong>zebedee</strong> [<strong>-dDlmtu</strong>] [<strong>-e</strong> <em>command</em>] [<strong>-f</strong> <em>file</em>]
+[<strong>-k</strong> <em>keybits</em>] [<strong>-n</strong> <em>name</em>] [<strong>-o</strong> <em>log</em>] [<strong>-T</strong> <em>port</em>] [<strong>-v</strong>
+<em>level</em>] [<strong>-x</strong> <em>config</em>] [<strong>-z</strong> <em>level</em>] [server] [<em>tunnel-spec</em> ...]</p>
+</dd>
+<dt><strong><a name="key_generation" class="item">Key generation:</a></strong></dt>
+
+<dd>
+<p><strong>zebedee</strong> <strong>-p</strong> [<strong>-f</strong> <em>file</em>]</p>
+<p><strong>zebedee</strong> <strong>-P</strong> [<strong>-p</strong>] [<strong>-f</strong> <em>file</em>]</p>
+</dd>
+<dt><strong><a name="hash_generation" class="item">Hash generation:</a></strong></dt>
+
+<dd>
+<p><strong>zebedee</strong> <strong>-h</strong> [<em>file ...</em>]</p>
+<p><strong>zebedee</strong> <strong>-H</strong> <em>string</em> ...</p>
+</dd>
+<dt><strong><a name="windows_service" class="item">Windows Service:</a></strong></dt>
+
+<dd>
+<p><strong>zebedee</strong> [<strong>-n</strong> <em>name</em>] <strong>-S</strong> [install[=<em>file</em>] | remove | run]</p>
+</dd>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><strong>Zebedee</strong>¤Ï2¤Ä¤Î¥·¥¹¥Æ¥à´Ö¤Ç¡¢
+°Å¹æ²½¤µ¤ì¡¢°µ½Ì¤µ¤ì¤¿TCP/IP¤Þ¤¿¤ÏUDP¤Î&quot;¥È¥ó¥Í¥ë&quot;¤ò³ÎÎ©¤¹¤ëÃ±½ã¤Ê¥×¥í¥°¥é¥à¤Ç¤¢¤ë¡£ 
+¤³¤ì¤Ï¡¢ÄãÂÓ°è¤Î¥Í¥Ã¥È¥ï¡¼¥¯¾å¤Ç¤Î¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤ò°µ½Ì¤Ë¤è¤ê¸þ¾å¤¹¤ë¤À¤±¤Ç¤Ê¤¯¡¢
+<strong>telnet</strong>, <strong>ftp</strong> ¤ä <strong>X</strong> ¤Ê¤É¤Î TCP ¥Ù¡¼¥¹¤Î
+¥È¥é¥Õ¥£¥Ã¥¯¤òÅðÄ°¤«¤éËÉ¸æ¤¹¤ë¤³¤È¤â²ÄÇ½¤Ë¤¹¤ë¡£
+¤Þ¤¿¡¢°Å¹æ²½¤ÎÍ­Ìµ¤Ë¤«¤«¤ï¤é¤º¥Ç¡¼¥¿°µ½Ì¤ò»ÈÍÑ¤¹¤ë¤³¤È¤Ç¡¢
+ÃÙ¤¤¥Í¥Ã¥È¥ï¡¼¥¯¤ÇÎÉ¹¥¤Ê¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤òÆÀ¤ë¤³¤È¤â²ÄÇ½¤Ç¤¢¤ë¡£</p>
+<p><strong>Zebedee</strong> ¤Î¼ç¤ÊÌÜÅª¤Ï:</p>
+<ul>
+<li>
+<p>UNIX ¤È Windows 95/98/NT ¤ÎÁÐÊý¤Ë¤Æ¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð¡¼¤Îµ¡Ç½¤òÄó¶¡¤¹¤ë¡£</p>
+</li>
+<li>
+<p>¤Û¤ó¤Î¾¯¤·¤ÎÀßÄê¤«Á´¤¯¤ÎÀßÄêÌµ¤·¤Ç´ÊÃ±¤Ë¥¤¥ó¥¹¥È¡¼¥ë¡¢»ÈÍÑ¡¢ÊÝ¼é¤¬¤Ç¤­¤ë¡£</p>
+</li>
+<li>
+<p>¾¯¤·¤ÎÉÕ²Ã¥Ç¡¼¥¿¤È¡¢¾¯¤Ê¤¤¥×¥í¥È¥³¥ë¤Î¥ª¡¼¥Ð¥Ø¥Ã¥É¤Ë¤Æ¡¢
+°µ½Ì¤Ë¤è¤êÂ¿Âç¤Ê¥È¥é¥Õ¥£¥Ã¥¯¤ÎÄã¸º¤ò¹Ô¤¦¡£</p>
+</li>
+<li>
+<p>ÆÃµö²½¤µ¤ì¤Æ¤¤¤Ê¤¤¤«¡¢¤Þ¤¿¤ÏÆÃµö¤ÎÍ­¸ú´ü¸Â¤¬ÀÚ¤ì¤Æ¤¤¤ë¥¢¥ë¥´¥ê¥º¥à¤Î¤ß¤òÍÑ¤¤¤ë¡£</p>
+</li>
+<li>
+<p>GNU °ìÈÌ¸øÍ­»ÈÍÑµöÂú½ñ(GPL)¤Î¤â¤È¤Ç¾¦ÍÑ¡¢Èó¾¦ÍÑ¤òÌä¤ï¤º
+´°Á´¤Ë¥Õ¥ê¡¼¤Ë»ÈÍÑ¡¦ÇÛÉÛ¤¬¤Ç¤­¤ë (<a href="#credits_and_legalities">CREDITS AND LEGALITIES</a> ¤ò¸«¤è)¡£</p>
+</li>
+</ul>
+<p>¤â¤Á¤í¤ó¡¢<strong>Zebedee</strong> ¤Ï½é¤á¤Æ¤Î¤¢¤ë¤¤¤ÏÍ£°ì¤ÎÍøÍÑ²ÄÇ½¤Ê
+¥»¥­¥å¥¢¤Ê¥È¥ó¥Í¥ë¥×¥í¥°¥é¥à¤Ç¤Ï¤Ê¤¤¡£ 
+¹âµ¡Ç½¤È¤¤¤¦ÌÌ¤Ç¤Ï <strong>ssh</strong> ¤ä <strong>SSL</strong> ¤Ê¤É¤È¤ÏÈæ¤ÙÊª¤Ë¤â¤Ê¤é¤Ê¤¤¤¬¡¢
+¤â¤·¡¢ÁÇÁá¤¯¡¢Ã±½ã¤Ç¡¢<strong>´°Á´¤Ë¥Õ¥ê¡¼</strong>¤Ê¤â¤Î¤òµá¤á
+¤Æ¤¤¤ë¤Ê¤é¡¢¤³¤ì¤Ï¥Ô¥Ã¥¿¥ê¤Î¥Ä¡¼¥ë¤À¤í¤¦¡£</p>
+<p>¤³¤ÎÊ¸½ñ¤Ï <strong>Zebedee</strong> ¥ê¥ê¡¼¥¹ 2.2.0 ¤Îµ¡Ç½¤Ë¤Ä¤¤¤Æµ­¤·¤Æ¤¤¤ë.</p>
+<p>
+</p>
+<h2><a name="ì_á__îí_íè_ï_what_s_in_a_name_">Ì¾Á°¤ÎÍ³Íè¤Ï?(What&#146;s in a name?)</a></h2>
+<p>¤¢¤Ê¤¿¤¬µ¿Ìä¤ò»ý¤È¤¦¤¬»ý¤Ä¤Þ¤¤¤¬¡¢<strong>Zebedee</strong> ¤Ï¼¡¤Î 3¤Ä¤Î¼çÍ×¤Ê¥³¥ó¥Ý¡¼
+¥Í¥ó¥È¤«¤éÌ¿Ì¾¤µ¤ì¤¿¡£</p>
+<ul>
+<li>
+<p><strong>Z</strong>lib ¤Ë¤è¤ë°µ½Ì</p>
+</li>
+<li>
+<p><strong>B</strong>lowfish ¤Ë¤è¤ë°Å¹æ²½</p>
+</li>
+<li>
+<p><strong>D</strong>iffie-Hellman ¤Ë¤è¤ëÇ§¾Ú</p>
+</li>
+</ul>
+<p>¤³¤ì¤Ç¤ï¤«¤Ã¤¿¤è¤Í?</p>
+<p>
+</p>
+<h2><a name="_ðëüåª_ê_è__êý_basic_usage_">´ðËÜÅª¤Ê»È¤¤Êý(Basic Usage)</a></h2>
+<p>¥í¡¼¥«¥ë¥Þ¥·¥ó¤È¥ê¥â¡¼¥È¥Û¥¹¥È¤ò°ÂÁ´¤ËÀÜÂ³¤¹¤ë¤Ë¤Ï¡¢
+¤Þ¤º¥ê¥â¡¼¥È¥Û¥¹¥È¤ÎÊý¤Ç¡¢<strong>Zebedee</strong> ¤ò¥µ¡¼¥Ð¡¼¥â¡¼¥É¤Çµ¯Æ°¤¹¤ëÉ¬Í×¤¬¤¢¤ë¡£
+°ìÈÖ´ÊÃ±¤ÊÊýË¡¤Ï¡¢<strong>-s</strong> ¥ª¥×¥·¥ç¥ó¤ò»È¤¦¤³¤È¤À¡£</p>
+<pre>
+ zebedee -s</pre>
+<p>¤¦¤Þ¤¯¤¤¤±¤Ð(¤¤¤¯¤Ï¤º¡ª)<strong>Zebedee</strong>¤Ï
+Ã¼Ëö(windows¤Ç¤Ï¥³¥ó¥½¡¼¥ë¥¦¥¤¥ó¥É¥¦)¤«¤éÀÚ¤êÎ¥¤µ¤ì¤Æ¥Ð¥Ã¥¯¥°¥é¥¦¥ó¥É¤ÇÁö¤ë¡£
+¤½¤·¤Æ¡¢¥¯¥é¥¤¥¢¥ó¥È¤«¤é¤ÎÀÜÂ³¤òÂÔ¤Ä¡£</p>
+<p>¼¡¤Ë¥¯¥é¥¤¥¢¥ó¥È¥Þ¥·¥ó¤Ç<strong>Zebedee</strong>¤ò¥¯¥é¥¤¥¢¥ó¥È¥â¡¼¥É¤Çµ¯Æ°¤¹¤ë¡£
+¤³¤Î¾ì¹ç¤Ï¡¢¥ê¥â¡¼¥È¥Û¥¹¥È¤Î¥Û¥¹¥ÈÌ¾¤È¥È¥ó¥Í¥ë¤¹¤Ù¤­¥µ¡¼¥Ó¥¹Ì¾¤«¥Ý¡¼¥ÈÈÖ¹æ
+(¤³¤³¤Ç¤Ï¤³¤ì¤ò¥¿¡¼¥²¥Ã¥È¥Ý¡¼¥È¤È¸Æ¤Ö¤³¤È¤Ë¤¹¤ë)¤ò»ØÄê¤¹¤ë¡£
+Îã¤¨¤Ð¡¢¥ê¥â¡¼¥È¥Û¥¹¥È¤ÎÌ¾Á°¤¬<code>remhost</code>¤Ç
+°ÂÁ´¤Ê<strong>telnet</strong>¥»¥Ã¥·¥ç¥ó¤òÄ¥¤ê¤¿¤¤¤È¤·¤¿¤é¡¢¤³¤¦¤Ê¤ë¡£</p>
+<pre>
+ zebedee remhost:telnet</pre>
+<p>¼ÂºÝ¤Ë¤Ï¡¢¥Ý¡¼¥È¤Î¥Ç¥Õ¥©¥ë¥È¤¬telnet¤Ê¤Î¤Ç
+¤³¤Î¥±¡¼¥¹¤Ç¤Ï¼¡¤Î¤è¤¦¤Ë¾ÊÎ¬¤·¤Æ¤â¤è¤¤¡£</p>
+<pre>
+ zebedee remhost</pre>
+<p>¤³¤Î¥³¥Þ¥ó¥É¤ò¼Â¹Ô¤¹¤ë¤È¡¢
+¥È¥ó¥Í¥ë¤ÎÆþ¸ý¤Ë¤Ê¤ë(¥í¡¼¥«¥ëÂ¦¤Î)¥Ý¡¼¥È¤ÎÈÖ¹æ¤¬É½¼¨¤µ¤ì¤ë¡£
+<strong>Zebedee</strong>¤ÏÃ¼Ëö¤«¤éÀÚ¤êÎ¥¤µ¤ì¤Æ¥Ð¥Ã¥¯¥°¥é¥¦¥ó¥É¤ÇÁö¤ê¡¢
+¤³¤Î¥í¡¼¥«¥ëÂ¦¤Î¥Ý¡¼¥È¤ËÀÜÂ³¤µ¤ì¤ë¤Î¤òÂÔ¤Ä¡£
+Îã¤¨¤Ð¡¢1234¤ÈÉ½¼¨¤µ¤ì¤¿¤é¡¢</p>
+<pre>
+ telnet localhost 1234</pre>
+<p>¤È¤¹¤ì¤Ð¡¢<code>remhost</code>¤Ë°ÂÁ´¤Ê¥È¥ó¥Í¥ë·ÐÍ³¤ÇÀÜÂ³¤µ¤ì¤ë¡£</p>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢<strong>Zebedee</strong>¤Ï¥×¥í¥»¥¹¤ò½ªÎ»¤µ¤»¤ë¤Þ¤ÇÀÜÂ³¤òÂÔ¤ÁÂ³¤±¤Æ¡¢
+É¬Í×¤¬¤¢¤ì¤ÐÆ±»þÈ¯À¸¤¹¤ëÊ£¿ô¤Î¥³¥Í¥¯¥·¥ç¥ó¤ò½èÍý¤¹¤ë¡£</p>
+<p>»þ¤Ë¤Ï¡¢<strong>Zebedee</strong>¤òµ¯Æ°¤·¡¢
+¤½¤Î¸å¤¹¤°¤Ë¤½¤Î¥Ý¡¼¥È¤ËÀÜÂ³¤¹¤ë¥³¥Þ¥ó¥É¤òµ¯Æ°¤·¤¿¤¤¤³¤È¤â¤¢¤ë¤À¤í¤¦¡£
+¤³¤ì¤ò°ìÈ¯¤Ç¤ä¤ë¤Ë¤Ï¼¡¤Î¤è¤¦¤Ë¤¹¤ë¡£</p>
+<pre>
+ zebedee -e &quot;telnet localhost %d&quot; remhost</pre>
+<p>Ê¸»úÎóÃæ¤Î&quot;<code>%d</code>&quot;¤¬¥í¡¼¥«¥ë¥Ý¡¼¥ÈÈÖ¹æ¤ÈÃÖ¤­´¹¤¨¤é¤ì¤ë¡£½¾¤Ã¤Æ¡¢
+<strong>Zebedee</strong>¤Ï¥Ý¡¼¥ÈÈÖ¹æ¤òÉ½¼¨¤·¤Ê¤¤(¤¹¤ëÉ¬Í×¤¬¤Ê¤¤)¡£
+¤³¤Î¤è¤¦¤Ë¥³¥Þ¥ó¥É¤ò»ØÄê¤·¤¿¾ì¹ç¤Ë¤Ï¡¢¤½¤Î¥³¥Þ¥ó¥É¤¬ÀÜÂ³¤ò½ªÎ»¤¹¤ë¤ÈÆ±»þ¤Ë¡¢
+¥í¡¼¥«¥ëÂ¦¤Î<strong>Zebedee</strong>¥¯¥é¥¤¥¢¥ó¥È¤â½ªÎ»¤¹¤ë¡£</p>
+<p>¥¯¥é¥¤¥¢¥ó¥È¤¬»ÈÍÑ¤¹¤ë¥í¡¼¥«¥ë¥Ý¡¼¥ÈÈÖ¹æ¤ò»ØÄê¤·¤¿¤¤(¤¹¤ëÉ¬Í×¤¬¤¢¤ë)¤³¤È¤â¤¢¤ë¤À¤í¤¦¡£
+(ÊÝ¸î¤·¤¿¤¤ÄÌ¿®¤ò¹Ô¤Ê¤¦)¥³¥Þ¥ó¥É¤¬¡¢ÆÃÄê¤Î¥Ý¡¼¥È¤ËÀÜÂ³¤·¤è¤¦¤È¤¹¤ë¾ì¹ç¤À¡£
+¤³¤Î¾ì¹ç¤Ï¡¢<strong>Zebedee</strong>¤ò¼¡¤Î¤è¤¦¤Ëµ¯Æ°¤¹¤ë¤³¤È¤Ç¡¢
+¥í¡¼¥«¥ë¥Ý¡¼¥È¤ò»ØÄê¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£</p>
+<pre>
+ zebedee clientport:hostname:targetport</pre>
+<p>Îã¤¨¤Ð¡¢¼¡¤Î¥³¥Þ¥ó¥É:</p>
+<pre>
+ zebedee 8000:webhost:80</pre>
+<p>¤Ï¡¢¥¯¥é¥¤¥¢¥ó¥È¤Î8000ÈÖ¥Ý¡¼¥È·ÐÍ³¤ÇÀÜÂ³¤¹¤ë¡¢
+<strong>webhost</strong>¤Ø¤ÎÁ´¤Æ¤ÎHTTPÀÜÂ³¤òÊÝ¸î¤¹¤ë¡£
+¾ÜºÙ¤Ï<em>EXAMPLES</em>»²¾È¤Î¤³¤È¡£</p>
+<p>¤Þ¤¿¡¢<strong>Zebedee</strong> ¥¯¥é¥¤¥¢¥ó¥È¤Ï 
+Æ±°ì¥Û¥¹¥ÈÆâ¤ÎÊ£¿ô¤Î¥¿¡¼¥²¥Ã¥È¥Ý¡¼¥È¤ËÂÐ¤·¤Æ¡¢
+Ê£¿ô¤Î¥È¥ó¥Í¥ë¤ò(Æ±»þÊÂ¹ÔÅª¤Ë)°·¤¦¤³¤È¤â¤Ç¤­¤ë¡£
+¤³¤Î¾ì¹ç¤Ï¡¢¥í¡¼¥«¥ë¤È¥ê¥â¡¼¥È¤Î¥Ý¡¼¥È¤Î»ØÄê¤Ï¥Ý¡¼¥ÈÈÖ¹æ¤Î¥ê¥¹¥È¤Ë¤Ê¤ë¡£
+Îã¤¨¤Ð</p>
+<pre>
+ zebedee 9001,9002,9003:somehost:daytime,telnet,ftp</pre>
+<p>¤³¤ì¤Ï¡¢9001ÈÖ¤Î¥¯¥é¥¤¥¢¥ó¥È¥Ý¡¼¥È¤Ø¤ÎÄÌ¿®¤ò¡¢
+¥ê¥â¡¼¥È¤Î¥¿¡¼¥²¥Ã¥È¥·¥¹¥Æ¥à¤Î<strong>daytime</strong>¥Ý¡¼¥È¤Ø¤È¥È¥ó¥Í¥ë¤¹¤ë¡£
+Æ±ÍÍ¤Ë¡¢9002ÈÖ¤Ï<strong>telnet</strong>¥Ý¡¼¥È¤Ø¡¢9003ÈÖ¤Ï<strong>ftp</strong>¥Ý¡¼¥È¤Ø¥È¥ó¥Í¥ë¤¹¤ë¡£</p>
+<p>¤³¤Î¡¢¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¤Î¼õ¤±¤Ä¤±¥Ý¡¼¥È¡¢¥¿¡¼¥²¥Ã¥È¤È¤Ê¤ë¥Û¥¹¥È¡¢¤½¤·¤ÆÌÜÅª
+¤Î¥Ý¡¼¥ÈÈÖ¹æ¤ÎÁÈ¤ß¹ç¤ï¤»¤Ï¡Ö¥È¥ó¥Í¥ë»ÅÍÍ(tunnel specification)¡×¤È¸Æ¤Ð¤ì
+¤ë¡£¾Ü¤·¤¯¤Ï <strong><a href="#item_tunnel">tunnel</a></strong> ¥­¡¼¥ï¡¼¥É»²¾È¤Î¤³¤È¡£</p>
+<p>
+</p>
+<h2><a name="udp_è_ó_í_ê_ó___udp_tunnelling_">UDP¥È¥ó¥Í¥ê¥ó¥°(UDP Tunnelling)</a></h2>
+<p><strong>Zebedee</strong>¤Ï¤â¤È¤â¤È¤Ï TCP/IP ¤Î¥È¥é¥Õ¥£¥Ã¥¯¤À¤±¤ò°·¤¦¤è¤¦¤ËÀß·×¤µ¤ì¤¿¤¬¡¢
+¥Ð¡¼¥¸¥ç¥ó2.0.0¤«¤é¤Ï¥³¥Í¥¯¥·¥ç¥ó¥ì¥¹¤ÎUDP¤Î¥Ç¡¼¥¿¤â°·¤¨¤ë¤è¤¦¤Ë¤Ê¤Ã¤¿¡£
+¤³¤Îµ¡Ç½¤òÍ­¸ú¤Ë¤¹¤ë¤Ë¤Ï<strong>Zebedee</strong>¤ò <strong>-u</strong> ¥ª¥×¥·¥ç¥óÉÕ¤­¤Çµ¯Æ°¤¹¤ë
+(¤Þ¤¿¤Ï¡¢<strong><a href="#item_udpmode">udpmode</a></strong> ¥­¡¼¥ï¡¼¥É¤ò»ÈÍÑ¤¹¤ë)¡£
+Îã¤¨¤Ð¥µ¡¼¥ÐÂ¦¤Ç</p>
+<pre>
+ zebedee -s -u</pre>
+<p>¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¤Ç</p>
+<pre>
+ zebedee -u 10000:somehost:echo</pre>
+<p>¤ò¼Â¹Ô¤¹¤ë¡£¤Ê¤ª¡¢¤Ò¤È¤Ä¤Î¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð¤Ï¡¢TCP¤«UDP¤Î¤É¤Á¤é¤«¤ò°·¤¤¡¢
+Î¾ÊýÆ±»þ¤Ë°·¤¦¤³¤È¤Ï¤Ç¤­¤Ê¤¤¡£Î¾Êý¤Î¥¿¥¤¥×¤ò¥È¥ó¥Í¥ë¤¹¤ë¤Ë¤Ï¡¢
+2¤Ä¤ÎÆÈÎ©¤·¤¿¥¤¥ó¥¹¥¿¥ó¥¹¤òµ¯Æ°¤¹¤ë¡£
+TCP¥â¡¼¥É¤ÈUDP¥â¡¼¥É¤Î¥µ¡¼¥Ð¤Ï°ã¤¦¥Ý¡¼¥È¤ò»È¤¦¤Î¤Ç¡¢
+Î¾¼Ô¤òÆ±¤¸¥·¥¹¥Æ¥à¤Çµ¯Æ°¤¹¤ë¤³¤È¤Ï°ÂÁ´¤Ç¤¢¤ë¡£</p>
+<p>UDP¥â¡¼¥É¤Ç¤â<strong>Zebedee</strong>¤Î¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð´Ö¤Î¥È¥ó¥Í¥ë¤ÏTCP/IP¤ÇÀÜÂ³¤¹¤ë¡£
+¤³¤ÎÀÜÂ³¤ÏÌµÄÌ¿®¤¬°ìÄê»þ´ÖÂ³¤¯¤È¥¿¥¤¥à¥¢¥¦¥È¤¹¤ë¡£
+¥¿¥¤¥à¥¢¥¦¥È¤·¤Æ¤«¤é¤µ¤é¤Ë¥Ç¡¼¥¿¤¬Íè¤ë¤È¥È¥ó¥Í¥ë¤ÎºÆÀÜÂ³¤ò¹Ô¤¦É¬Í×¤¬¤¢¤ë¤Î¤Ç¡¢
+¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÆÃÀ­¤Ë¤è¤Ã¤Æ¤Ï
+UDP¥â¡¼¥É¤Î¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤¬¤è¤¯¤Ê¤¤¤è¤¦¤Ë¸«¤¨¤ë¤³¤È¤â¤¢¤ë¡£
+¤Þ¤¿¡¢°·¤¨¤ëUDP¥À¥¤¥¢¥°¥é¥à¤Î¥µ¥¤¥º¤Ë¤âÀ©¸Â¤¬¤¢¤ë¤³¤È¤Ë¤âÃí°Õ¤¹¤ë¤³¤È¡£</p>
+<p>¾ÜºÙ¤Ï¡¢<strong><a href="#item_maxbufsize">maxbufsize</a></strong>¡¢
+<strong><a href="#item_udpmode">udpmode</a></strong>¡¢ <strong><a href="#item_udptimeout">udptimeout</a></strong>
+¤ò»²¾È¤Î¤³¤È¡£</p>
+<p>
+</p>
+<h2><a name="_àíõ_îäêµá_some_terminology_">¸ÀÍÕ¤ÎÄêµÁ(Some Terminology)</a></h2>
+<p>ÄÌ¾ï¤Ï¡¢<strong>Zebedee</strong>¤Ë¤è¤Ã¤Æ¥È¥ó¥Í¥ë¤ò¥»¥Ã¥È¥¢¥Ã¥×¤·¤è¤¦¤È¤¹¤ë¾ì¹ç¡¢´Ø·¸¤¹¤ë¥·¥¹¥Æ¥à¤Ï2¤Ä¤Ç¤¢¤ë¡£
+ÊÒÊý¤Ç¥¯¥é¥¤¥¢¥ó¥È¤òµ¯Æ°¤·¤Æ¡¢¥í¡¼¥«¥ë¥Ý¡¼¥È¤Ç¤½¤ì¤ÈÄÌ¿®¤¹¤ë¡£
+È¿ÂÐÂ¦¤Ç¤Ï¥µ¡¼¥Ð¤òµ¯Æ°¤·¤Æ¡¢¤½¤Î¥·¥¹¥Æ¥à¤ÇÆ°ºî¤·¤Æ¤¤¤ë¥µ¡¼¥Ó¥¹¤È²ñÏÃ¤¹¤ë¡£
+¤·¤«¤·¤Ê¤¬¤é¡¢¼¡¤Î¤è¤¦¤ËºÇÂç4¤Ä¤Î¥·¥¹¥Æ¥à(¥Þ¥·¥ó)¤¬´Ø·¸¤¹¤ë¥±¡¼¥¹¤â¤¢¤ê¤¨¤ë¡£</p>
+<pre>
+ [¥½¡¼¥¹] &lt;===&gt; [¥¯¥é¥¤¥¢¥ó¥È] &lt;=====&gt; [¥µ¡¼¥Ð] &lt;===&gt; [¥¿¡¼¥²¥Ã¥È]
+            |                     |               |
+            +- °ÂÁ´¤Ç¤Ê¤¤         |               + °ÂÁ´¤Ç¤Ê¤¤
+               ÀÜÂ³               |                 ÀÜÂ³
+                                  +- °ÂÁ´¤Ê¥È¥ó¥Í¥ë</pre>
+<p><strong>Zebedee</strong>¤Î¥¯¥é¥¤¥¢¥ó¥È¤Ï¡Ö¥¯¥é¥¤¥¢¥ó¥È¡×¥·¥¹¥Æ¥à¤Ç¡¢
+¥µ¡¼¥Ð¤Ï¡Ö¥µ¡¼¥Ð¡×¥·¥¹¥Æ¥à¤Ç¤½¤ì¤¾¤ìÆ°ºî¤·¤Æ¤¤¤ë¡£
+¥È¥ó¥Í¥ëÀßÄê¤Î·Àµ¡¤È¤Ê¤ëºÇ½é¤ÎÀÜÂ³¤Ï¡Ö¥½¡¼¥¹¡×¥Þ¥·¥ó¤«¤éÈ¯À¸¤¹¤ë¡£
+¡Ö¥½¡¼¥¹¡×¤È¡Ö¥¯¥é¥¤¥¢¥ó¥È¡×¤Ï°ã¤¦¥·¥¹¥Æ¥à¤Ç¤¢¤Ã¤Æ¤â¤«¤Þ¤ï¤Ê¤¤¤¬¡¢
+ÄÌ¾ï¤ÏÆ±°ì¤Î¥·¥¹¥Æ¥à¤Ç¤¢¤ë¡£
+¥µ¡¼¥Ð¤ÏºÇ¸å¤Ë¡Ö¥¿¡¼¥²¥Ã¥È¡×¥·¥¹¥Æ¥à¤ÈÄÌ¿®¤¹¤ë¡£
+¥¿¡¼¥²¥Ã¥È¤âÉáÄÌ¤Ï¥½¡¼¥¹¤ÈÆ±¤¸¥Þ¥·¥ó¤Ë¤Ê¤ë¤¬¡¢°ã¤¦¥Þ¥·¥ó¤Ç¤¢¤Ã¤Æ¤âÁ´¤¯ÌäÂê¤Ï¤Ê¤¤¡£</p>
+<p>¤Û¤È¤ó¤É¤Î¾ì¹ç¡¢¡Ö¥½¡¼¥¹¡×¤È¡Ö¥¯¥é¥¤¥¢¥ó¥È¡×¡¢
+¡Ö¥µ¡¼¥Ð¡×¤È¡Ö¥¿¡¼¥²¥Ã¥È¡×¤Î°ã¤¤¤òµ¤¤Ë¤¹¤ëÉ¬Í×¤Ï¤Ê¤¤¡£
+¤·¤«¤·¡¢¤³¤ÎÍÑ¸ì¤Î¶èÊÌ¤¬°Ê²¼¤Ë½Ò¤Ù¤ë¥­¡¼¥ï¡¼¥É¤ËÂ¿¤¯È¿±Ç¤·¤Æ¤¤¤ë¡£
+¥­¡¼¥ï¡¼¥É¤ÎÀâÌÀ¤òÆÉ¤à»þ¤Ë¤Ï¡¢¤³¤Î¤³¤È¤òÆ¬¤ËÆþ¤ì¤Æ¤ª¤¤¤¿¤Û¤¦¤¬¤¤¤¤¤À¤í¤¦¡£</p>
+<p><strong>Zebedee</strong>¤Î¥È¥ó¥Í¥ë¤Ë´Ø·¸¤¹¤ë¤³¤Î4¤Ä¥·¥¹¥Æ¥à¤ÎÌäÂê¤ÈÊÌ¤Ë¡¢
+°ÂÁ´¤ËÀÜÂ³¤¹¤ë¤¿¤á¤Ë¡¢¤¤¤¯¤Ä¤«¤ÎÁ´¤¯°ã¤¦¥¿¥¤¥×¤Î¡Ö¥­¡¼(key)¡×¤¬»È¤ï¤ì¤ë¡£
+¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð¤Ï<strong>private key</strong>(ÈëÌ©¸°)¤È¤¤¤¦ÃÍ¤òÉ¬Í×¤È¤¹¤ë
+(¼«Ê¬¤ÇÀ¸À®¤¹¤ë¾ì¹ç¤â¤¢¤ë)¡£
+¤³¤Î¥­¡¼¤«¤é¤Ï¡¢public values ¤¬·×»»¤µ¤ì¸ò´¹¤µ¤ì¡¢
+¤½¤ì¤Ë¤è¤ê<strong>shared secret key</strong> ¤¬Æ³¤­½Ð¤µ¤ì¤ë
+(¤³¤Î»þ¤ËDiffie-Hellman key agreement mechanism ¤¬»ÈÍÑ¤µ¤ì¤ë)¡£
+¤³¤Î¥­¡¼¤«¤é¤Ï¡¢ÀÜÂ³¤Î¤¿¤Ó¤Ë¥æ¥Ë¡¼¥¯¤Ê<strong>session key</strong>¤¬Æ³¤­½Ð¤µ¤ì¡¢
+ºÇ½ªÅª¤Ë¤³¤Î¥­¡¼¤Ç°Å¹æ²½¤¬¹Ô¤Ê¤ï¤ì¤ë¡£</p>
+<p>
+</p>
+<h2><a name="ê__ô_î_______ã_è_multiple_destinations_">Ê£¿ô¤Î¥¿¡¼¥²¥Ã¥È(Multiple Destinations)</a></h2>
+<p>2.1.0°ÊÁ°¤Î<strong>Zebedee</strong>¤Ç¤Ï¡¢¤Ò¤ÈÁÈ¤Î¥¯¥é¥¤¥¢¥ó¥È/¥µ¡¼¥Ð¤Î¥Ú¥¢¤Ï¡¢
+¥¿¡¼¥²¥Ã¥È¤Ê¤ë¥Û¥¹¥È¤ò¤Ò¤È¤Ä¤·¤«°·¤¨¤Ê¤«¤Ã¤¿¡£
+¤·¤«¤·¤³¤Î¥Ð¡¼¥¸¥ç¥ó¤«¤é¤Ï¡¢
+Ê£¿ô¤Î¥¿¡¼¥²¥Ã¥È¤Ø¤Î¥È¥ó¥Í¥ë¤ò°·¤¦¤³¤È¤¬¤Ç¤­¤ë¡£</p>
+<p>¥µ¡¼¥Ð¤òµ¯Æ°¤¹¤ë»þ¤Ë¡¢
+¥³¥Þ¥ó¥É¥é¥¤¥ó¤« <strong><a href="#item_target">target</a></strong> ¥­¡¼¥ï¡¼¥É¤«¤é
+Ê£¿ô¤Î¥¿¡¼¥²¥Ã¥È¤òÍ¿¤¨¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+¥¿¡¼¥²¥Ã¥È¤È¤Ï¥Û¥¹¥ÈÌ¾¤Ç¤¢¤ê¡¢
+¸å¤ËÀÜÂ³¤òµö²Ä¤¹¤ë¥Ý¡¼¥ÈÈÖ¹æ¤Î¥ê¥¹¥È¤ò¤Ä¤±¤Æ¤â¤è¤¤¡£</p>
+<p><strong>serverhost</strong>¤È¤¤¤¦¥Þ¥·¥ó¤Ç°Ê²¼¤Î¥³¥Þ¥ó¥É¤ò¼Â¹Ô¤·¤¿¤È¤·¤è¤¦¡£</p>
+<pre>
+ zebedee -s target1:daytime,telnet target2:telnet target3</pre>
+<p>¤½¤Î¥µ¡¼¥Ð¤Ï¡¢<strong>target1</strong>¤Î<strong>daytime</strong>¥Ý¡¼¥È¤È<strong>telnet</strong>¥Ý¡¼¥È¤ËÂÐ¤¹¤ëÀÜÂ³¤È¡¢
+<strong>target2</strong>¤Î<strong>telnet</strong>¤ËÂÐ¤¹¤ëÀÜÂ³¡¢
+µÚ¤Ó¡¢<strong>target3</strong>¤ËÂÐ¤¹¤ëÁ´¤Æ¤Î¥Ý¡¼¥È¤Ø¤ÎÀÜÂ³¤òµö²Ä¤¹¤ë¡£</p>
+<p>¥µ¡¼¥Ð¤ò°Ê¾å¤Î¤è¤¦¤Ëµ¯Æ°¤·¤¿¤é¡¢¥¯¥é¥¤¥¢¥ó¥È¤Ï¼¡¤Î¤è¤¦¤Ë¤Ê¤ë¤À¤í¤¦¡£</p>
+<pre>
+ zebedee serverhost 10000:target1:telnet 20000:target3:telnet</pre>
+<p>¤³¤Î¥³¥Þ¥ó¥É¤Ë¤è¤ê¡¢<strong>serverhost</strong>¤Î<strong>Zebedee</strong> ¥µ¡¼¥Ð¤ËÀÜÂ³¤·¡¢
+¤½¤Î¥µ¡¼¥Ð¤ò¼¡¤Î¤è¤¦¤Ê2¤Ä¤Î¥È¥ó¥Í¥ë¤ÎÀßÄê¤Ë»ÈÍÑ¤¹¤ë¡£
+¤Þ¤º¥¯¥é¥¤¥¢¥ó¥È¤Î¥Ý¡¼¥È10000¤«¤é<strong>target1</strong>¤Î<strong>telnet</strong>¥Ý¡¼¥È¤Ø¤Î¥È¥ó¥Í¥ë¡¢
+¼¡¤¬¥¯¥é¥¤¥¢¥ó¥È¤Î¥Ý¡¼¥È20000¤«¤é<strong>target3</strong>¤Î<strong>telnet</strong>¥Ý¡¼¥È¤Ø¤Î¥È¥ó¥Í¥ë¤Ç¤¢¤ë¡£
+¥µ¡¼¥Ð¤¬Æ°ºî¤·¤Æ¤¤¤ë¥Û¥¹¥È¤ÎÌ¾Á°¤¬ºÇ½é¤Î¥Ñ¥é¥á¡¼¥¿¤È¤·¤ÆÍ¿¤¨¤é¤ì¤Æ¤¤¤ë¤³¤È¤ËÃí°Õ¤·¤Æ¤Û¤·¤¤¡£
+¤â¤·¥µ¡¼¥ÐÌ¾¤ò¾Ê¤¯¤ÈºÇ½é¤Î¡Ö¥È¥ó¥Í¥ë»ÅÍÍ¡×¤«¤é»ý¤Ã¤Æ¤¯¤ë¤³¤È¤Ë¤Ê¤ë¡£</p>
+<p>¤â¤·¥µ¡¼¥Ð¤¬<strong>target3</strong>¤ÇÆ°ºî¤·¤Æ¤¤¤ë¤Ê¤é¤Ð¡¢
+¾å¤Î¥³¥Þ¥ó¥É¤Ï¼¡¤Î¤è¤¦¤Ë¤·¤Æ¤âÆ±¤¸¤³¤È¤Ë¤Ê¤ë¡£</p>
+<pre>
+ zebedee 20000:target3:telnet 10000:target1:telnet</pre>
+<p>¼ÂºÝ¤Î½ê¡¢¥µ¡¼¥Ð¤Ï¡Ö¥Ç¥Õ¥©¥ë¥È¥¿¡¼¥²¥Ã¥È¡×¤È¤¤¤¦³µÇ°¤ò»ý¤Ã¤Æ¤¤¤ë¡£
+¤³¤ì¤Ï<em>ºÇ¸å¤Ë</em>»ØÄê¤µ¤ì¤¿¥¿¡¼¥²¥Ã¥È¤Î¤³¤È¤Ç¤¢¤ë¡£
+¾åµ­¤ÎÎã¤Ç¤Ï¡Ö¥Ç¥Õ¥©¥ë¥È¥¿¡¼¥²¥Ã¥È¡×¤Ï<strong>target3</strong>¤Ë¤Ê¤Ã¤Æ¤¤¤ë¡£
+¤â¤·¥µ¡¼¥ÐÂ¦¤È¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¤Î¥¿¡¼¥²¥Ã¥È¤Î»ØÄê¤¬Æ±¤¸¤À¤Ã¤¿¤é¡¢
+¤³¤Î¥¿¡¼¥²¥Ã¥È¤¬»ÈÍÑ¤µ¤ì¤ë¡£
+Í½ÁÛ¤È°ã¤¦·ë²Ì¤òÆÀ¤ë¤³¤È¤¬¤¢¤ë¤Î¤Ç¡¢¤³¤Î¤³¤È¤Ë¤Ï½¼Ê¬Ãí°Õ¤·¤Æ¤Û¤·¤¤¡£
+Îã¤¨¤Ð¥µ¡¼¥Ð¤¬¼¡¤Î¤è¤¦¤Ëµ¯Æ°¤µ¤ì¤¿¤È¤·¤è¤¦¡£</p>
+<pre>
+ zebedee -s target2:telnet target3 target1:daytime,telnet</pre>
+<p>¤³¤Î¾ì¹ç¤Ï¡¢¾å¤ËÎã¼¨¤·¤¿¥¯¥é¥¤¥¢¥ó¥È¤òµ¯Æ°¤¹¤ë¥³¥Þ¥ó¥É¤Ë¤è¤Ã¤Æ¡¢
+20000ÈÖ¥Ý¡¼¥È¤Ø¤ÎÀÜÂ³¤Ï¡¢<strong>target3</strong>¤Ç¤Ê¤¯<strong>target1</strong>¤ËÂÐ¤·¤Æ¥È¥ó¥Í¥ë¤µ¤ì¤ë¤³¤È¤Ë¤Ê¤ë¡£
+¥µ¡¼¥Ð¤Ç»ØÄê¤µ¤ì¤¿¥¿¡¼¥²¥Ã¥È¤È¥¯¥é¥¤¥¢¥ó¥È¤Ç»ØÄê¤µ¤ì¤¿¥¿¡¼¥²¥Ã¥È¤¬Æ±¤¸¤À¤Ã¤¿»þ¤Ï¡¢
+ÄÌ¿®¤Ï¡Ö¥Ç¥Õ¥©¥ë¥È¥¿¡¼¥²¥Ã¥È¡×¤Ë¸þ¤«¤¦¤«¤é¤À¡£
+º®Íð¤òÈò¤±¤ë¤¿¤á¤Ë¤Ï¡¢¥µ¡¼¥Ð¤Î¥Û¥¹¥È¤¬°¸Àè¥ê¥¹¥È¤Ë´Þ¤Þ¤ì¤ë¾ì¹ç¤Ï¡¢
+É¬¤ººÇ¸å¤Ë¤½¤ì¤òÃÖ¤¯¤è¤¦¤Ë¤¹¤ì¤Ð¤è¤¤¡£
+¡Ö¥Ç¥Õ¥©¥ë¥È¥¿¡¼¥²¥Ã¥È¡×¤ÈÆ±ÍÍ¤Ë¡¢
+¥Ý¡¼¥È»ØÄê¤¬¤Ê¤«¤Ã¤¿»þ¤Î¤¿¤á¤Î¡¢
+Ê£¿ô¤Î¡Ö¥Ç¥Õ¥©¥ë¥È¥¿¡¼¥²¥Ã¥È¥Ý¡¼¥È¡×¤Î¥ê¥¹¥È¤ò»ØÄê¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£
+¾ÜºÙ¤Ï<strong><a href="#item_redirect">redirect</a></strong>¤ò»²¾È¤·¤Æ¤Û¤·¤¤¡£</p>
+<p><strong><a href="#item_target">target</a></strong>¥­¡¼¥ï¡¼¥É¤ÈÆ±ÍÍ¤Ë¡¢
+¥¯¥é¥¤¥¢¥ó¥ÈÍÑ¤ÎÆ±Åù¤Î¥³¥Þ¥ó¥É¥é¥¤¥ó¥Ñ¥é¥á¡¼¥¿¤È¤·¤Æ¡¢
+<strong><a href="#item_tunnel">tunnel</a></strong> ¥­¡¼¥ï¡¼¥É (and <strong><a href="#item_serverhost">serverhost</a></strong>¤¬¤¢¤ë¡£
+¤³¤ì¤Ë¤è¤Ã¤Æ¡¢¥µ¡¼¥Ð¥Û¥¹¥È¤òÌÀ¼¨Åª¤Ë»ØÄê¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£</p>
+<p>
+</p>
+<h2><a name="_µ___ð_çæ__îàüâ__server_initiated_connections_">¥µ¡¼¥Ð¼çÆ³¤ÎÀÜÂ³(Server-Initiated Connections)</a></h2>
+<p>ÄÌ¾ï¤Î»ÈÍÑË¡¤Ç¤Ï¡¢
+¥½¡¼¥¹¥·¥¹¥Æ¥à¤«¤éÀÜÂ³¤ò¼õ¤±¤¿»þÅÀ¤Ç¡¢
+<strong>Zebedee</strong>¥¯¥é¥¤¥¢¥ó¥È¤¬¥µ¡¼¥Ð¤ËÂÐ¤¹¤ëÀÜÂ³¤ò³«»Ï¤¹¤ë¡£
+¤·¤«¤·¡¢<strong>Zebedee</strong>¤òÀ©¸Â¤Î¤¢¤ë¥Õ¥¡¥¤¥¢¡¼¥¦¥©¡¼¥ë±Û¤·¤Ë»ÈÍÑ¤¹¤ë¾ì¹ç¤Ê¤É¡¢
+µÕ¸þ¤­¤Ë¥µ¡¼¥Ð¤«¤é¥¯¥é¥¤¥¢¥ó¥È¤ËÂÐ¤·¤ÆÀÜÂ³¤ò³«»Ï¤¹¤ë¤³¤È¤¬É¬Í×¤Ê¾ì¹ç¤â¤¢¤ë¡£
+¤³¤ì¤ò¤É¤¦¤ä¤ë¤«¤Î¾ÜºÙ¤Ë¤Ä¤¤¤Æ¤Ï¡¢
+<strong><a href="#item_clienthost">clienthost</a></strong> ¥­¡¼¥ï¡¼¥É¤È
+<strong><a href="#item_listenmode">listenmode</a></strong>¥­¡¼¥ï¡¼¥É¤ò»²¾È¤Î¤³¤È¡£</p>
+<p>
+</p>
+<h2><a name="àßäê_õ_____ë_configuration_file_">ÀßÄê¥Õ¥¡¥¤¥ë(Configuration File)</a></h2>
+<p><strong>Zebedee</strong> ¤ÎÆ°ºî¤ò¥³¥ó¥È¥í¡¼¥ë¤¹¤ë¤Ë¤Ï¡¢
+ÀßÄê¥Õ¥¡¥¤¥ë¤ò»È¤¦¤Î¤¬¤ª¤½¤é¤¯°ìÈÖ¤è¤¤¡£ÀßÄê¥Õ¥¡¥¤¥ë¤ò»ØÄê¤¹¤ë¤Ë¤Ï
+¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Ç <strong>-f</strong>¤ò»È¤¦¡£¥Õ¥¡¥¤¥ë¤Ï(<strong>-f</strong>)¥ª¥×¥·¥ç¥ó¤Î°Ì
+ÃÖ¤Ç½èÍý¤µ¤ì¤ë¡£½¾¤Ã¤Æ¡¢¤½¤ì°Ê¹ß¤Î¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Ç¥Õ¥¡¥¤¥ë¤ÎÆâ
+ÍÆ¤ò¾å½ñ¤­¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£</p>
+<p>¹Ô¤Î·Á¼°¤Ï°Ê²¼¤Î¤È¤ª¤ê¡£</p>
+<pre>
+ keyword value # optional comment</pre>
+<p><em>keyword</em>¤Ï¤Ò¤È¤Ä¤ÎÃ±¸ì¤Ç¤¢¤êÂçÊ¸»ú¾®Ê¸»ú¤ÏÌµ»ë¤µ¤ì¤ë¡£<em>value</em>¤ÏÃ±¸ì¤«Ê¸»ú
+Îó¤«¤É¤Á¤é¤«¤Ç¤¢¤ë¡£
+Ê¸»úÎó¤Ï¥À¥Ö¥ë¥¯¥©¡¼¥È(<code>&quot;¤³¤ó¤ÊÉ÷¤Ë&quot;</code>)¤«¥·¥ó¥°¥ë¥¯¥©¡¼¥È
+(<code>&#146;¤³¤ó¤ÊÉ÷¤Ë&#146;</code>)¤Ç¤¯¤¯¤é¤ì¤ë¡£¥À¥Ö¥ë¥¯¥©¡¼¥È &quot; ¤ÎÃæ¤Ë
+¥·¥ó¥°¥ë¥¯¥©¡¼¥È &#146; ¤¬¤¢¤Ã¤Æ¤â¤è¤¤¤·(<code>&quot;here&#146;s an example&quot;</code>)¡¢¤½¤ÎµÕ¤â¸À¤¨¤ë¡£
+value ¤Ç¤ÏÂçÊ¸»ú¾®Ê¸»ú¤Î°ã¤¤¤Ï¶èÊÌ¤µ¤ì¤ë¡£</p>
+<p>¶õÇò¹Ô¤È&quot;<code>#</code>&quot;¤Ç¤Ï¤¸¤Þ¤ë¹Ô(¤½¤ÎÁ°¤Ë¶õÇò¤¬¤¢¤Ã¤Æ¤âÆ±¤¸)¤ÏÌµ»ë¤µ¤ì¤ë¡£
+Ä¹¤¤Ê¸»úÎó¤Ï &quot;<code>\</code>&quot;¤Ç¼¡¤Î¹Ô¤Ë·ÑÂ³¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£
+¤³¤ÎÊ¸»ú¤Ï½üµî¤µ¤ì¡¢¼¡¤Î¹Ô¤¬¤³¤Î¹Ô¤ËÀÜÂ³¤µ¤ì¤ë¡£
+1¹Ô¤ÎÄ¹¤µ¤Ï·ÑÂ³¹Ô¤â´Þ¤á 1024 Ê¸»ú¤ËÀ©¸Â¤µ¤ì¤Æ¤¤¤ë¤³¤È¤ËÃí°Õ¡£
+¹Ô¤ÎÀÜÂ³¤Ï¥³¥á¥ó¥È¤ÎÇ§¼±¤ò´Þ¤á¤¹¤Ù¤Æ¤Î½èÍý¤ËÀè¤À¤Ã¤Æ¹Ô¤ï¤ì¤ë¡£
+¤½¤Î¤¿¤á°Ê²¼¤ÎÎã</p>
+<pre>
+ server false
+ # This comment continues on the next line \
+ server true</pre>
+<p>¤Ç¤Ï¡¢<strong>server</strong>¤ÎÃÍ¤Ï <strong>false</strong>¤Ë¤Ê¤ë¡£</p>
+<p>¥­¡¼¥ï¡¼¥É¤È¤½¤Î°ÕÌ£¤Ï°Ê²¼¤Ë½Ò¤Ù¤ë¡£
+<a href="#quick_reference_summary">Quick-Reference Summary</a>¤Ë¤Ï¡¢Á´¤Æ¤Î¥­¡¼¥ï¡¼¥É¤Î´Ê·é¤ÊÍ×Ìó¤¬¤¢¤ë¡£
+¤Û¤È¤ó¤É¤Î¥­¡¼¥ï¡¼¥É¤ÏÂÐ±þ¤¹¤ë¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤¬¤¢¤ë¤¬¡¢
+¤Ê¤«¤Ë¤ÏÂÐ±þ¤¹¤ë¥ª¥×¥·¥ç¥ó¤¬¤Ê¤¤¤â¤Î¤â¤¢¤ë¡£
+ÂÐ±þ¤¹¤ë¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤¬¤¢¤ë¤â¤Î¤Ë¤Ä¤¤¤Æ¤Ï¤½¤ì¤âÊ»µ­¤·¤Æ¤¢¤ë¡£
+µÕ¤Ë¡¢¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤ÎÃæ¤Ë¤Ï
+ÀßÄê¥Õ¥¡¥¤¥ëÆâ¤Î¥­¡¼¥ï¡¼¥É¤ËÂÐ±þ¤¹¤ë¤â¤Î¤¬¤Ê¤¤¤â¤Î¤â¤¢¤ë¡£
+¤½¤ì¤é¤Ï¤³¤Î¥»¥¯¥·¥ç¥ó¤ÎºÇ¸å¤Ë½Ò¤Ù¤ë¡£</p>
+<p>¥­¡¼¥ï¡¼¥É¤¬¿¿µ¶ÃÍ(boolean)¤È½ñ¤«¤ì¤Æ¤¤¤¿¤é¡¢
+¤½¤ÎÃÍ¤Ï&quot;<strong>true</strong>&quot; ¤Þ¤¿¤Ï &quot;<strong>false</strong>&quot;¤Ç¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£</p>
+<p>¥­¡¼¥ï¡¼¥É¤ÎÃæ¤Ë¤Ï¥Ý¡¼¥È¤Î¥ê¥¹¥È¤ò»ØÄê¤¹¤ë¤â¤Î¤¬¤¢¤ë¡£
+¤³¤Î¾ì¹ç¤Ï¡¢¥Ý¡¼¥ÈÌ¾(¥µ¡¼¥Ó¥¹Ì¾)¡¢¥Ý¡¼¥ÈÈÖ¹æ¡¢ÈÖ¹æ¤ÎÈÏ°Ï¤ò
+¥³¥ó¥Þ¤«¶õÇò¤Ç¶èÀÚ¤Ã¤¿¤â¤Î¤ò»ØÄê¤¹¤ë¡£
+Îã¤¨¤Ð¡¢&quot;<code>telnet, ftp 5900-5903</code>&quot;¤Ï 
+&quot;<code>23,21,5900,5901,5902,5903</code>&quot;¤ÈÅù¤·¤¤¡£</p>
+<p>¤Þ¤¿¡¢¥¯¥é¥¤¥¢¥ó¥È¤À¤±¤Ë»ØÄê¤¹¤ë¥­¡¼¥ï¡¼¥É¤â¤¢¤ë¤·¡¢
+¥µ¡¼¥Ð¤À¤±¤Ë»ØÄê¤¹¤ë¥­¡¼¥ï¡¼¥É¤â¤¢¤ë¡£
+¤Ò¤È¤Ä¤Î <strong>Zebedee</strong> ¥×¥í¥°¥é¥à¤Ï¥µ¡¼¥Ð¤«¥¯¥é¥¤¥¢¥ó¥È¤«¤É¤Á¤é¤«¤Ò¤È¤Ä¤Îµ¡Ç½¤ò¼Â¹Ô¤·¡¢
+¤½¤Î»þ¤ÎÍÑÅÓ¤È°ã¤¦ÍÑÅÓ¸þ¤±¤Î¥ª¥×¥·¥ç¥ó¤ÏÌµ»ë¤¹¤ë¡£
+¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤âÉ½¼¨¤·¤Ê¤¤¡£
+¥µ¡¼¥Ð¤Ë¤Ê¤ë¤«¥¯¥é¥¤¥¢¥ó¥È¤Ë¤Ê¤ë¤«¤Ï¡¢
+<strong><a href="#item_server">server</a></strong> ¥­¡¼¥ï¡¼¥É¤Ç·è¤Þ¤ë¡£</p>
+<dl>
+<dt><strong><a name="server" class="item"><strong>server</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-s</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢¥¯¥é¥¤¥¢¥ó¥È¤Ë¤Ê¤ë¤«¥µ¡¼¥Ð¤Ë¤Ê¤ë¤«¤ò·è¤á¤ë¿¿µ¶ÃÍ¤Î¥­¡¼¥ï¡¼¥É¤Ç¤¢¤ë¡£
+¤³¤ì¤¬»ØÄê¤µ¤ì¤Ê¤«¤Ã¤¿¾ì¹ç¤Ï¡¢¥¯¥é¥¤¥¢¥ó¥È¤È¤·¤ÆÆ°ºî¤¹¤ë¡£
+¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Î <strong>-s</strong> ¥ª¥×¥·¥ç¥ó¤Ï¤³¤ÎÃÍ¤ò<strong>true</strong>¤Ë¤¹¤ë¤Î¤ÈÅù¤·¤¤¡£</p>
+</dd>
+</dl>
+<p>
+</p>
+<h3><a name="___é_____ó_èàìíñ_____ï___é_client_only_keywords_">¥¯¥é¥¤¥¢¥ó¥ÈÀìÍÑ¥­¡¼¥ï¡¼¥É(Client-Only Keywords)</a></h3>
+<p>°Ê²¼¤Î¥­¡¼¥ï¡¼¥É¤Ï¥¯¥é¥¤¥¢¥ó¥È¤À¤±¤ËÅ¬ÍÑ¤µ¤ì¤ë¡£</p>
+<dl>
+<dt><strong><a name="command" class="item"><strong>command</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-e</strong>)</a></strong></dt>
+
+<dd>
+<p>¥¯¥é¥¤¥¢¥ó¥È¤È¤·¤ÆÆ°ºî¤·¤Æ¤¤¤ë»þ¤Ë°ÕÌ£¤ò»ý¤Ä¡£
+¤³¤ì¤Ï¡¢¥È¥ó¥Í¥ë¤ØÀÜÂ³¤·¤¿¸å¤Ëµ¯Æ°¤µ¤ì¤ë¥³¥Þ¥ó¥É¤ò¼¨¤¹¡£
+¤³¤ÎÃÍ¤¬ &quot;<code>%d</code>&quot; ¤È¤¤¤¦Ê¸»úÎó¤ò´Þ¤ó¤Ç¤¤¤¿¤é¡¢¼Â¹Ô»þ¤Ë¥í¡¼¥«¥ë¥Ý¡¼¥ÈÈÖ¹æ¤ÈÃÖ¤­ÊÑ¤¨¤é¤ì¤ë
+(<strong><a href="#item_tunnel">tunnel</a></strong> ¥­¡¼¥ï¡¼¥É »²¾È)¡£
+¤³¤Î½èÍý¤Ï<strong>sprintf</strong>´Ø¿ô¤ò»ÈÍÑ¤·¤Æ¹Ô¤Ê¤¦¤Î¤Ç¡¢
+&quot;<code>%</code>&quot;¤Ë¤è¤ë¥¨¥¹¥±¡¼¥×½èÍý¤¬Å¬ÍÑ¤µ¤ì¤ë
+(¤¹¤Ê¤ï¤Á¡¢&quot;<code>%</code>&quot; ¤ò 1 Ê¸»úÀ¸À®¤¹¤ë¤¿¤á¤Ë¤Ï &quot;<code>%%</code>&quot; ¤ò»È¤¦)¡£
+¤µ¤é¤Ë¡¢&quot;<code>%d</code>&quot; ¤òÆó¤Ä°Ê¾å»ØÄê¤·¤¿¤ê &quot;<code>%d</code>&quot; °Ê³°¤Î¥Õ¥©¡¼¥Þ¥Ã¥È»ØÄê»Ò
+¤ò»ØÄê¤¹¤ë¤È¡¢¤ª¤½¤é¤¯¥×¥í¥°¥é¥à¤Ï¥¯¥é¥Ã¥·¥å¤¹¤ë¤À¤í¤¦¡£</p>
+<p>¥³¥Þ¥ó¥É¤¬ÀÜÂ³¤òÊÄ¤¸¤¿¤é¡¢<strong>Zebedee</strong>¤â½ªÎ»¤¹¤ë¡£
+¤³¤Î¥­¡¼¥ï¡¼¥É¤ª¤è¤Ó¥ª¥×¥·¥ç¥ó¤ò»ÈÍÑ¤¹¤ë¤È¡¢°ÅÌÛ¤Î¤¦¤Á¤Ë¥Þ¥ë¥Á¥æ¡¼¥¹¥â¡¼¥É¤¬OFF¤Ë¤Ê¤ë
+(<strong><a href="#item_multiuse">multiuse</a></strong>»²¾È)¡£
+<strong>Zebedee</strong> ¥¯¥é¥¤¥¢¥ó¥È¤¬Ê£¿ô¤ÎÀÜÂ³¤ò°·¤¦¾ì¹ç
+(<strong><a href="#item_multiuse">multiuse</a></strong>)¤ä¥Ý¡¼¥È¤Î¥ê¥¹¥È¤¬ 
+<strong><a href="#item_tunnel">tunnel</a></strong>¥­¡¼¥ï¡¼¥É¤«¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç»ØÄê¤µ¤ì¤¿¾ì¹ç¤Ï¡¢¥³¥Þ¥ó¥É¤Î¼«Æ°µ¯Æ°¤Ï
+»ÈÍÑ¤¹¤ë¤³¤È¤¬¤Ç¤­¤Ê¤¤¡£</p>
+</dd>
+<dt><strong><a name="listenmode" class="item"><strong>listenmode</strong> (command-line <strong>-l</strong>)</a></strong></dt>
+
+<dd>
+<p>ÄÌ¾ï¤Î»ÈÍÑË¡¤Ç¤Ï¡¢
+¥½¡¼¥¹¥·¥¹¥Æ¥à¤«¤éÀÜÂ³¤ò¼õ¤±¤¿»þÅÀ¤Ç¡¢
+<strong>Zebedee</strong>¥¯¥é¥¤¥¢¥ó¥È¤¬¥µ¡¼¥Ð¤ËÂÐ¤¹¤ëÀÜÂ³¤ò³«»Ï¤¹¤ë¡£
+¤·¤«¤·¡¢<strong>Zebedee</strong>¤òÀ©¸Â¤Î¤¢¤ë¥Õ¥¡¥¤¥¢¡¼¥¦¥©¡¼¥ë±Û¤·¤Ë»ÈÍÑ¤¹¤ë¾ì¹ç¤Ê¤É¡¢
+µÕ¸þ¤­¤Ë¥µ¡¼¥Ð¤«¤é¥¯¥é¥¤¥¢¥ó¥È¤ËÂÐ¤·¤ÆÀÜÂ³¤ò³«»Ï¤¹¤ë¤³¤È¤¬É¬Í×¤Ê¾ì¹ç¤â¤¢¤ë¡£</p>
+<p><strong>listenmode</strong>¥­¡¼¥ï¡¼¥É¤¬¿¿¤Ê¤é¤Ð¡¢
+<strong>Zebedee</strong>¥¯¥é¥¤¥¢¥ó¥È¤ÏÄ¾ÀÜÀÜÂ³¤·¤è¤¦¤È¤¹¤ë¤«¤ï¤ê¤Ë¡¢
+¥µ¡¼¥Ð¤¬ÀÜÂ³¤ò³«»Ï¤¹¤ë¤Î¤òÂÔ¤Ä¡£
+¥µ¡¼¥Ð¤«¤é¤ÎÀÜÂ³Í×µá¤Ï¤¹¤°¤Ë¤Ï¼õ¤±¤Ä¤±¤é¤ì¤º¡¢
+¥½¡¼¥¹¥·¥¹¥Æ¥à¤«¤é¤½¤ì¤ËÂÐ±þ¤¹¤ëÀÜÂ³¤¬¹Ô¤ï¤ì¤ë¤Þ¤ÇÂÔ¤¿¤µ¤ì¤ë¡£
+¤·¤«¤·¤Ê¤¬¤é¡¢¤â¤·¥¯¥é¥¤¥¢¥ó¥È¤Ë¥È¥ó¥Í¥ë¤ÎÌÜÅªÃÏ¤Ë¤Ä¤¤¤ÆÁª¤Ö¸¢Íø¤¬¤Ê¤¤¤È¡¢
+¤É¤Î¥µ¡¼¥Ð¤«¤éÀÜÂ³¤µ¤ì¤ë¤«¤ï¤«¤Ã¤¿¤â¤Î¤Ç¤Ï¤Ê¤¤¡£
+¤½¤ÎÍÑ¿´¤Î¤¿¤á¤Ë¡¢¥³¥Þ¥ó¥É¥é¥¤¥ó¤«¡¢
+¥¯¥é¥¤¥¢¥ó¥È¤Ë¤Ï<strong><a href="#item_serverhost">serverhost</a></strong> ¥­¡¼¥ï¡¼¥É¤«¡¢
+ºÇ½é¤Î¥È¥ó¥Í¥ë»ÅÍÍ¤Î°ìÉô¤È¤·¤Æ¡¢¥µ¡¼¥Ð¥¢¥É¥ì¥¹¤ò»ØÄê¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¤è¤¦¤Ë¤Ê¤Ã¤Æ¤¤¤ë¡£
+¥¯¥é¥¤¥¢¥ó¥È¤Ï(¼ÂºÝ¤ÎÀÜÂ³¤¬)¤³¤ì¤È°ìÃ×¤¹¤ë¤«³ÎÇ§¤·¤Æ¡¢ÀÜÂ³¤ÎÀµÅöÀ­¤òÈ½ÃÇ¤¹¤ë¡£</p>
+<p>(ÌõÃí¡§ÄÌ¾ï¤Ï</p>
+<p>¥½¡¼¥¹(1)¢ª¥¯¥é¥¤¥¢¥ó¥È(2)¢ª¥µ¡¼¥Ð(3)¢ª¥¿¡¼¥²¥Ã¥È</p>
+<p>¤È¤¤¤¦Êý¸þ¤È½çÈÖ¤Çconnect(ÀÜÂ³Í×µá)¤¬¹Ô¤Ê¤ï¤ì¤ë¤¬¡¢¥ê¥Ã¥¹¥ó¥â¡¼¥É¤Ç¤Ï</p>
+<p>¥½¡¼¥¹(2)¢ª¥¯¥é¥¤¥¢¥ó¥È¢«(1)¥µ¡¼¥Ð(3)¢ª¥¿¡¼¥²¥Ã¥È</p>
+<p>¤È¤Ê¤ë¡£¤Ä¤Þ¤ê¡¢¥½¡¼¥¹¤«¤é¤ÎÀÜÂ³¤ÎÁ°¤Ë¥µ¡¼¥Ð¤«¤é¥¯¥é¥¤¥¢¥ó¥È¤ËÀÜÂ³¤Ë¹Ô¤¯)</p>
+<p>ÆÃ¼ì¤Ê¾ì¹ç¤È¤·¤Æ¡¢¤â¤·¥µ¡¼¥Ð¤ÎÌ¾Á°¤¬&quot;<code>*</code>&quot;¤Ê¤é¤Ð¡¢
+¤É¤Î¥µ¡¼¥Ð¥¢¥É¥ì¥¹¤«¤é¤ÎÀÜÂ³¤â¼õ¤±¤Ä¤±¤é¤ì¤ë¡£
+¥µ¡¼¥Ð¤«¤é¤ÎÀÜÂ³¤ò³Î¼Â¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï¡¢
+<a href="#identity_checking">identity checking</a>µ¡Ç½¤òÊ»ÍÑ¤¹¤ë¤³¤È¤ò¤ª¤¹¤¹¤á¤¹¤ë¡£</p>
+<p>¤â¤·°ìÄê»þ´ÖÆâ¤Ë¥µ¡¼¥Ð¤«¤é¤ÎÀÜÂ³¤¬¤Ê¤¤¤È¡¢
+¥½¡¼¥¹¥·¥¹¥Æ¥à¤Ø¤ÎÀÜÂ³¤ÏÊÄ¤¸¤é¤ì¥×¥í¥»¥¹¤ÏÃæÃÇ¤¹¤ë¡£
+¤³¤ÎÂÔ¤Á»þ´Ö¤Ï<strong><a href="#item_connecttimeout">connecttimeout</a></strong>¥­¡¼¥ï¡¼¥É¤ÇÀ©¸æ¤Ç¤­¤ë¡£
+´ûÄêÃÍ¤Ï300ÉÃ¤Ç¤¢¤ë¡£</p>
+<p>¤³¤Î¥×¥í¥»¥¹¤Î¥µ¡¼¥ÐÂ¦¤ÎÆ°¤­¤Ë¤Ä¤¤¤Æ¤Ï<strong><a href="#item_clienthost">clienthost</a></strong>»²¾È¤Î¤³¤È¡£</p>
+</dd>
+<dt><strong><a name="localsource" class="item"><strong>localsource</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ÎÃÍ¤¬<strong>true</strong>¤À¤È¡¢¥¯¥é¥¤¥¢¥ó¥È¤Ï¥í¡¼¥«¥ë¥Þ¥·¥ó¤ÇÈ¯À¸¤·¤¿ÀÜÂ³¤À¤±¤ò¼õ¤±¤Ä¤±¤ë¡£
+ÊÌ¤Î¸ÀÍÕ¤Ç¸À¤¦¤È¡¢¡Ö¥½¡¼¥¹¡×¤È¡Ö¥¯¥é¥¤¥¢¥ó¥È¡×¤¬Æ±°ì¤Î¥·¥¹¥Æ¥à¤Ç¤¢¤ëÉ¬Í×¤¬¤¢¤ë¡£</p>
+<p>¤³¤ÎÃÍ¤Ï¥Ç¥Õ¥©¥ë¥È¤Ï<strong>false</strong>¤Ç¤¢¤ê¡¢¤É¤Î¥Þ¥·¥ó¤¬¥½¡¼¥¹¤È¤Ê¤Ã¤Æ¤âÀÜÂ³¤ò¼õ¤±¤Ä¤±¤ë¡£</p>
+</dd>
+<dt><strong><a name="multiuse" class="item"><strong>multiuse</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-m</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ÎÃÍ¤¬<strong>true</strong>¤À¤È(¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¤½¤¦¤Ê¤Ã¤Æ¤¤¤ë¤¬)¡¢
+<strong>Zebedee</strong>¤Î¥¯¥é¥¤¥¢¥ó¥È¤ÏÊ£¿ô¤ÎÀÜÂ³Í×µá(Æ±»þÊÂ¹ÔÅª¤ËÈ¯À¸¤·¤Æ¤â¤è¤¤)¤ò°·¤¤¡¢
+Í×µá¤Ò¤È¤Ä¤Ò¤È¤Ä¤ËÂÐ¤·¤Æ¡¢¿·¤·¤¤¥È¥ó¥Í¥ë¤òÀßÃÖ¤¹¤ë¡£
+ÃÍ¤¬<strong>false</strong>¤À¤È¡¢¥¯¥é¥¤¥¢¥ó¥È¤Ï¥·¥ó¥°¥ë¥æ¡¼¥¹¥â¡¼¥É¤ÇÆ°ºî¤·¡¢
+ºÇ½é¤ÎÀÜÂ³¤¬ÊÄ¤¸¤é¤ì¤¿Ä¾¸å¤Ë½ªÎ»¤¹¤ë¡£</p>
+<p>¥³¥Þ¥ó¥É¥é¥¤¥ó¤Î<strong>-m</strong>¥ª¥×¥·¥ç¥ó¤Ï¤³¤ì¤ò<strong>true</strong>¤ËÀßÄê¤¹¤ë¤Î¤ÈÅù¤·¤¤¡£
+¸½ºß¤Î¥Ð¡¼¥¸¥ç¥ó¤Î<strong>Zebedee</strong>¤Ï¤³¤ì¤¬¥Ç¥Õ¥©¥ë¥È¤À¤¬
+(¤À¤«¤é¡¢¤³¤Î¥ª¥×¥·¥ç¥ó¤òÀßÄê¤¹¤ëÉ¬Í×¤Ï¤Ê¤¤¤¬)¡¢
+¸åÊý¸ß´¹À­¤Î¤¿¤á¤Ë»Ä¤µ¤ì¤Æ¤¤¤ë¡£</p>
+<p>¥¯¥é¥¤¥¢¥ó¥È¤¬Ê£¿ô¤Î¥Ý¡¼¥È¤òÂÔ¤Á¼õ¤±¤ë¾ì¹ç¤Ï¡¢
+¤¿¤È¤¨¤³¤ì¤¬<strong>false</strong>¤ËÀßÄê¤µ¤ì¤Æ¤¤¤Æ¤â¡¢
+¼«Æ°Åª¤Ë ¥Þ¥ë¥Á¥æ¡¼¥¹¥â¡¼¥É¤Ë¤Ê¤ë¡£
+(<strong><a href="#item_clientport">clientport</a></strong> »²¾È)</p>
+</dd>
+<dt><strong><a name="serverhost" class="item"><strong>serverhost</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¥È¥ó¥Í¥ë¤òÀÜÂ³¤·¤è¤¦¤È¤¹¤ë<strong>Zebedee</strong>¥µ¡¼¥Ð¤¬²ÔÆ¯¤·¤Æ¤¤¤ë¥ê¥â¡¼¥È¥Û¥¹¥È¤ÎÌ¾Á°¤Ç¤¢¤ë¡£
+¥Û¥¹¥È¤ÎÌ¾¾Î¤Ë¤Ï¥Ç¥Õ¥©¥ë¥È¤Ï¤Ê¤¤¤Î¤Ç¡¢
+ÀßÄê¥Õ¥¡¥¤¥ë¤«¥³¥Þ¥ó¥É¥é¥¤¥ó¤Î¤É¤Á¤é¤«¤Ç¡¢
+É¬¤º¤³¤ì¤ò»ØÄê¤·¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£</p>
+<p>¥µ¡¼¥Ð¼çÆ³¤ÎÀÜÂ³¤ò¹Ô¤Ê¤¦»þ¤Î¤³¤ÎÃÍ¤Î°ÕÌ£¤Ë¤Ä¤¤¤Æ¤Ï¡¢
+<strong><a href="#item_listenmode">listenmode</a></strong>»²¾È¡£</p>
+<p>2.0.0¤è¤êÁ°¤Î¥Ð¡¼¥¸¥ç¥ó¤Ç¤Ï¡¢Æ±¤¸°ÕÌ£¤Ç<strong>remotehost</strong>¤È¤¤¤¦¥­¡¼¥ï¡¼¥É¤¬»ÈÍÑ¤µ¤ì¤Æ¤¤¤¿¡£
+¸åÊý¸ß´¹À­¤Î¤¿¤á¤Ë¡¢¤³¤Î¥­¡¼¥ï¡¼¥É¤Ï¸½¥Ð¡¼¥¸¥ç¥ó¤Ç¤âÇ§¼±¤µ¤ì¤ë¡£</p>
+</dd>
+<dt><strong><a name="tunnel" class="item"><strong>tunnel</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢¥³¥í¥ó¤ÇÊ¬¤±¤é¤ì¤¿3¤Ä¤Î¥Ñ¡¼¥È¤«¤é¤Ê¤ëÊ¸»úÎó¤Ç¤¢¤ë¡£
+Îã¤¨¤Ð</p>
+<pre>
+ 10000-10002:targethost:echo,telnet,daytime</pre>
+<p>ºÇ½é¤ÎÉôÊ¬¤Ï<strong>Zebedee</strong>¥¯¥é¥¤¥¢¥ó¥È¤¬ÀÜÂ³¤òÂÔ¤Ä¥Ý¡¼¥ÈÈÖ¹æ¤Î¥ê¥¹¥È¤Ç¤¢¤ë¡£
+ÆóÈÖÌÜ¤¬¥È¥ó¥Í¥ë¤µ¤ì¤¿¥Ç¡¼¥¿¤¬¸þ¤«¤¦¤Ù¤­¥¿¡¼¥²¥Ã¥È¥Û¥¹¥È¤ÎÌ¾Á°¤Ç¤¢¤ë¡£
+ºÇ¸å¤Î¥Ñ¡¼¥È¤Ï¥¿¡¼¥²¥Ã¥È¥Ý¡¼¥È¤Î¥ê¥¹¥È¤Ç¤¢¤ê¡¢
+¤³¤ì¤Ï¥¯¥é¥¤¥¢¥ó¥È¤¬ÂÔ¤Ä¥Ý¡¼¥È¤Î¥ê¥¹¥È¤ÈÂÐ±þ¤·¤Æ¤¤¤ë¡£
+¥¯¥é¥¤¥¢¥ó¥È¤È¥¿¡¼¥²¥Ã¥È¤Î¥Ý¡¼¥È¤Î¿ô¤Ï°ìÃ×¤·¤Æ¤¤¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£</p>
+<p>ÆÃ¼ì¤Ê¾ì¹ç¤È¤·¤Æ¡¢
+¥¿¡¼¥²¥Ã¥È¥Ý¡¼¥È¤¬¤Ò¤È¤Ä¤À¤±¤Î¥È¥ó¥Í¥ë»ÅÍÍ¤¬Ã±ÆÈ¤ÇÍ¿¤¨¤é¤ì¤ë»þ¤Ë¤Ï¡¢
+¥¯¥é¥¤¥¢¥ó¥È¤Î¥Ý¡¼¥È¥ê¥¹¥È(¤È¶èÀÚ¤ê¤Î¥³¥í¥ó)¤Ï¾Ê¤¤¤Æ¤â¤è¤¤¡£
+¥¯¥é¥¤¥¢¥ó¥È¥Ý¡¼¥È¤Ï¼«Æ°Åª¤Ë³ä¤êÅö¤Æ¤é¤ì¤ë
+(¤½¤·¤Æ¡¢¤½¤Î¥Ý¡¼¥ÈÈÖ¹æ¤ò¼¨¤¹¥á¥Ã¥»¡¼¥¸¤¬Ã¼Ëö¤ËÉ½¼¨¤µ¤ì¤ë)
+¤³¤ì¤Ï¸åÊý¸ß´¹À­¤Î¤¿¤á¤È<strong><a href="#item_command">command</a></strong>¤Î»ÈÍÑ»þ¤Î¤¿¤á¤Ëµö¤µ
+¤ì¤Æ¤¤¤ë¡£
+¤â¤·¥¿¡¼¥²¥Ã¥È¥Ý¡¼¥È¤â¾ÊÎ¬¤µ¤ì¤¿¤é¡¢´ûÄêÃÍ¤È¤·¤Æ<strong>telnet</strong>(¥Ý¡¼¥È23)¤Ë¤Ê¤ë¡£</p>
+<p><a href="#ê__ô_î_______ã_è_multiple_destinations_">Ê£¿ô¤Î¥¿¡¼¥²¥Ã¥È(Multiple Destinations)</a>¤Ç½Ò¤Ù¤¿¤è¤¦¤Ë¡¢
+<strong>Zebedee</strong>¥µ¡¼¥Ð¤¬¥³¥Þ¥ó¥É¥é¥¤¥ó¤ÎºÇ½é¤Î°ú¿ô¤È¤·¤Æ¤â
+<strong><a href="#item_serverhost">serverhost</a></strong>¥­¡¼¥ï¡¼¥É¤Ç¤â»ØÄê¤µ¤ì¤Ê¤«¤Ã¤¿¤é¡¢
+ºÇ½é¤Ë¸«¤Ä¤«¤Ã¤¿¥È¥ó¥Í¥ë»ÅÍÍ¤«¤é¼è¤é¤ì¤ë¡£</p>
+<p>¥È¥ó¥Í¥ë»ÅÍÍ¤ÎÊÑÂ§Åª¤Ê·Á¼°¤¬¤â¤¦¤Ò¤È¤Ä¤À¤±¤¢¤ë¡£
+¤³¤Î¾ì¹ç¤Ï¥¿¡¼¥²¥Ã¥È¥Û¥¹¥È¤Ï&quot;<code>*</code>&quot;¤ÇÃÖ¤­¤«¤¨¤é¤ì¤ë¡£
+¤³¤Î¥ï¥¤¥ë¥É¥«¡¼¥É·Á¼°¤Ï¥ê¥Ã¥¹¥ó¥â¡¼¥É(¾ÜºÙ¤Ï<strong><a href="#item_listenmode">listenmode</a></strong> »²¾È)¤Ç¥¯¥é¥¤¥¢¥ó¥È¤òµ¯Æ°¤¹¤ë»þ¤È¡¢
+¥µ¡¼¥Ð¡¼¤Î¥Ç¥Õ¥©¥ë¥È¥¿¡¼¥²¥Ã¥È¤ËÂÐ¤·¤Æ¥È¥ó¥Í¥ëÀÜÂ³¤ò¹Ô¤Ê¤¤¤¿¤¤»þ¤Ë»ÈÍÑ¤µ¤ì¤ë¡£
+¸å¼Ô¤Ï¡¢¤É¤Î¥µ¡¼¥Ð¤Ë¤âÅ¬ÍÑ¤Ç¤­¤ë¤è¤¦¤Ê¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥·¥ç¥ó¥Õ¥¡¥¤¥ë¤ò½ñ¤­¤¿¤¤»þ¤Ë»ÈÍÑ¤µ¤ì¤ë¡£
+Îã¤¨¤Ð¡¢¤³¤Î¤è¤¦¤Ë¤Ê¤ë¡£</p>
+<pre>
+ server false
+ tunnel 10000:*:daytime
+ tunnel 20000:*:echo
+ tunnel 30000:*:telnet</pre>
+<p>¤³¤ì¤Ï¡¢¼¡¤Î¤è¤¦¤Ê·Á¤Ç¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç»ØÄê¤µ¤ì¤¿¥µ¡¼¥Ð¤ËÂÐ¤·¤Æ
+(¤½¤ì¤¬¤É¤Î¥Û¥¹¥È¤Ç¤¢¤ì)10000ÈÖ¡¢20000ÈÖ¡¢30000ÈÖ¤Î¥Ý¡¼¥È¤Ë¥È¥ó¥Í¥ë¤òºîÀ®¤¹¤ë¡£</p>
+<pre>
+ zebedee -f configfile serverhost</pre>
+</dd>
+</dl>
+<p>
+</p>
+<h3><a name="_µ___ðàìíñ_____ï___é_server_only_keywords_">¥µ¡¼¥ÐÀìÍÑ¥­¡¼¥ï¡¼¥É(Server-Only Keywords)</a></h3>
+<p>°Ê²¼¤Î¥­¡¼¥ï¡¼¥É¤Ï¥µ¡¼¥Ð¤È¤·¤ÆÆ°ºî¤¹¤ë»þ¤ËÅ¬ÍÑ¤¹¤ë¡£</p>
+<dl>
+<dt><strong><a name="clienthost" class="item"><strong>clienthost</strong> (command-line <strong>-c</strong>)</a></strong></dt>
+
+<dd>
+<p><strong>clienthost</strong>¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢
+¥µ¡¼¥Ð¤Ï¤¹¤°¤Ë¤½¤Î¥Û¥¹¥È(¤Î<strong><a href="#item_serverport">serverport</a></strong>¤Ç»ØÄê¤µ¤ì¤¿¥Ý¡¼¥È)¤ËÀÜÂ³¤·¤è¤¦¤È¤¹¤ë¡£
+¤½¤Î¥¢¥É¥ì¥¹¤Ç¤Ï¡¢¥ê¥Ã¥¹¥ó¥â¡¼¥É(<strong><a href="#item_listenmode">listenmode</a></strong>»²¾È)¤Î¥¯¥é¥¤¥¢¥ó¥È¤¬µ¯Æ°¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£
+¤Ò¤È¤¿¤Ó¥¯¥é¥¤¥¢¥ó¥È¤Ø¤ÎÀÜÂ³¤¬³ÎÎ©¤·¤¿¤é¡¢¥×¥í¥È¥³¥ë¤ÏÄÌ¾ï¤É¤ª¤ê¤Ë¾ðÊó¸ò´¹¤ò¹Ô¤Ê¤¦¡£</p>
+<p>¥¯¥é¥¤¥¢¥ó¥È¤Ë¤è¤Ã¤ÆÀÜÂ³¤¬¼õ¤±¤Ä¤±¤é¤ì¤ë¤¿¤Ó¤Ë¡¢
+¥µ¡¼¥Ð¤ÏÈ¿ÂÐÂ¦¤ÎÀÜÂ³¤ò»î¤ß¤ë¡£
+ÀÜÂ³¤¬°ìÄê¤Î»þ´ÖÆâ¤Ë¼õ¤±¤Ä¤±¤é¤ì¤Ê¤¤¤È¡¢
+(¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¤ÎÀÜÂ³¤ò)ÊÄ¤¸¤Æ¥µ¡¼¥Ð¤Ï½ªÎ»¤·¸½ºß¤Î¥¢¥¯¥Æ¥£¥Ö¤Ê¥È¥ó¥Í¥ë¤ÏÁ´¤ÆÊÄ¤¸¤é¤ì¤ë¡£
+¤³¤ÎÂÔ¤Á»þ´Ö¤Ï<strong><a href="#item_connecttimeout">connecttimeout</a></strong>¥­¡¼¥ï¡¼¥É¤ÇÀ©¸æ¤µ¤ì¤ë¡£
+´ûÄêÃÍ¤Ï300ÉÃ¤Ç¤¢¤ë¡£</p>
+<p><strong>Zebedee</strong>¼«¿È¤Ï¡¢
+¡ÖµÕ¸þ¤­¥È¥ó¥Í¥ë¡×¤Î¥»¥Ã¥È¥¢¥Ã¥×¤Î¤¿¤á¤Ë¡¢
+¥µ¡¼¥Ð¡¼¤È¥¯¥é¥¤¥¢¥ó¥È¤ò¶¨Ä´¤·¤Æµ¯Æ°¤µ¤»¤ë¼êÃÊ¤ÏÄó¶¡¤·¤Æ¤¤¤Ê¤¤¤³¤È¤ËÃí°Õ¤µ¤ì¤¿¤¤¡£
+¤½¤Î¤¿¤á¤Ë¤Ï¡¢¤Ê¤ó¤é¤«¤Î¡ÖÂÓ°è³°¡×¤Î¥á¥«¥Ë¥º¥à¤¬É¬Í×¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="redirect" class="item"><strong>redirect</strong> (command-line <strong>-r</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤Ï¥µ¡¼¥Ð¤¬¥ê¥À¥¤¥ì¥¯¥È¤¹¤ë¥Ý¡¼¥È¤Î¥ê¥¹¥È¤Ç¤¢¤ë¡£
+(Îã &quot;<code>telnet,ftp, 5900-5910</code>&quot;)
+¤â¤· <strong>redirect</strong> ¥­¡¼¥ï¡¼¥É¤¬»ØÄê¤µ¤ì¤Ê¤¤¾ì¹ç¤Ï¡¢
+¤É¤Î¥Ý¡¼¥È¤Ø¤Î¥È¥ó¥Í¥ëÀÜÂ³Í×µá¤â¼õ¤±ÉÕ¤±¤é¤ì¤ë¡£
+¤³¤ÎÊýË¡(<strong>redirect</strong>¤ò»ØÄê¤·¤Ê¤¤¤³¤È)¤Ï¥Æ¥¹¥ÈÃæ¤Ë¤ÏÊØÍø¤À¤¬¡¢
+¥»¥­¥å¥ê¥Æ¥£¡¼ÌÌ¤Ç¤Î¥ê¥¹¥¯¤¬¤¢¤ë¤Î¤Ç¡¢
+¤â¤·²ÄÇ½¤Ê¤é¤Ð(¤³¤Î¥­¡¼¥ï¡¼¥É¤Ç)ÌÀ¼¨Åª¤Ëµö²Ä¤¹¤ë¥Ý¡¼¥È¤ò»ØÄê¤¹¤Ù¤­¤Ç¤¢¤ë¡£</p>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É(¤Þ¤¿¤Ï<strong>-r</strong>¥ª¥×¥·¥ç¥ó)¤ÏÊ£¿ô»ØÄê¤µ¤ì¤Æ¤â¤è¤¤¡£¤³¤Î¾ì¹ç¤Ï¡¢
+¤½¤Î¤¦¤Á¤É¤ì¤«¤Î¥Ý¡¼¥È¤Ë»ØÄê¤µ¤ì¤Æ¤¤¤ì¤Ð¥ê¥À¥¤¥ì¥¯¥È¤¬µö²Ä¤µ¤ì¤ë¡£</p>
+</dd>
+<dt><strong><a name="target" class="item"><strong>target</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¥¿¡¼¥²¥Ã¥È¥Û¥¹¥È¤ò»ØÄê¤¹¤ë¡£
+¤Þ¤¿¡¢¥µ¡¼¥Ð¤¬¥ê¥À¥¤¥ì¥¯¥È¤·¤¿¥Ç¡¼¥¿¤ò¼õ¤±¤Ä¤±¤ë¥Ý¡¼¥È¤Î¥ê¥¹¥È¤â»ØÄê¤Ç¤­¤ë¡£
+¥³¥í¥ó¤Ç¶èÀÚ¤é¤ì¤¿¥¿¡¼¥²¥Ã¥È¥Û¥¹¥È¤ÎÌ¾Á°¤È¥Ý¡¼¥È¤Î¥ê¥¹¥È¤Ç»ØÄê¤¹¤ë¡£
+Îã¤¨¤Ð¼¡¤Î¤è¤¦¤Ë¤Ê¤ë¡£</p>
+<pre>
+ target www.winton.org.uk:http,ftp</pre>
+<p>¤â¤·¥Ý¡¼¥È¤Î¥ê¥¹¥È(¤È¥³¥í¥ó)¤¬¾ÊÎ¬¤µ¤ì¤Æ¤¤¤¿¤é¡¢
+¥ê¥À¥¤¥ì¥¯¥·¥ç¥ó¤ÎÍ×µá¤Ï<strong><a href="#item_redirect">redirect</a></strong>Ê¸¤Î»ØÄê¤Ç(¤â¤·¤¢¤ì¤Ð)À©¸æ¤µ¤ì¤ë¡£</p>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤ÏÆ±¤¸·Á¼°¤Î¥³¥Þ¥ó¥É¥é¥¤¥ó¤Î°ú¿ô¤ÈÆ±¤¸°ÕÌ£¤Ç¤¢¤ë¡£
+(<a href="#ê__ô_î_______ã_è_multiple_destinations_">Ê£¿ô¤Î¥¿¡¼¥²¥Ã¥È(Multiple Destinations)</a>»²¾È)¡£
+¤³¤ì¤Ï²¿²ó·«¤êÊÖ¤·¤Æ¤â¤è¤¤¡£
+¤³¤Î¥­¡¼¥ï¡¼¥É¤È¥³¥Þ¥ó¥É¥é¥¤¥ó¤òÄÌ¤·¤ÆºÇ¸å¤Î¥¿¡¼¥²¥Ã¥È¤¬¡¢
+¥¯¥é¥¤¥¢¥ó¥È¤¬°¸Àè¤È¤·¤Æ¥µ¡¼¥Ð¤Î¥Û¥¹¥ÈÌ¾¤ò»ØÄê¤·¤¿»þ¤Î¡¢
+¥È¥ó¥Í¥ë¤ÎÌÜÅªÃÏ¤È¤Ê¤ë¡£</p>
+</dd>
+</dl>
+<p>
+</p>
+<h3><a name="_µ_ì_è_å_æ___øï__î_____ï___é_compression_and_encryption_keywords_">°µ½Ì¤È°Å¹æ²½´ØÏ¢¤Î¥­¡¼¥ï¡¼¥É(Compression and Encryption Keywords)</a></h3>
+<p>°Ê²¼¤Î¥­¡¼¥ï¡¼¥É¤Ï¡¢¥È¥ó¥Í¥ëÆâ¤òÎ®¤ì¤ë¥Ç¡¼¥¿¤Î°µ½Ì¤È°Å¹æ²½¤òÀ©¸æ¤¹¤ë¡£
+¤³¤ì¤é¤Ï¡¢¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð¤É¤Á¤é¤Ç¤â»ÈÍÑ¤µ¤ì¤ë¡£</p>
+<dl>
+<dt><strong><a name="compression" class="item"><strong>compression</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-z</strong>)</a></strong></dt>
+
+<dd>
+<p><strong>Zebedee</strong> ¤Ï°µ½ÌÊý¼°¤È¤·¤Æ <strong>zlib</strong> ¤ò¥µ¥Ý¡¼¥È¤¹¤ë¡£
+¤½¤·¤Æ¡¢¤â¤·¥³¥ó¥Ñ¥¤¥ë»þ¤ËÍ­¸ú¤Ë¤Ê¤Ã¤Æ¤¤¤ì¤Ð<strong>bzip2</strong>¤â¥µ¥Ý¡¼¥È¤¹¤ë¡£
+¤³¤Î¥­¡¼¥ï¡¼¥É¤Ç°µ½Ì¤ÎÊý¼°¤È°µ½Ì¥ì¥Ù¥ë¤ò»ØÄê¤¹¤ë¡£
+¤³¤ÎÃÍ¤Î·Á¼°¤Ï <em>type:level</em> ¤Ç¤¢¤ë¡£<em>type</em> ¤Ï 
+&quot;<code>zlib</code>&quot; ¤È &quot;<code>bzip2</code>&quot;¤Î¤É¤Á¤é¤«¡¢<em>level</em> ¤Ï0¤«¤é9¤ÎÀ°¿ô¤Ç¤¢¤ë¡£
+¥×¥ì¥Õ¥£¥Ã¥¯¥¹¤Ê¤·¤ÇÀ°¿ô¤À¤±¤Î¾ì¹ç¤Ï¡¢<strong>zlib</strong>¤¬ÁªÂò¤µ¤ì¤ë¡£</p>
+<p><em>level</em> ¤Ï»ÈÍÑ²ÄÇ½¤ÊºÇÂç¤Î°µ½Ì¥ì¥Ù¥ë¤òÀßÄê¤¹¤ë
+(9¤¬ºÇÂç¤Ç0¤¬°µ½Ì¤Ê¤·)¡£
+¼ÂºÝ¤Ë»ÈÍÑ¤µ¤ì¤ë°µ½Ì¥ì¥Ù¥ë¤Ï¡¢¥¯¥é¥¤¥¢¥ó¥È¤ÎÃÍ¤È¥µ¡¼¥Ð¤ÎÃÍ¤ÎºÇ¾®ÃÍ¤Ç¤¢¤ë¡£
+¤³¤ÎÌÜÅª¤Ç¤Ï¡¢(0°Ê³°¤Î)<strong>bzip2</strong>¥ì¥Ù¥ë¤Ï¤¤¤«¤Ê¤ë<strong>zlib</strong>¥ì¥Ù¥ë¤ÎÃÍ¤è¤ê¾å¤Ç¤¢¤ë¤È¤ß¤Ê¤µ¤ì¤ë¡£
+½¾¤Ã¤Æ¡¢¥µ¡¼¥Ð¤È¥¯¥é¥¤¥¢¥ó¥È¤Î¤¤¤º¤ì¤«¤¬<strong>bzip2</strong>¥ì¥Ù¥ë¤ò¥µ¥Ý¡¼¥È¤·¤Æ¤¤¤Ê¤±¤ì¤Ð¡¢
+¥×¥í¥È¥³¥ë¤Ï<strong>zlib</strong>¤òÁªÂò¤¹¤ë¡£
+¥Ç¥Õ¥©¥ë¥È¤Î°µ½Ì¥ì¥Ù¥ë¤Ï&quot;<code>zlib:6</code>&quot;¤Ç¤¢¤ë¡£</p>
+<p><strong>bzip2</strong>°µ½Ì¤ÎÆ°ºîÊý¼°¤È¥Ð¥Ã¥Õ¥¡¡¼¥µ¥¤¥º¤Î¤¿¤á¤Ë¡¢
+<strong>bzip2</strong>¤ÏÏ¢Â³Åª¤Ê¥Ç¡¼¥¿¤Î¥¹¥È¥ê¡¼¥à¤¬Î®¤ì¤ë¾ì¹ç¤Ë¤À¤±»È¤¦°ÕÌ£¤¬¤¢¤ë¡£
+ÄÌ¾ï¤Î<strong>telnet</strong>¥»¥Ã¥·¥ç¥ó¤Î¤è¤¦¤Ê¡¢¾®¤µ¤ÊÅ¾Á÷¤Ç¤Ï<strong>zlib</strong>¤ÎÊý¤¬À­Ç½¤¬¤è¤¤¡£
+¤É¤Á¤é¤¬¤¢¤Ê¤¿¤Ë¤È¤Ã¤Æ¤è¤¯Æ¯¤¯¤«¤Ï¡¢¼Â¸³¤·¤Æ¤ß¤Ê¤¤¤È¤ï¤«¤é¤Ê¤¤¤À¤í¤¦¡£
+²Ã¤¨¤Æ¡¢¥Ð¥Ã¥Õ¥¡¡¼¥µ¥¤¥º¤¬¾®¤µ¤¤¤Î¤Ç¡¢<strong>bzip2</strong>¤Î1¤è¤ê¾å¤«¤é¤ÏÆÀ¤ë¤â¤Î¤¬¤Ê¤¤¡£
+<strong>Zebedee</strong>¤Ï¤³¤ì¤è¤ê¾å¤ÎÃÍ¤Ï¤³¤ÎÃÍ¤ËÊÑ¹¹¤¹¤ë¡£</p>
+<p>verbosity level¤ò2°Ê¾å¤Ë¤¹¤ì¤Ð¡¢
+ÀÜÂ³¤¬½ªÎ»¤·¤¿»þ¤Ë´ðËÜÅª¤ÊÅý·×ÃÍ¤¬¥×¥ê¥ó¥È¥¢¥¦¥È¤µ¤ì¤ë¤Î¤Ç¡¢
+¤É¤ì¤À¤±°µ½Ì¤¬Í­¸ú¤À¤Ã¤¿¤«Àµ³Î¤ËÃÎ¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+Îã¤¨¤Ð¡¢</p>
+<pre>
+ zebedee(232/210):   read 166 bytes (265 expanded) in 3 messages
+ zebedee(232/210):   wrote 20969 bytes (30499 expanded) in 247 messages</pre>
+</dd>
+<dt><strong><a name="generator" class="item"><strong>generator</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢Diffie-Hellman¥­¡¼¸ò´¹¤Î&quot;generator&quot;¤Ç¡¢16¿Ê¿ô¤ÎÊ¸»úÎó¤Ç»ØÄê¤¹¤ë¡£
+¥Ç¥Õ¥©¥ë¥È¤Ï&quot;2&quot;¤Ç¤¢¤ë¡£
+¤Ê¤ó¤Î¤³¤È¤«¤ï¤«¤é¤Ê¤±¤ì¤Ð¡¢
+²¼¼ê¤Ë¤¤¤¸¤é¤Ê¤¤Êý¤¬¤¤¤¤¤À¤í¤¦¡£</p>
+</dd>
+<dt><strong><a name="keygencommand" class="item"><strong>keygencommand</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤¬»ØÄê¤µ¤ì¤ë¤È¡¢
+¤³¤ÎÃÍ(¥³¥Þ¥ó¥ÉÊ¸»úÎó)¤¬ÈëÌ©¸°¤òÀ¸À®¤¹¤ë¤¿¤á¤Ë»ÈÍÑ¤µ¤ì¤ë¡£
+¤½¤Î¥³¥Þ¥ó¥É¤ÏÉ¸½à½ÐÎÏ¤Ë1¹Ô¤Î16¿Ê¿ô¤ò½ÐÎÏ¤·¤Ê¤¯¤Æ¤Ï¤Ê¤é¤Ê¤¤¡£
+¤³¤Î¹Ô¤Ï¾¯¤¯¤È¤â10·å¤Î16¿Ê¿ô¤Ç¤¢¤ë¤³¤È¡£</p>
+</dd>
+<dt><strong><a name="keygenlevel" class="item"><strong>keygenlevel</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï0¤È2¤Î´Ö¤ÎÀ°¿ô¤Ç¡¢<strong>Zebedee</strong>¤Ç»ÈÍÑ¤¹¤ëÈëÌ©¸°À¸À®¤Î¶¯ÅÙ¤ò·èÄê¤¹¤ë¡£
+¥Ç¥Õ¥©¥ë¥È¤Ï2(ºÇ¶¯)¤Ç¤¢¤ë¡£ÀÜÂ³»þ¤Î¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤¬ÂÑ¤¨¤¬¤¿¤¤¾ì¹ç°Ê³°¤Ë¤Ï¡¢
+°ìÈÌÅª¤Ë¤Ï¤³¤ì¤òÊÑ¹¹¤·¤Ê¤¤¤Û¤¦¤¬¤è¤¤¡£</p>
+<p>´ÊÃ±¤Ë¸À¤Ã¤Æ¡¢UNXI·Ï¤Î¥·¥¹¥Æ¥à¤Ç¤Ï¥ì¥Ù¥ë2¤Î¥­¡¼À¸À®¤Î¥á¥«¥Ë¥º¥à¤Ï¡¢
+²ÄÇ½¤Ç¤¢¤ì¤Ð <code>/dev/random</code> ¤ò»ÈÍÑ¤¹¤ë¡£
+¤·¤«¤·¤Ê¤¬¤é¡¢¤¢¤Þ¤ê¤Ë¤âÂ¿¤¯¤ÎÍ×µá¤òÏ¢Â³Åª¤Ë¤³¤Î¥Ç¥Ð¥¤¥¹¤ËÂÐ¤·¤Æ¹Ô¤¦¤È¡¢
+¥«¡¼¥Í¥ë¤¬É¬Í×¤Ê&quot;¥¨¥ó¥È¥í¥Ô¡¼&quot;¤ò¤«¤­½¸¤á¤ë´Ö¡¢
+¥×¥í¥»¥¹¤¬¥Ö¥í¥Ã¥¯¤µ¤ì¤ë²ÄÇ½À­¤¬¤¢¤ë(¤½¤ì¤¬¿ôÉÃ¤Ë¤Ê¤ë¤³¤È¤â¤¢¤ë)¡£
+<code>/dev/random</code>¤¬»ÈÍÑ¤Ç¤­¤Ê¤¤¾ì¹ç¤ä
+¥ì¥Ù¥ë¤¬1¤Ë¥»¥Ã¥È¤µ¤ì¤¿¾ì¹ç¤Ï¡¢
+<code>/proc</code>¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à¤Î¸½ºß¤ÎÆâÍÆ¤¬(¤â¤·¤¢¤ì¤Ð)»ÈÍÑ¤µ¤ì¤ë¡£
+¥ì¥Ù¥ë0¤Ç¤Ï¸½ºß¤Î¥×¥í¥»¥¹¤Ë¤¢¤ë¾ðÊó¤À¤±¤¬»ÈÍÑ¤µ¤ì¤ë¡£</p>
+<p>Windows¾å¤Î¥·¥¹¥Æ¥à¤Ç¤Ï¡¢¸½ºß¤Î¤È¤³¤í¡¢
+¥­¡¼À¸À®¶¯ÅÙ¤Î¥ì¥Ù¥ë¤´¤È¤Î°ã¤¤¤Ï¤Ê¤¯¡¢
+¤³¤Î¥­¡¼¥ï¡¼¥É¤Ï¼ÂºÝ¤Ë¤ÏÌµ»ë¤µ¤ì¤ë¡£</p>
+</dd>
+<dt><strong><a name="keylength" class="item"><strong>keylength</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-k</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢Blowfish°Å¹æ²½¤Î¥­¡¼¤Î¥Ó¥Ã¥ÈÄ¹¤ÎºÇÂçÃÍ¤ÎÀ°¿ô¤Ç¤¢¤ë¡£
+¤³¤ÎÃÍ¤Ï4¤«¤é576¤Î´Ö¤Î4¤ÎÇÜ¿ô¤Ç¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£
+»ÈÍÑ¤µ¤ì¤ë¥­¡¼Ä¹¤Ï¥¯¥é¥¤¥¢¥ó¥È¤ÎÃÍ¤È¥µ¡¼¥Ð¤ÎÃÍ¤ÎºÇ¾®ÃÍ¤Ë¤Ê¤ë¡£
+(<strong><a href="#item_minkeylength">minkeylength</a></strong>»²¾È)</p>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ï128¤Ç¤¢¤ë¡£
+ÆÃÊÌ¤Ê¥±¡¼¥¹¤È¤·¤Æ¡¢¤³¤ÎÃÍ¤¬0¤ËÀßÄê¤µ¤ì¤ë¤È¡¢
+¥­¡¼¤Î¥Í¥´¥·¥¨¡¼¥·¥ç¥ó¤È°Å¹æ²½¤ÏÌµ¸ú¤Ë¤µ¤ì¤ë¡£</p>
+</dd>
+<dt><strong><a name="keylifetime" class="item"><strong>keylifetime</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥Ñ¥é¥á¡¼¥¿¤ÎÃÍ¤¬0°Ê³°¤ËÀßÄê¤µ¤ì¤ë¤È¡¢¤³¤ì°Ê¹ß¤ÎÀÜÂ³¤Ë¤ª¤¤¤Æ¡¢
+¥¯¥é¥¤¥¢¥ó¥È¤Ï¥»¥Ã¥·¥ç¥ó¥­¡¼¤ÎÆ³½Ð¤Î¤¿¤á¤Ë¡¢°ÊÁ°ÀßÄê¤µ¤ì¤¿shared secret key¤ò
+ºÆÍøÍÑ¤¹¤ë¤è¤¦¤ËÍ×µá¤¹¤ë¡£
+¤Ä¤Þ¤ê<strong>Zebedee</strong>¤Î¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð¤Ï¡¢
+ºÇ½é¤ÎÀÜÂ³¤Ë¤ª¤¤¤Æ¤Î¤ß¥­¡¼¸ò´¹¤ÎÂÐÏÃ¤òÁ´¤Æ¹Ô¤Ê¤¦¡£
+¤½¤ì°Ê¹ß¤ÎÀÜÂ³¤Ç¤Ï¡¢¥­¡¼¤ÎÍ­¸ú´ü¸Â¤¬ÀÚ¤ì¤ë¤Þ¤Ç¤Ï¡¢Æ±¤¸secret key¤¬ºÆÍøÍÑ¤µ¤ì¡¢
+¤³¤Î¥­¡¼¤«¤ésession key¤¬Æ³½Ð¤µ¤ì¤ë¡£
+¥­¡¼¤ÎÍ­¸ú´ü¸Â¤¬ÀÚ¤ì¤ë¤È¡¢¼«Æ°Åª¤Ë¿·¤·¤¤¥­¡¼¤Î¸ò´¹¤¬¹Ô¤Ê¤ï¤ì¤ë¡£</p>
+<p>¤½¤·¤Æ¡¢¤³¤Î¥­¡¼¥ï¡¼¥É¤¬¡¢shared secret key¤¬Í­¸ú¤Ê´ü´Ö¤ò»ØÄê¤¹¤ë¡£
+¤³¤ì¤Ï¡¢´û¤ËÀÜÂ³¤µ¤ì¤¿ÀÜÂ³¤Ë¤Ï±Æ¶Á¤·¤Ê¤¤¤Ç¡¢¿·¤·¤¤ÀÜÂ³¤À¤±¤Ë±Æ¶Á¤¹¤ë¡£</p>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤ÎÃÍ¤ÎÃ±°Ì¤ÏÉÃ¤Ç¤¢¤ê¡¢65535(Ìó18»þ´Ö)°Ê²¼¤Ç¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£
+¥Ç¥Õ¥©¥ë¥È¤Ï3600ÉÃ(1»þ´Ö)¤Ç¤¢¤ë¡£
+¤³¤Î¥­¡¼¥ï¡¼¥É¤ÎÃÍ¤ò0¤ËÀßÄê¤¹¤ë¤È¡¢¥­¡¼¤ÎºÆÍøÍÑ¤Ï¹Ô¤Ê¤ï¤ì¤Ê¤¯¤Ê¤ê¡¢
+ÀÜÂ³¤ÎÅÙ¤Ë¡¢´°Á´¤Êshared key¤Î¸ò´¹¼êÂ³¤­¤¬¹Ô¤Ê¤ï¤ì¤ë¡£
+¤Ä¤Þ¤ê¡¢¥¯¥é¥¤¥¢¥ó¥È¤â¥µ¡¼¥Ð¤âËè²óÈëÌ©¸°¤ò¿·¤·¤¯À¸À®¤¹¤ë¤È¤ß¤Ê¤¹¡£
+¤¿¤À¤·¡¢¤³¤ÎÊýË¡¤Ï¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤ËÂ¿Âç¤Ê±Æ¶Á¤¬¤¢¤ë¤Î¤Ç¡¢
+ÊÐ¼¹¶¸Åª¤Ë¹âÅÙ¤Ê°ÂÁ´À­¤òÉ¬Í×¤È¤¹¤ë¾ì¹ç°Ê³°¤Ë¤Ï´«¤á¤é¤ì¤Ê¤¤¡£</p>
+</dd>
+<dt><strong><a name="minkeylength" class="item"><strong>minkeylength</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢¥¯¥é¥¤¥¢¥ó¥È¤Þ¤¿¤Ï¥µ¡¼¥Ð¤ÇµöÍÆ¤µ¤ì¤ëºÇ¾®¤Î¥­¡¼Ä¹¤ò»ØÄê¤¹¤ë¡£
+¥¯¥é¥¤¥¢¥ó¥È¤¬¥µ¡¼¥Ð¤Î¥ì¥Ù¥ë¤è¤ê¾®¤µ¤¤ÃÍ¤òÍ×µá¤¹¤ë¤È¡¢
+¥µ¡¼¥Ð¤Ï¤³¤³¤Ç»ØÄê¤·¤¿ºÇ¾®ÃÍ¤òÊÖÅú¤¹¤ë¡£
+¥µ¡¼¥Ð¤¬¥¯¥é¥¤¥¢¥ó¥È¤ÎºÇ¾®ÃÍ¤è¤ê²¼¤Î¥ì¥Ù¥ë¤òÊÖÅú¤¹¤ë¤È¡¢
+¥¯¥é¥¤¥¢¥ó¥È¤ÏÀÜÂ³¤ò½ªÎ»¤¹¤ë¡£</p>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ï0¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="modulus" class="item"><strong>modulus</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤ÎÃÍ¤Ï¡¢Diffie-Hellman¥­¡¼¸ò´¹¤Î¾êÍ¾ÃÍ¤òÉ½¤¹16¿Ê¿ô¤ÎÊ¸»úÎó¤Ç¤¢¤ë¡£
+¤³¤ì¤¬²¿¤«¤ï¤«¤ë¿Í¤Ç¿ô³Ø¥ª¥¿¥¯¤Î¿Í°Ê³°¤Ï¤¤¤¸¤Ã¤Á¤ã¤À¤á¡£</p>
+<p>¥Ç¥Õ¥©¥ë¥È¤ÎÃÍ¤Ï²¼µ­¤Î1024¥Ó¥Ã¥È¤ÎÁÇ¿ô¤Ç¤¢¤ë¡£</p>
+<pre>
+ f488fd584e49dbcd 20b49de49107366b 336c380d451d0f7c 88b31c7c5b2d8ef6
+ f3c923c043f0a55b 188d8ebb558cb85d 38d334fd7c175743 a31d186cde33212c
+ b52aff3ce1b12940 18118d7c84a70a72 d686c40319c80729 7aca950cd9969fab
+ d00a509b0246d308 3d66a45d419f9c7c bd894b221926baab a25ec355e92f78c7</pre>
+<p>¤³¤ì¤Ï Peter Gutman ¤Î <strong>CryptLib</strong> ¤ÎÃæ¤Î <em class="file">testdh.h</em> ¤È¤¤¤¦¥Õ¥¡¥¤¥ë¤«¤é
+¤È¤é¤ì¤¿¡£
+¤½¤³¤Ë¤Ï¡¢¤³¤ÎÃÍ¤¬ &quot;generated by Colin Plumb for SKIP&quot;¤À¤È¥³¥á¥ó¥È¤¬¤¢¤ë¡£
+¤½¤ì¤«¤é &quot;these values were chosen as representative
+well-known public values to allay fears of possible trapdoors in
+self-generated values.  The generation method and actual values can be
+checked against the SKIP standards document.&quot; ¤À¤È¤µ¡£</p>
+</dd>
+<dt><strong><a name="privatekey" class="item"><strong>privatekey</strong></a></strong></dt>
+
+<dd>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢<strong>Zebedee</strong>¤Ï¥»¥Ã¥·¥ç¥ó¤´¤È¤Ë¿·¤·¤¤ÈëÌ©¸°¤òÀ¸À®¤¹¤ë¡£
+¤·¤«¤·¡¢¤â¤·¤¢¤Ê¤¿¤¬Ëè²óÆ±¤¸¥­¡¼¤ò»È¤¤¤¿¤¤¾ì¹ç¤Ï¡¢
+16¿Ê¿ô¤ÎÊ¸»úÎó¤È¤·¤Æ¤³¤ì¤ò»ØÄê¤¹¤ì¤Ð¤¤¤¤¡£
+¤â¤·¸ø³«¸°°Å¹æ¤Ë¤è¤ëÇ§¾Ú(<a href="#identity_checking">identitychecking</a>)¤ò»ÈÍÑ¤·¤¿¤¤¾ì¹ç¤Ï¡¢
+É¬¤º¤³¤ì¤òÀßÄê¤·¤Ê¤¯¤Æ¤Ï¤¤¤±¤Ê¤¤¡£
+¥­¡¼¤¬¾¯¤¯¤È¤â10·å¤ÏÉ¬Í×¤Ê¤³¤È¤ËÃí°Õ¤¹¤ë¤³¤È¡£</p>
+</dd>
+</dl>
+<p>
+</p>
+<h3><a name="íí___ê_____ï___é_miscellaneous_keywords_">ÍÍ¡¹¤Ê¥­¡¼¥ï¡¼¥É(Miscellaneous Keywords)</a></h3>
+<p>°Ê²¼¤Î¥­¡¼¥ï¡¼¥É¤Ï¥¯¥é¥¤¥¢¥ó¥È¤Ë¤â¥µ¡¼¥Ð¤Ë¤âÅù¤·¤¯Å¬ÍÑ¤µ¤ì¤ë¡£</p>
+<dl>
+<dt><strong><a name="checkidfile" class="item"><strong>checkidfile</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢ÀÜÂ³¤òµö²Ä¤¹¤ëÁ°¤Ë¥Á¥§¥Ã¥¯¤¹¤ë¥¢¥¤¥Ç¥ó¥Æ¥£¥Æ¥£¤òÊ£¿ôµ­½Ò¤·¤¿¥Õ¥¡¥¤¥ë¤ÎÌ¾¾Î¤Ç¤¢¤ë¡£
+¤³¤ì¤Ë¤Ä¤¤¤Æ¤Ï<a href="#identity_checking">identity checking</a>¤Ç¾Ü¤·¤¯½Ò¤Ù¤ë¡£
+¤³¤Î¥Õ¥¡¥¤¥ë¤Ï¤Ò¤È¤Ä¤·¤«»ØÄê¤Ç¤­¤Ê¤¤¡£¤â¤·Ê£¿ô½Ð¸½¤·¤¿¤é¡¢
+ºÇ¸å¤ÎÃÍ¤¬»ÈÍÑ¤µ¤ì¤ë¡£</p>
+<p>¤â¤·¡¢<strong><a href="#item_keylength">keylength</a></strong>¤¬0¤Ç¤¢¤ë¤³¤È¤Ë
+(¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð¤¬)Æ±°Õ¤·¤¿¾ì¹ç¤Ï¡¢¥¢¥¤¥Ç¥ó¥Æ¥£¥Æ¥£¤Î¥Á¥§¥Ã¥¯¤Ï¹Ô¤Ê¤ï¤ì¤Ê¤¤¡£</p>
+</dd>
+<dt><strong><a name="connecttimeout" class="item"><strong>connecttimeout</strong></a></strong></dt>
+
+<dd>
+<p><strong>Zebedee</strong>¤¬¡ÖµÕ¤à¤­¥â¡¼¥É¡×(<strong><a href="#item_listenmode">listenmode</a></strong> µÚ¤Ó <strong><a href="#item_clienthost">clienthost</a></strong>»²¾È)¤Ç»ÈÍÑ¤µ¤ì¤Æ¤¤¤ë»þ¡¢
+ÀÜÂ³¤¬¼õ¤±¤Ä¤±¤é¤ì¤ë¤Î¤òÂÔ¤Ä»þ´Ö¤Ï¤³¤Î¥­¡¼¥ï¡¼¥É¤ÇÀ©¸æ¤µ¤ì¤ë¡£
+ÃÍ¤ÏÉÃÃ±°Ì¤Ç65535Ì¤Ëþ¤Ç¤¢¤ë¤³¤È¡£
+´ûÄêÃÍ¤Ï300ÉÃ¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="debug" class="item"><strong>debug</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-D</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï<strong>Zebedee</strong>¤¬ &quot;debug&quot; ¥â¡¼¥É¤ÇÆ°ºî¤¹¤ë¤«¤ò»ØÄê¤¹¤ë¿¿µ¶ÃÍ¤Ç¤¢¤ë¡£
+&quot;debug&quot; ¥â¡¼¥É¤Ç¤Ï¥µ¡¼¥Ð¤Ï
+(<strong><a href="#item_multiuse">multiuse</a></strong>¥â¡¼¥É¤Î¥¯¥é¥¤¥¢¥ó¥È)¤Ï
+°ìÅÙ¤Ë°ì¤Ä¤ÎÀÜÂ³¤·¤«¼õ¤±ÉÕ¤±¤Ê¤¤¡£
+¤½¤·¤Æ¡¢ÊÌ¥×¥í¥»¥¹¤äÊÌ¥¹¥ì¥Ã¥É¤òÀ¸À®¤¹¤ë¤³¤È¤Ê¤¯ &quot;inline&quot; ¤ÇÆ°ºî¤¹¤ë¡£
+¤³¤ì¤Ï¥Ç¥Ð¥Ã¥¬¾å¤Ç¥×¥í¥°¥é¥à¤òÆ°¤«¤¹»þ¤ËÊØÍø¤Ç¤¢¤ë¡£
+¥Ç¥Õ¥©¥ë¥È¤Ïfalse¤Ç¤¢¤ë¡£¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Î <strong>-D</strong> ¤Ï
+¤³¤ì¤ò <strong>true</strong> ¤ËÀßÄê¤¹¤ë¤Î¤ÈÆ±¤¸¤Ç¤¢¤ë¡£</p>
+<p>Ãí¡§¤³¤ÎÀßÄê¤Ï¡¢UDP¥â¡¼¥É¤Ç¤ÏÀµ¤·¤¯Æ°ºî¤·¤Ê¤¤¤Î¤Ç¡¢»î¤µ¤Ê¤¤¤Û¤¦¤¬¤¤¤¤¡£</p>
+</dd>
+<dt><strong><a name="detached" class="item"><strong>detached</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-d</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¥×¥í¥»¥¹¤¬À©¸æÃ¼Ëö¤«¤é¼«Ê¬¼«¿È¤òÀÚÎ¥¤·¤Æ¥Ð¥Ã¥¯¥°¥é¥¦¥ó¥È¤Ç
+(UNIXÍÑ¸ì¤Ç¤Ï¥Ç¡¼¥â¥ó¤È¤·¤Æ)Æ°ºî¤¹¤ë¤«¤É¤¦¤«»ØÄê¤¹¤ë¿¿µ¶ÃÍ¤Ç¤¢¤ë¡£
+¤³¤ì¤Ï¥¯¥é¥¤¥¢¥ó¥È¤Ç¤â¥µ¡¼¥Ð¤Ç¤âÍ­¸ú¤Ç¤¢¤ê¡¢
+¥Ç¥Õ¥©¥ë¥È¤Ï <strong>true</strong> ¤Ç¤¢¤ë¡£¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Î<strong>-d</strong>¤Ï
+¤³¤ì¤ò <strong>false</strong> ¤ËÀßÄê¤¹¤ë¤Î¤ÈÆ±¤¸¤Ç¤¢¤ë¡£</p>
+<p>Ãí¡§Windows¤Î¥³¥Þ¥ó¥É¥×¥í¥ó¥×¥È¤Ç¤Ï¤³¤ì¤¬¤¦¤Þ¤¯Æ°ºî¤·¤Ê¤¤¤³¤È¤â¤¢¤ë¤è¤¦¤À¡£
+¤½¤ÎÄ§¸õ¤Ï¡¢¥³¥ó¥½¡¼¥ë¥¦¥¤¥ó¥É¥¦¤Ø¤Î½ÐÎÏ¤¬»ß¤Þ¤ê³ä¹þ¤ß¤Îsignal¤¬Ìµ»ë¤µ¤ì¤ë¤¬¡¢
+¥³¥ó¥½¡¼¥ë¤Î¥×¥í¥ó¥×¥È¤¬<strong>Zebedee</strong>¤¬½ªÎ»¤¹¤ë¤Þ¤ÇÉ½¼¨¤µ¤ì¤Ê¤¤¤³¤È¤À¡£
+¤³¤ì¤ò²óÈò¤¹¤ë¤Ë¤Ï¡¢°Ê²¼¤Î¤è¤¦¤Ë &quot;start&quot; ¥³¥Þ¥ó¥É¤ò»ÈÍÑ¤¹¤ì¤Ð¤è¤¤¡£</p>
+<pre>
+ DOS&gt; start zebedee -f server.zbd</pre>
+<p>¤³¤ì¤Ï<strong>Zebedee</strong>¤ò¿·¤·¤¤¥³¥ó¥½¡¼¥ë¥»¥Ã¥·¥ç¥ó¤Çµ¯Æ°¤·¡¢¤½¤³¤«¤éÀÚ¤êÎ¥¤¹¡£
+ÀÚ¤êÎ¥¤¹Á°¤Ë°ì½Ö¤À¤±¥Á¥é¥ê¤È¤½¤Î¥³¥ó¥½¡¼¥ë¤¬¸«¤¨¤ë¤¬¡¢¤½¤ì¤¬¾Ã¤¨¤Æ¤â
+<strong>Zebedee</strong>¤Ï¥Ð¥Ã¥¯¥°¥é¥¦¥ó¥É¤ÇÆ°ºî¤·¤Æ¤¤¤ë¡£</p>
+</dd>
+<dt><strong><a name="include" class="item"><strong>include</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤ÏÊÌ¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°¤ò»ØÄê¤¹¤ë¡£
+¤½¤Î¥Õ¥¡¥¤¥ë¤Ï¤³¤Î¥Õ¥¡¥¤¥ë¤Î»Ä¤ê¤ò½èÍý¤¹¤ëÁ°¡¢
+¤³¤Î»þÅÀ¤Ç½èÍý¤µ¤ì¤ë¡£
+Îã¤¨¤Ð¡¢ÈëÌ©¸°¤ò¤â¤Ã¤È¤­¤Ã¤Á¤ê¥¬¡¼¥É¤·¤¿¥Õ¥¡¥¤¥ë¤ËÊ¬Î¥¤·¤ÆÊÝÂ¸¤·¤¿¾ì¹ç¤Ë¡¢
+¤½¤Î¥Õ¥¡¥¤¥ë¤ò¼è¤ê¹þ¤à¤¿¤á¤Ë»ÈÍÑ¤µ¤ì¤ë¡£
+include¤Ï5¥ì¥Ù¥ë¤Î¿¼¤µ¤Þ¤Ç¤Ë¸ÂÄê¤µ¤ì¤ë(ºÇ½é¤Î¥Õ¥¡¥¤¥ë¤ò¥ì¥Ù¥ë1¤È¤·¤Æ)¡£
+¤³¤ì¤Ï¤¦¤Ã¤«¤êÌµ¸Â¥ë¡¼¥×¤òºî¤é¤Ê¤¤¤¿¤á¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="maxbufsize" class="item"><strong>maxbufsize</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢
+<strong>Zebedee</strong> ¤¬¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤«¤é¥Ç¡¼¥¿¤òÆÉ¤à¤¿¤á¤Ë»ÈÍÑ¤¹¤ë¥Ð¥Ã¥Õ¥¡¤ÎÄ¹¤µ(¥Ð¥¤¥ÈÃ±°Ì)¤ò»ØÄê¤¹¤ë¡£
+¼ÂºÝ¤Ë»ÈÍÑ¤µ¤ì¤ë¥Ð¥Ã¥Õ¥¡¤ÎÄ¹¤µ¤Ï¥µ¡¼¥Ð¤ÎÃÍ¤È¥¯¥é¥¤¥¢¥ó¥È¤ÎÃÍ¤ÎºÇ¾®ÃÍ¤Ë¤Ê¤ë¡£</p>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢<strong>Zebedee</strong>¤Ï¥È¥ó¥Í¥ë¤ÎÎ¾Ã¼¤Ç
+¥µ¡¼¥Ð¥×¥í¥°¥é¥à¡¢¥¯¥é¥¤¥¢¥ó¥È¥×¥í¥°¥é¥à¤«¤é8192¥Ð¥¤¥ÈÃ±°Ì¤ÇÆÉ¤ß½Ð¤¹¡£
+Îã¤¨¤Ð¡¢¤¹¤´¤¯ÂÐÏÃÅª¤Ê¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤¬¤¢¤Ã¤Æ¡¢
+Âç¤­¤Ê¥Ç¡¼¥¿Å¾Á÷¤òÂÔ¤Ä¤¿¤á¤Ë¤Ò¤É¤¤¥ì¥¹¥Ý¥ó¥¹¤À¤Ã¤¿¤ê¤·¤¿»þ¤Ê¤É¡¢
+¤³¤ì¤ò¾®¤µ¤¯¤·¤¿¤¤¤³¤È¤â¤¢¤ë¤À¤í¤¦¡£
+¥Ð¥Ã¥Õ¥¡¥µ¥¤¥º¤Ï1¥Ð¥¤¥È¤Þ¤Ç½Ì¤á¤ë¤³¤È¤¬¤Ç¤­¤ë¤¬¡¢
+¤ª¤«¤·¤ÊÆ°¤­¤ò¥Ç¥Ð¥Ã¥°¤·¤è¤¦¤È¤·¤Æ¤¤¤ë¤Î¤«»þ´Ö¤òÌµÂÌ¤Ë¤·¤¿¤¤¤Î¤Ç¤Ê¤±¤ì¤Ð¡¢
+¤³¤ì¤Ï¤ª´«¤á¤Ç¤­¤Ê¤¤¡£
+µÕ¤Ë¡¢ÂçÎÌ¤Î¥Ç¡¼¥¿¤ÎÅ¾Á÷¤¬¤¢¤Ã¤Æ¡¢
+°µ½Ì¤ò¤á¤¤¤Ã¤Ñ¤¤¸ú¤«¤»¤¿¤¤¾ì¹ç¤Ï¡¢16383¥Ð¥¤¥È¤Þ¤ÇÂç¤­¤¯¤·¤Æ¤â¤è¤¤¡£
+Ãí¡§<strong>maxbufsize</strong> ¤Ï <strong>Zebedee</strong> ¤¬»ÈÍÑ¤¹¤ë¥á¥â¥êÎÌ¤Ë¤Ï´Ø·¸¤Ê¤¤¡£
+°ìÅÙ¤ËÆÉ¤ß¤³¤à¥Ç¡¼¥¿¤Î¤«¤¿¤Þ¤ê¤Î¥µ¥¤¥º¤À¤±¤Ë±Æ¶Á¤¹¤ë¡£</p>
+<p>UDP¥â¡¼¥É¤Ç¤Ï¡¢¥Ð¥Ã¥Õ¥¡¥µ¥¤¥º¤Ï°·¤¨¤ë¥Ç¡¼¥¿¥°¥é¥à¤ÎºÇÂçÄ¹¤Ë¤â±Æ¶Á¤¹¤ë¡£
+¸½ºß¤Î¥Ð¥Ã¥Õ¥¡¥µ¥¤¥º¤è¤êÂç¤­¤Ê¥Ç¡¼¥¿¥°¥é¥à¤ÏÊ¬ÃÇ¤µ¤ì¡¢
+¤½¤ì¤ò¼õ¿®¤¹¤ë¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤¬Íî¤Á¤ë¤³¤È¤Ë¤Ê¤ê¤¬¤Á¤À¡£
+16383¥Ð¥¤¥È°Ê¾å¤Î¥Ç¡¼¥¿¥°¥é¥à¤Ï°·¤¦¤³¤È¤¬¤Ç¤­¤Ê¤¤¡£</p>
+</dd>
+<dt><strong><a name="message" class="item"><strong>message</strong></a></strong></dt>
+
+<dd>
+<p>verbosity level ¤¬1¤Ê¤é¤Ð¡¢ÀßÄê¥Õ¥¡¥¤¥ë¤Î¤³¤ÎÉôÊ¬¤ò½èÍý¤·¤¿»þ¤Ë¡¢
+¤³¤Î¥á¥Ã¥»¡¼¥¸¤¬¥í¥°¤Ëµ­Ï¿¤µ¤ì¤ë¡£</p>
+</dd>
+<dt><strong><a name="name" class="item"><strong>name</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-n</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢¼Â¹Ô¥Õ¥¡¥¤¥ë¤Î¥Õ¥¡¥¤¥ëÌ¾¤ÎÂå¤ï¤ê¤Ë¡¢
+¥á¥Ã¥»¡¼¥¸¤ÎÃæ¤Ç»È¤ï¤ì¤ë¥×¥í¥°¥é¥àÌ¾¾Î¤Ë¤Ê¤ë¡£
+Windows´Ä¶­¤Ç¤Ï¡¢¥¤¥ó¥¹¥È¡¼¥ë¤¢¤ë¤¤¤Ïºï½ü¤µ¤ì¤ë¥µ¡¼¥Ó¥¹¤ÎÌ¾Á°¤È¤·¤Æ¤âÍÑ¤¤¤é¤ì¤ë¡£</p>
+</dd>
+<dt><strong><a name="logfile" class="item"><strong>logfile</strong> (command-line <strong>-o</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¥á¥Ã¥»¡¼¥¸¤¬½ÐÎÏ¤µ¤ì¤ë¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°¤Ç¤¢¤ë¡£
+¤â¤·¾ÊÎ¬¤µ¤ì¤ë¤È¥á¥Ã¥»¡¼¥¸¤ÏÉ¸½à¥¨¥é¡¼¤Ë½ÐÎÏ¤µ¤ì¤ë¡£</p>
+<p>2¤Ä¤ÎÆÃ¼ì¤Ê¥Õ¥¡¥¤¥ëÌ¾¤âÀµ¤·¤¤Ì¾Á°¤È¤·¤ÆÇ§¼±¤µ¤ì¤ë¡£
+¤â¤·¡¢Ì¾¾Î¤¬<strong>NULL</strong>¤À¤È¡¢Á´¤Æ¤Î¥á¥Ã¥»¡¼¥¸½ÐÎÏ¤Ï»ß¤á¤é¤ì¤ë¡£
+<strong>SYSLOG</strong>¤À¤È¡¢¥á¥Ã¥»¡¼¥¸¤Ï¥Û¥¹¥È¤Î¥·¥¹¥Æ¥à¥í¥°¤Ë½ÐÎÏ¤µ¤ì¤ë¡£
+Windows¥·¥¹¥Æ¥à¤Ç¤Ï¡¢¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥¤¥Ù¥ó¥È¥í¥°¤ò°ÕÌ£¤¹¤ë¡£
+Â¾¤Î¥·¥¹¥Æ¥à¤Ç¤Ï¡¢¥á¥Ã¥»¡¼¥¸¤Ï<strong>syslog</strong> ¥µ¡¼¥Ó¥¹¤Ë½ÐÎÏ¤µ¤ì¤ë¡£</p>
+</dd>
+<dt><strong><a name="serverport" class="item"><strong>serverport</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢<strong>Zebedee</strong> ¥µ¡¼¥Ð¤¬ÀÜÂ³¤òÂÔ¤Á¼õ¤±¤ë¥Ý¡¼¥È¤Ç¤¢¤ë¡£
+¥Ç¥Õ¥©¥ë¥È¤ÏTCP¥â¡¼¥É¤Ç¤Ï11965 (0x2EBD)¡¢UDP¥â¡¼¥É¤Ç¤Ï11230(0x2BDE)¤Ç¤¢¤ë¡£
+¥µ¡¼¥Ð¤Ç¤³¤ì¤ò»ØÄê¤¹¤ë¤È¡¢¥µ¡¼¥Ð¤Ï¤³¤Î¥Ý¡¼¥È¤Çlisten¤¹¤ë¡£
+¥¯¥é¥¤¥¢¥ó¥È¤Ç¤³¤ì¤ò»ØÄê¤¹¤ë¤È¡¢¥¯¥é¥¤¥¢¥ó¥È¤Ï
+¥µ¡¼¥Ð¤Î¤³¤ÎÈÖ¹æ¤Î¥Ý¡¼¥È¤ËÀÜÂ³¤¹¤ë¤³¤È¤Ë¤Ê¤ë¡£</p>
+<p>¥µ¡¼¥Ð¼çÆ³¤ÎÀÜÂ³(<strong><a href="#item_listenmode">listenmode</a></strong> µÚ¤Ó <strong><a href="#item_clienthost">clienthost</a></strong>»²¾È)¤ò»ÈÍÑ¤¹¤ë¾ì¹ç¤Ï¡¢
+¤³¤ì¤Ï¥¯¥é¥¤¥¢¥ó¥È¤¬¥µ¡¼¥Ð¤«¤é¤ÎÀÜÂ³¤òÂÔ¤Á¼õ¤±¤ë¥Ý¡¼¥È¤Î¤³¤È¤â°ÕÌ£¤¹¤ë¡£</p>
+</dd>
+<dt><strong><a name="timestamplog" class="item"><strong>timestamplog</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-t</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢¥í¥°¥á¥Ã¥»¡¼¥¸¤Ë¥¿¥¤¥à¥¹¥¿¥ó¥×¤ò´Þ¤á¤ë¤«¤É¤¦¤«¤ò¼¨¤¹¿¿µ¶ÃÍ¤Ç¤¢¤ë¡£
+¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Î <strong>-t</strong> ¤Ï¤³¤ì¤ò<strong>true</strong>¤ËÀßÄê¤¹¤ë¤Î¤ÈÆ±¤¸¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="udpmode" class="item"><strong>udpmode</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-u</strong>)</a></strong></dt>
+
+<dd>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï<strong>Zebedee</strong>¤Ï¡¢¥³¥Í¥¯¥·¥ç¥ó¥Ù¡¼¥¹¤ÎTCP/IP¤ÎÄÌ¿®¤ò°·¤¦¡£
+¤â¤·¡¢¤³¤Î¥­¡¼¥ï¡¼¥É¤¬»ØÄê¤µ¤ì¤ë¤È¡¢¤«¤ï¤ê¤Ë¥³¥Í¥¯¥·¥ç¥ó¥ì¥¹¤ÎUDP/IP¤ÎÄÌ¿®¤ò°·¤¦¡£</p>
+<p>¤³¤Î¾ì¹ç¤Ç¤â¡¢<strong>Zebedee</strong>¤Î¥¯¥é¥¤¥¢¥ó¥È¤È¥µ¡¼¥Ð´Ö¤Î¥È¥ó¥Í¥ë¤ÏTCP/IPÀÜÂ³¤ò»ÈÍÑ¤¹¤ë¡£
+UDP¤Î°¸Àè¤´¤È¤ËÊÌ¡¹¤ÎÀÜÂ³¤¬»ÈÍÑ¤µ¤ì¤ë¡£
+UDP¤Ï¥³¥Í¥¯¥·¥ç¥ó¥ì¥¹¤Ê¤Î¤Ç¡¢ÄÌ¿®¤¬´°Î»¤·¤¿¤³¤È¤ò´ÊÃ±¤ËÃÎ¤ë¤³¤È¤Ï¤Ç¤­¤Ê¤¤¡£
+¤³¤ÎÍýÍ³¤Ç¡¢<strong>Zebedee</strong>¤ÎÀÜÂ³¤Ï°ìÄê¤Î»þ´ÖÄÌ¿®¤¬Ìµ¤¤¾ì¹ç¤Ë¥¿¥¤¥à¥¢¥¦¥È¤¹¤ëÉ¬Í×¤¬¤¢¤ë¡£
+¤³¤Î»þ´Ö¤Ï<strong><a href="#item_udptimeout">udptimeout</a></strong>¤ÎÃÍ¤ÇÀ©¸æ¤µ¤ì¤ë¡£</p>
+<p>¤¹¤Ç¤Ë¥¿¥¤¥à¥¢¥¦¥È¤·¤Æ¤·¤Þ¤Ã¤¿¥È¥ó¥Í¥ë¤Ë¸þ¤±¤¿¥Ç¡¼¥¿¤¬ÅþÃå¤·¤¿¾ì¹ç¡¢
+ÀÜÂ³¤òºÆ³ÎÎ©¤¹¤ëÉ¬Í×¤¬¤¢¤ë¡£
+¤³¤Î¤¿¤á¤Ë¡¢¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÆÃÀ­¤Ë¤è¤Ã¤Æ¤Ï¡¢
+UDP¥â¡¼¥É¤Î¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤¬¤è¤¯¤Ê¤¤¤è¤¦¤Ë¸«¤¨¤ë¤³¤È¤â¤¢¤ë¡£
+<strong><a href="#item_keylifetime">keylifetime</a></strong>¤ÎÃÍ¤òÊÑ¹¹¤·¤Æ¡¢
+ÀÜÂ³¤Î¥»¥Ã¥È¥¢¥Ã¥×¤Î»þ´Ö¤òºÇ¾®¤Ë¤¹¤ì¤Ð¡¢¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤ò¸þ¾å¤µ¤»¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+<strong><a href="#item_udptimeout">udptimeout</a></strong> ¤ÎÃÍ¤òÊÑ¹¹¤¹¤ë¤³¤È¤âÆ±ÍÍ¤ËÌò¤ËÎ©¤Ä¡£</p>
+<p>¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Î<strong>-u</strong>¤Ï¡¢¤³¤ÎÃÍ¤ò<strong>true</strong>¤ËÀßÄê¤¹¤ë¤Î¤ÈÆ±¤¸¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="udptimeout" class="item"><strong>udptimeout</strong></a></strong></dt>
+
+<dd>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢UDP¥â¡¼¥É¤Î¥È¥ó¥Í¥ë¤Ï¡¢300ÉÃÄÌ¿®¤¬Ìµ¤¤¤ÈÊÄ¤¸¤é¤ì¤ë¡£
+¤³¤Î¥­¡¼¥ï¡¼¥É¤Ç¤½¤Î»þ´Ö¤òÊÑ¹¹¤Ç¤­¤ë(Ã±°Ì¤ÏÉÃ)¡£
+¤³¤ÎÃÍ¤Ï65535¤è¤êÂç¤­¤¯¤Ê¤Ã¤Æ¤Ï¤¤¤±¤Ê¤¤¡£
+¤³¤ì¤ò0¤Ë¤¹¤ë¤È°ìÀÚÄÌ¿®¤¬¹Ô¤Ê¤ï¤ì¤Ê¤¤(¤½¤¦¤¤¤¦ÀßÄê¤â¤Ç¤­¤ë¤±¤É¡Ä)¡£</p>
+</dd>
+<dt><strong><a name="verbosity" class="item"><strong>verbosity</strong> (¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¤Ï <strong>-v</strong>)</a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¡¢¥í¥°¤¹¤ë¥á¥Ã¥»¡¼¥¸¤Î¥ì¥Ù¥ë¤ò¼¨¤¹À°¿ôÃÍ¤Ç¤¢¤ë¡£
+0¤À¤È¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤À¤±¡¢
+5¤Ë¤¹¤ë¤È¥á¥Ã¥»¡¼¥¸¥È¥é¥Õ¥£¥Ã¥¯¤ÎÈó¾ï¤ËºÙ¤«¤¤¥Ç¥£¥Æ¡¼¥ë¤Þ¤Ç´Þ¤á¤ë¡£
+¥Ç¥Õ¥©¥ë¥È¤Ï1¤Ç¤¢¤ê¡¢ÄÌ¾ï¤Ï¤½¤ì¤¬ºÇ¤â»È¤¤¤ä¤¹¤¤¡£</p>
+<p>¥á¥Ã¥»¡¼¥¸¤Ï <em class="file">stderr</em> ¤Ë½ÐÎÏ¤µ¤ì¤ë(¥³¥Þ¥ó¥É¥é¥¤¥ó¥ª¥×¥·¥ç¥ó¤Î<strong>-o</strong>¤«
+<strong><a href="#item_logfile">logfile</a></strong> ¥­¡¼¥ï¡¼¥É¤Ç¥ê¥À¥¤¥ì¥¯¥È¤µ¤ì¤Ê¤¤¸Â¤ê)
+°ìÈÌÅª¤Ê¥á¥Ã¥»¡¼¥¸¤Ï¤³¤ó¤Ê´¶¤¸¤Ç¤¢¤ë:</p>
+<pre>
+ zebedee(54/119):  Listening on local port 1172</pre>
+<p>¥«¥Ã¥³¤ÎÃæ¤Î¿ô»ú¤Ï¥á¥Ã¥»¡¼¥¸¤ò½ÐÎÏ¤·¤¿¥×¥í¥»¥¹¤È¥¹¥ì¥Ã¥É¤ÎID¤òÉ½¤·¤Æ¤¤¤ë¡£
+Á´¤Æ¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Ï¥ì¥Ù¥ë0¤Ç¤â¥í¥°¤¬¼è¤é¤ì¡¢
+°Ê²¼¤ÎÍÍ¤Ë¡¢ÀèÆ¬¤¬ <code>ERROR</code> ¤È¤¤¤¦Ã±¸ì¤«¤é»Ï¤Þ¤ë¡£</p>
+<pre>
+ zebedee(54/119): ERROR: failed to connect to localhost:11965</pre>
+<p>¥á¥Ã¥»¡¼¥¸¤Ï¥í¥°¤¬¼è¤é¤ì¤¿¥ì¥Ù¥ë¤Ë½¾¤Ã¤Æ¥¤¥ó¥Ç¥ó¥È¤µ¤ì¤ë¡£</p>
+</dd>
+</dl>
+<p>
+</p>
+<h3><a name="çñ_ß_µ_ì_______ï___é_obsolete_keywords_">ÇÑ»ß¤µ¤ì¤¿¥­¡¼¥ï¡¼¥É(Obsolete Keywords)</a></h3>
+<p><strong>Zebedee</strong>¤Î³«È¯¤ÏÄ¹¤¯Â³¤¤¤Æ¤¤¤ë¤Î¤Ç¡¢¥­¡¼¥ï¡¼¥É¤Î°ìÉô¤â¤³¤ì¤ËÂÐ±þ¤·¤ÆÊÑ²½¤·¤Æ¤¤¤ë¡£
+Æó¡¢»°¤Î¥­¡¼¥ï¡¼¥É¤ÏÂ¾¤Î¤â¤Î¤Ë¤È¤Ã¤Æ¤«¤ï¤é¤ìÇÑ»ß¤µ¤ì¤Æ¤¤¤ë¡£
+¸Å¤¤¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥·¥ç¥ó¥Õ¥¡¥¤¥ë¤ËÂÐ¤¹¤ë¸åÊý¸ß´¹À­¤òÊÝ¤Ä¤¿¤á¤Ë¡¢
+¤³¤ì¤é¤ÎÇÑ»ß¤µ¤ì¤¿¥­¡¼¥ï¡¼¥É¤âÇ§¼±¤µ¤ì¤ë¤¬¡¢
+¿·¤·¤¤¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥·¥ç¥ó¥Õ¥¡¥¤¥ë¤Ç¤Ï»È¤¦¤Ù¤­¤Ç¤Ï¤Ê¤¤¡£</p>
+<dl>
+<dt><strong><a name="clientport" class="item"><strong>clientport</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤Ï¤è¤ê°ìÈÌÅª¤Ê<strong><a href="#item_tunnel">tunnel</a></strong>¤ËÃÖ¤­´¹¤¨¤é¤ì¤¿¡£</p>
+<p>¤³¤ì¤Ï<strong>Zebedee</strong>¥¯¥é¥¤¥¢¥ó¥È¤¬ÀÜÂ³¤òÂÔ¤Ä¥Ý¡¼¥È(¤¢¤ë¤¤¤Ï¥Ý¡¼¥È¤Î¥ê¥¹¥È)¤Ç¤¢¤ë¡£
+¤³¤ì¤Ï¡Ö¥È¥ó¥Í¥ë»ÅÍÍ¡×¤ÎºÇ½é¤ÎÉôÊ¬¤ÈÅù¤·¤¤¡£</p>
+</dd>
+</dl>
+<dl>
+<dt><strong><a name="localport" class="item"><strong>localport</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¥Ð¡¼¥¸¥ç¥ó 2.0.0°ÊÁ°¤Î<strong>Zebedee</strong>¤Ë¤ª¤±¤ë¡¢<strong><a href="#item_clientport">clientport</a></strong>¤ÎÌ¾Á°¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="redirecthost" class="item"><strong>redirecthost</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¥Ð¡¼¥¸¥ç¥ó 2.0.0°ÊÁ°¤Î<strong>Zebedee</strong>¤Ë¤ª¤±¤ë¡¢<strong><a href="#item_targethost">targethost</a></strong>¤ÎÌ¾Á°¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="remoteport" class="item"><strong>remoteport</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤ì¤Ï¥Ð¡¼¥¸¥ç¥ó 2.0.0°ÊÁ°¤Î<strong>Zebedee</strong>¤Ë¤ª¤±¤ë¡¢<strong><a href="#item_targetport">targetport</a></strong>¤ÎÌ¾Á°¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="targethost" class="item"><strong>targethost</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤Ï¤è¤ê°ìÈÌÅª¤Ê<strong><a href="#item_tunnel">tunnel</a></strong>¤ËÃÖ¤­´¹¤¨¤é¤ì¤¿¡£</p>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤Ï¡¢
+<strong>Zebedee</strong>¥µ¡¼¥Ð¤¬¥í¡¼¥«¥ë¥Þ¥·¥ó¤Î¥Ý¡¼¥È¤«¤é¥È¥ó¥Í¥ë¤¹¤ë¥Û¥¹¥È¤ÎÌ¾Á°¤òÍ¿¤¨¤ë¡£</p>
+</dd>
+<dt><strong><a name="targetport" class="item"><strong>targetport</strong></a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥­¡¼¥ï¡¼¥É¤Ï¤è¤ê°ìÈÌÅª¤Ê<strong><a href="#item_tunnel">tunnel</a></strong>¤ËÃÖ¤­´¹¤¨¤é¤ì¤¿¡£</p>
+<p>¤½¤ì¤Ï¡¢¥¯¥é¥¤¥¢¥ó¥È¤¬Í×µá¤¹¤ë¥Ý¡¼¥È¤«¥Ý¡¼¥È¥ê¥¹¥È
+(<strong>Zebedee</strong>¥µ¡¼¥Ð¤Ï¥¿¡¼¥²¥Ã¥È¥Û¥¹¥È¾å¤Î¤½¤Î¥Ý¡¼¥È¤ËÀÜÂ³¤¹¤ë)¤ò°ÕÌ£¤¹¤ë¡£
+¤³¤ì¤Ï¡Ö¥È¥ó¥Í¥ë»ÅÍÍ¡×¤ÎºÇ¸å¤ÎÉôÊ¬¤ÈÅù¤·¤¤¡£</p>
+</dd>
+</dl>
+<p>
+</p>
+<h3><a name="___îâ__î_ª_____ç_ó_other_options_">¤½¤ÎÂ¾¤Î¥ª¥×¥·¥ç¥ó(Other Options)</a></h3>
+<p>ÀßÄê¥Õ¥¡¥¤¥ë¤ËÂÐ±þ¤¹¤ë¤â¤Î¤ò»ý¤¿¤Ê¤¤¥³¥Þ¥ó¥É¥ª¥×¥·¥ç¥ó
+¤¬¤¤¤¯¤Ä¤«¤¢¤ë¤Î¤Ç¡¢¤½¤ì¤Ë¤Ä¤¤¤Æ¤³¤³¤ÇÀâÌÀ¤¹¤ë¡£</p>
+<dl>
+<dt><strong><a name="p" class="item">-p</a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥ª¥×¥·¥ç¥ó¤Ç <strong>Zebedee</strong> ¤ÏÈëÌ©¸°¤ÎÃÍ¤òÉ¸½à½ÐÎÏ¤Ë½ÐÎÏ¤¹¤ë¡£
+¤³¤Î½ÐÎÏ¤ÏÀßÄê¥Õ¥¡¥¤¥ë¤Ç¤½¤Î¤Þ¤Þ»ÈÍÑ¤Ç¤­¤ë·Á¼°¤Ç¤¢¤ë¡£
+Îã¤¨¤Ð¡¢</p>
+<pre>
+ privatekey &quot;c480bd48f707c69dec54c9e7b6e22dd04cac659e&quot;</pre>
+<p>¤ÎÍÍ¤Ê·Á¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="p" class="item">-P</a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥ª¥×¥·¥ç¥ó¤Ç <strong>Zebedee</strong> ¤Ï<a href="#identity_checking">identity checking</a> ¤Ç
+»ÈÍÑ¤Ç¤­¤ë¥Ñ¥Ö¥ê¥Ã¥¯¥¢¥¤¥Ç¥ó¥Æ¥£¥Æ¥£¤òÀ¸À®¤¹¤ë¡£·ë²Ì¤ÏÉ¸½à½ÐÎÏ¤Ë½ñ¤«¤ì¤ë¡£
+Îã¤¨¤Ð¡¢</p>
+<pre>
+ ef8153a0e392df005f67321ca2f0ace5bb8c5a1f myhostname</pre>
+<p>¤ÎÍÍ¤Ê·Á¤Ç¤¢¤ë¡£</p>
+<p>¤³¤Î¥ª¥×¥·¥ç¥ó¤ÏÈëÌ©¸°¤ò´Þ¤àÀßÄê¤È¶¦¤Ë»ØÄê¤¹¤ë¤«¡¢
+<strong>-p</strong> ¤È¶¦¤ËÍÑ¤¤¤ÆÈëÌ©¸°¤È¸ø³«¸°¤òÎ¾ÊýÆ±»þ¤ËÀ¸À®¤·¤Ê¤¯¤Æ¤Ï¤¤¤±¤Ê¤¤¡£</p>
+</dd>
+<dt><strong><a name="h" class="item">-h</a></strong></dt>
+
+<dd>
+<p>¤³¤Î¥ª¥×¥·¥ç¥ó¤Ï°Ê¹ß¤Î°ú¿ô¤ò¥Õ¥¡¥¤¥ëÌ¾¤È¤ß¤Ê¤¹¡£
+¤½¤·¤Æ¡¢¤½¤ì¤¾¤ì¤Î¥Õ¥¡¥¤¥ë¤Ï8192¥Ð¥¤¥È¤Î¤«¤¿¤Þ¤ê¤È¤·¤ÆÆÉ¤ß¤³¤Þ¤ì¡¢
+SHA¥Ï¥Ã¥·¥å¤¬·×»»¤µ¤ì¤ë¡£
+°ú¿ô¤¬¤Ê¤¤¾ì¹ç¤ä°ú¿ô¤¬&quot;<code>-</code>&quot;¤Ç¤¢¤Ã¤¿¾ì¹ç¤ÏÉ¸½àÆþÎÏ¤Î¥Ï¥Ã¥·¥å¤¬·×»»¤µ¤ì¤ë¡£
+Îã¤¨¤Ð¡¢</p>
+<pre>
+ $ zebedee -h /etc/passwd
+ bb1e734aeffd2111417761f5938dea3b53759598 /etc/passwd
+ $ zebedee -h &lt; /etc/passwd
+ bb1e734aeffd2111417761f5938dea3b53759598 -</pre>
+<p>¤ÎÍÍ¤Ê·Á¤Ç¤¢¤ë¡£</p>
+</dd>
+<dt><strong><a name="h" class="item">-H</a></strong></dt>
+
+<dd>
+<p>¤³¤Á¤é¤Ï<strong>-h</strong>¤È»÷¤Æ¤¤¤ë¤¬¡¢°ú¿ô¤¬Ê¸»úÎó¤È¤·¤Æ°·¤ï¤ì¡¢
+¤½¤ÎÊ¸»úÎó¤ÎSHA¥Ï¥Ã¥·¥å¤¬·×»»¤µ¤ìÉ½¼¨¤µ¤ì¤ë¡£</p>
+<pre>
+ $ zebedee -H hello world
+ ac62a630ca850b4ea07eda664eaecf9480843152 hello
+ 86bf25ecb8a40b40b885c097c683b6e236fc8085 world</pre>
+</dd>
+<dt><strong><a name="s" class="item">-S (Windows only)</a></strong></dt>
+
+<dd>
+<p>Windows¥·¥¹¥Æ¥à¤Ç¤Ï <strong>Zebedee</strong> ¤ò
+¥µ¡¼¥Ó¥¹(¥Ö¡¼¥È»þ¤Ë¼«Æ°Åª¤Ëµ¯Æ°¤µ¤ìÆÈÎ©¤·¤ÆÆ°¤¯¥×¥í¥»¥¹)¤È¤·¤Æ
+¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£</p>
+<p><strong>Zebedee</strong>¤Ï<strong>install</strong>¥Ñ¥é¥á¡¼¥¿¤ÈÀßÄê¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°¤ò»ØÄê¤¹¤ë¤³¤È¤Ç
+¥µ¡¼¥Ó¥¹¤È¤·¤Æ¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤ë¡£Îã¤¨¤Ð¡¢</p>
+<pre>
+ zebedee -Sinstall=c:\zebedee\service.zbd</pre>
+<p>¤ÎÍÍ¤Ê·Á¤Ç¤¢¤ë¡£</p>
+<p>¾ï¤Ë¡¢ÀßÄê¥Õ¥¡¥¤¥ë¤Î¥Õ¥ë¥Ñ¥¹¤ò»ØÄê¤·¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£
+¤³¤Î¥Õ¥¡¥¤¥ë¤Ï¥¹¥¿¡¼¥È¥¢¥Ã¥×»þ¤ËÆÉ¤ß¤³¤Þ¤ì¡¢
+¥µ¡¼¥Ó¥¹¤¬Æ°ºî¤¹¤ë¤¿¤á¤ËÉ¬Í×¤Ê¥Ñ¥é¥á¡¼¥¿¤òÁ´¤Æ´Þ¤ó¤Ç¤¤¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£</p>
+<p>¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢
+¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤ë¥µ¡¼¥Ó¥¹¤ÎÌ¾Á°¤Ï¥×¥í¥°¥é¥à¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°¤«¤é¼è¤é¤ì¤ë¡£
+½¾¤Ã¤ÆÄÌ¾ï¤Ï<strong>Zebedee</strong>¤Ë¤Ê¤ë¡£
+¤·¤«¤·¡¢<strong>-n</strong>¥ª¥×¥·¥ç¥ó¤ò»ÈÍÑ¤·¤ÆÊÑ¹¹¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£</p>
+<pre>
+ zebedee -n &quot;Zebedee Client Service&quot; -Sinstall=c:\zebedee\clientsvc.zbd</pre>
+<p>°ìÃ¶¡¢¥µ¡¼¥Ó¥¹¤¬¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤ë¤È¡¢¼¡¤Î¥·¥¹¥Æ¥àºÆµ¯Æ°¤«¤é¼«Æ°Åª¤Ëµ¯Æ°¤µ¤ì¤ë¡£
+¤â¤·¤¯¤Ï(Windows NT¤Î¾ì¹ç)¥µ¡¼¥Ó¥¹¥³¥ó¥È¥í¡¼¥ë¥Ñ¥Í¥ë¤Ç¼êÆ°µ¯Æ°¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£</p>
+<p>¥µ¡¼¥Ó¥¹¤òºï½ü¤¹¤ë¤Ë¤Ï¤Þ¤º¥µ¡¼¥Ó¥¹¤ò½ªÎ»¤·¤Æ¤«¤é¡¢<strong>-S</strong>¥ª¥×¥·¥ç¥ó¤È 
+<strong>remove</strong> ¥Ñ¥é¥á¡¼¥¿¤ò»È¤¦¡£
+¤½¤·¤Æ¡¢¤â¤·É¬Í×¤Ê¤é¤Ð<strong>-n</strong>¥ª¥×¥·¥ç¥ó¤Ç¥µ¡¼¥Ó¥¹¤ÎÌ¾¾Î¤ò»ØÄê¤¹¤ë¡£
+Îã¤¨¤Ð¡¢</p>
+<pre>
+ zebedee -n &quot;Zebedee Client Service&quot; -Sremove</pre>
+<p>¤ÎÍÍ¤Ê·Á¤Ç¤¢¤ë¡£</p>
+<p><strong>-S</strong>¤Î¥Ñ¥é¥á¡¼¥¿¤ÏÂ¾¤Ë <strong>run</strong> ¤¬¤¢¤ë¡£¤³¤ì¤ÏÆâÉô¤Ç <strong>Zebedee</strong> ¤Î
+¥µ¡¼¥Ó¥¹¥¹¥¿¡¼¥È¥¢¥Ã¥×¥³¡¼¥É¤òµ¯Æ°¤¹¤ë¤¿¤á¤Ë»È¤¦¤â¤Î¤Ç¡¢
+¥æ¡¼¥¶¤¬Ä¾ÀÜ»ÈÍÑ¤·¤Æ¤Ï¤Ê¤é¤Ê¤¤¡£</p>
+</dd>
+<dt><strong><a name="x" class="item">-x</a></strong></dt>
+
+<dd>
+<p>¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç»ØÄê¤Ç¤­¤Ê¤¤ÀßÄê¥Õ¥¡¥¤¥ë¤Î¥Ñ¥é¥á¡¼¥¿¤ò
+»ØÄê¤¹¤ë¤¿¤á¤Ë¡¢¤³¤Î¥ª¥×¥·¥ç¥ó¤ò»ÈÍÑ¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£
+¤³¤ì¤ËÊ¸»úÎó¤Î°ú¿ô¤ò¤Ä¤±¤ë¤È¡¢
+¤½¤ì¤¬¤¢¤¿¤«¤âÀßÄê¥Õ¥¡¥¤¥ë¤Î1¹Ô¤Ç¤¢¤ë¤«¤Î¤è¤¦¤Ë½èÍý¤µ¤ì¤ë¡£
+¥³¥á¥ó¥È¤ÏÇ§¼±¤µ¤ì¤ë¤¬¡¢&quot;\&quot;¤Î·ÑÂ³¹Ô¤Ï»ÈÍÑ¤Ç¤­¤Ê¤¤¡£
+Îã¤¨¤Ð¡¢</p>
+<pre>
+ zebedee -x &quot; server true # It&#146;s a server!&quot;</pre>
+<p>¤È¤¤¤¦¤Þ¤ï¤ê¤¯¤É¤¤¤ä¤ê¤«¤¿¤Ç¤â¼¡¤Î¥³¥Þ¥ó¥É</p>
+<pre>
+ zebedee -s</pre>
+<p>¤ÈÆ±¤¸¸ú²Ì¤òÆÀ¤ë¤³¤È¤¬¤Ç¤­¤ë¡£</p>
+</dd>
+</dl>
+<p>
+</p>
+<h3><a name="_____ã___ê_õ___ì_ó___quick_reference_summary_">¥¯¥¤¥Ã¥¯¥ê¥Õ¥¡¥ì¥ó¥¹(Quick-Reference Summary)</a></h3>
+<p>°Ê²¼¤Î°ìÍ÷É½¤Ë¡¢Ç§¼±¤µ¤ì¤ë¥­¡¼¥ï¡¼¥É¡¢°ú¿ô¡¢¥³¥Þ¥ó¥É¥é¥¤¥ó¤ÎÆ±Åù¥ª¥×¥·¥ç¥ó¡¢
+»ØÄê¤Ç¤­¤ë¤Î¤¬¥¯¥é¥¤¥¢¥ó¥È(C)¤«¥µ¡¼¥Ð(S)¤Þ¤¿¤ÏÎ¾Êý(CS)¡¢´ÊÃ±¤ÊÀâÌÀ¡¢
+¤ò¼¨¤¹¡£</p>
+<pre>
+ checkidfile    filename       CS  Áê¼êÂ¦¤òÇ§¾Ú¤¹¤ë
+ clienthost     hostname  -c   S   ¥µ¡¼¥Ð¤Ë¥¯¥é¥¤¥¢¥ó¥È¥Û¥¹¥È¤ËÀÜÂ³¤¹¤ë¤è¤¦»Ø¼¨¤¹¤ë
+ command        string    -e   C   ¥È¥ó¥Í¥ëÀÜÂ³»þ¤Ë¼Â¹Ô¤¹¤ë¥³¥Þ¥ó¥É
+ compression    level     -z   CS  Í×µá¤¹¤ë°µ½Ì¥ì¥Ù¥ë¤ÎºÇÂçÃÍ
+ connecttimeout seconds        CS  ÀÜÂ³¤ò¼õ¤±¤Ä¤±¤ë¤Þ¤Ç¤ÎÂÔ¤Á»þ´Ö
+ debug          boolean        CS  ¥·¥ó¥°¥ë¥¹¥ì¥Ã¥É¤Î¥Ç¥Ð¥Ã¥°¥â¡¼¥É¤Ç¼Â¹Ô¤¹¤ë
+ detached       boolean   -d   CS  Ã¼Ëö/¥³¥ó¥½¡¼¥ë¤«¤éÀÚÎ¥¤¹
+ generator      string         CS  ¡ÖDiffie-Hellman generator value¡×¤Î16¿Ê¿ô
+ include        filename  -f   CS  ¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥·¥ç¥ó¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¤³¤à
+ keygencommand  string         CS  ¥­¡¼¤òÀ¸À®¤¹¤ë¥³¥Þ¥ó¥É
+ keygenlevel    level          CS  À¸À®¤¹¤ë¥­¡¼¤Î¶¯ÅÙ(0¤«¤é2)
+ keylength      bits           CS  Í×µá¤¹¤ë¥­¡¼¤ÎÎ®¤µ¤ÎºÇÂçÃÍ(¥Ó¥Ã¥ÈÃ±°Ì)
+ keylifetime    seconds        CS  ÈëÌ©¸°¤Î¼÷Ì¿
+ listenmode     boolean   -l   C   ¥¯¥é¥¤¥¢¥ó¥È¤Ë¥µ¡¼¥Ð¤ÎÀÜÂ³¤òÂÔ¤Ä¤è¤¦»Ø¼¨¤¹¤ë
+ localsource    boolean        C   ¥í¡¼¥«¥ë¥Þ¥·¥ó¤«¤é¤ÎÀÜÂ³¤Î¤ß¤ò¼õ¤±¤Ä¤±¤ë
+ logfile        filename  -o   CS  ¥í¥°¥Õ¥¡¥¤¥ë¤òÀßÄê
+ maxbufsize     bytes          CS  ¥Ç¡¼¥¿ÆÉ¤ß¹þ¤ßÍÑ¤Î¥Ð¥Ã¥Õ¥¡¡¼¥µ¥¤¥º¤ò»ØÄê
+ message        string         CS  »ØÄê¤µ¤ì¤¿Ê¸»úÎó¤ò½ÐÎÏ¤¹¤ë
+ minkeylength   bits           CS  ¼õ¤±¤Ä¤±¤ë¥­¡¼Ä¹¤ÎºÇ¾®ÃÍ
+ modulus        string         CS  ¡ÖDiffie-Hellman modulus value¡×¤Î16¿Ê¿ô
+ multiuse       boolean   -m   C   Ê£¿ô¤ÎÀÜÂ³¤ò°·¤¦
+ name           string         CS  ¥×¥í¥°¥é¥àÌ¾¤ò»ØÄê¤¹¤ë
+ privatekey     string         CS  ÈëÌ©¸°¤Î16¿Ê¿ô
+ redirect       ports     -r   S   ¥µ¡¼¥Ð¤¬¥ê¥À¥¤¥ì¥¯¥È¤¹¤ë¥Ý¡¼¥È
+ server         boolean   -s   CS  ¥µ¡¼¥Ð¥â¡¼¥É¤«¥¯¥é¥¤¥¢¥ó¥È¥â¡¼¥É¤«
+ serverhost     hostname       C   ÀÜÂ³¤¹¤Ù¤­¥µ¡¼¥Ð¤ÎÌ¾Á°
+ serverport     port      -T   CS  ¥µ¡¼¥Ð¤¬ÂÔ¤Á¤¦¤±¤ë¥Ý¡¼¥ÈÈÖ¹æ
+ target         spec           S   ¥¿¡¼¥²¥Ã¥È¤È¤Ç¤­¤ë¥Û¥¹¥È¤È¥Ý¡¼¥È¤ò»ØÄê¤¹¤ë
+ timestamplog   boolean   -t   CS  ¥í¥°¥Õ¥¡¥¤¥ë¤Ë¥¿¥¤¥à¥¹¥¿¥ó¥×¤òÉÕ²Ã¤¹¤ë
+ tunnel         spec           C   ¥¯¥é¥¤¥¢¥ó¥È¤Î¥Ý¡¼¥È¤ÈÂÐ±þ¤¹¤ë¥¿¡¼¥²¥Ã¥È¤ò»ØÄê¤¹¤ë
+ udpmode        boolean   -u   CS  UDP¤ÎÄÌ¿®¤ò°·¤¦
+ udptimeout     seconds        CS  UDP¤Î¥È¥ó¥Í¥ë¤Ë¤ª¤±¤ëÌµÄÌ¿®¤ÎÂÔ¤Á»þ´Ö
+ verbosity      level     -v   CS  ¥á¥Ã¥»¡¼¥¸¤Î¥í¥°¥ì¥Ù¥ë¤òÀßÄê¤¹¤ë</pre>
+<p>°Ê²¼¤Î¥ª¥×¥·¥ç¥ó¤Ë¤Ï¥­¡¼¥ï¡¼¥É¤ËÂÐ±þ¤¹¤ë¤â¤Î¤¬¤Ê¤¤</p>
+<pre>
+ -p  ÈëÌ©¸°¤òÀ¸À®¤¹¤ë
+ -P  ¥Ñ¥Ö¥ê¥Ã¥¯¥¢¥¤¥Ç¥ó¥Æ¥£¥Æ¥£¤òÀ¸À®¤¹¤ë
+ -h file
+    ¥Õ¥¡¥¤¥ë¤ÎÆâÍÆ¤ò¥Ï¥Ã¥·¥å¤·¤Æ·ë²Ì¤òÉ½¼¨¤¹¤ë
+ -Sinstall=file
+    »ØÄê¤µ¤ì¤¿¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥·¥ç¥ó¥Õ¥¡¥¤¥ë¤È¤È¤â¤ËWindows¤Î¥µ¡¼¥Ó¥¹¤È¤·¤Æ¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
+ -Sremove
+    Windows¤Î¥µ¡¼¥Ó¥¹¤òºï½ü¤¹¤ë
+ -x string
+    ¥ª¥×¥·¥ç¥óÊ¸»úÎó¤ò²ò¼á¤¹¤ë</pre>
+<p>
+</p>
+<h2><a name="identity_checking">Identity Checking</a></h2>
+<p><strong>Zebedee</strong> ¤Ï¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢2ÅÀ´Ö¤Ë°Å¹æ²½¥Á¥ã¥Í¥ë¤òÀ¸À®¤¹¤ë¤Ë²á¤®¤Ê¤¤¡£
+¤´¾µÃÎ¤ÎÄÌ¤ê¡¢¥Ç¡¼¥¿¤Ï &quot;on the wire (ÄÌ¿®Àþ¾å)&quot; ¤Ç¤ÎÅðÄ°¤«¤é¤Ï¼é¤é¤ì¤ë¤¬¡¢
+¤¢¤Ê¤¿¤¬ÁÛÄê¤·¤Æ¤¤¤ëÁê¼ê¤ËÀÜÂ³¤µ¤ì¤Æ¤¤¤ë¤«ÈÝ¤«¤ÏÊÝ¾Ú¤µ¤ì¤Ê¤¤¡£
+¤³¤ì¤Ï¡¢&quot;man-in-the-middle (Âè»°¼Ô¤Ë¤è¤ë²£¼è¤ê)&quot; ¥¢¥¿¥Ã¥¯¤ËÂÐ¤·¤Æ¤ÏÌµËÉÈ÷¤Ç¤¢¤ë¡£
+¤â¤·¡¢¤¢¤Ê¤¿¤¬¥Ç¡¼¥¿¤Î°µ½Ì¤È¡¢ÅðÄ°¤«¤é¼é¤ë¤³¤È¤òÂè°ì¤Ë¿´ÇÛ¤·¤Æ¤¤¤ë¤Ê¤é¡¢
+¤¢¤Ê¤¿¤Ï¤³¤Î¾ò·ï¤ËËþÂ­¤¹¤ë¤À¤í¤¦¡£
+¤·¤«¤·¡¢¤¢¤Ê¤¿¤ÎÄÌ¿®¤¬Âè»°¼Ô¤Ë²£¼è¤ê¤µ¤ì¤Æ¤¤¤Ê¤¤¤³¤È¤ËÂÐ¤¹¤ëÊÝ¾Ú¤òµá¤á¤ë¤Ê¤é¡¢
+<strong>Zebedee</strong> ¤Ï¤½¤ì¤ò¹Ô¤¦¤¿¤á¤ÎÊØµ¹¤òÄó¶¡¤¹¤ë¡£</p>
+<p>¤â¤·¡¢Æ±°ì¤ÎÁÇ¿ô¤È¸¶»Ïº¬¤ÈÈëÌ©¸°¤¬ÍÑ¤¤¤é¤ì¤ë¤Ê¤é¡¢¤½¤ì¤é¤Ï 
+Diffie-Hellman ¤Î¸°¸ò´¹¥×¥í¥È¥³¥ë¤Î¤¿¤á¤Ë¡¢¾ï¤ËÆ±¤¸¸ø³«¸°¤òÀ¸À®¤¹¤ë¤À¤í¤¦¡£
+¤â¤·¡¢¤¢¤Ê¤¿¤¬(ÀßÄê¥Õ¥¡¥¤¥ë¤Î<strong><a href="#item_privatekey">privatekey</a></strong>¥­¡¼¥ï¡¼¥É¤Ë¤ÆÀßÄê¤µ¤ì¤¿)
+¸ÇÄê¤µ¤ì¤¿ÈëÌ©¸°¤òÍÑ¤¤¤ë¤Ê¤é¡¢
+<strong>Zebedee</strong> ¤ÏÁÇ¿ô¤È¸¶»Ïº¬¤ÈÈëÌ©¸°¤ÎÃÍ¤ÎÁ´¤Æ¤ò¥Ï¥Ã¥·¥å¤·¤Æ &quot;fingerprint (»ØÌæ)&quot; ¤òÀ¸À®¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+¤³¤ì¤Ï¡¢<strong>-P</strong> ¥ª¥×¥·¥ç¥ó¤Ë¤è¤ê¹Ô¤ï¤ì¤ë¡£ 
+Îã¤¨¤Ð¡¢server.key ¥Õ¥¡¥¤¥ë¤¬¼¡¤ÎÃÍ</p>
+<pre>
+ privatekey &quot;1e34d6769502bae1087c18d2e8c8776e4a17ddaf&quot;</pre>
+<p>¤Ç¤¢¤ë¤È¤­¡¢</p>
+<p>¼¡¤Î¥³¥Þ¥ó¥É</p>
+<pre>
+ $ zebedee -P -f server.key &gt; server.id</pre>
+<p>¤ò¼Â¹Ô¤¹¤ë¤È¡¢</p>
+<p>¤³¤Î¤è¤¦¤Ê½ÐÎÏ</p>
+<pre>
+ 135f04050961d37553731250d5c6f7495f088b32 myhostname</pre>
+<p>¤¬ÆÀ¤é¤ì¤ë¡£</p>
+<p>¤³¤ÎºÇ½é¤Î16¿Ê¿ô¤¬ &quot;fingerprint (»ØÌæ)&quot; ¤Ç¤¢¤ë¡£ 
+¹ÔÃæ¤ÎÂ¾¤ÎÊ¸»úÎó¤Ï¡¢¤³¤Î¥¢¥¤¥Ç¥ó¥Æ¥£¥Æ¥£¤Î½êÍ­¼Ô¤òÉ½¤¹¥³¥á¥ó¥È¤Ç¤¢¤ë¡£
+¥Ç¥Õ¥©¥ë¥È¤Ç¤Ï¡¢¤³¤ì¤Ï¥¢¥¤¥Ç¥ó¥Æ¥£¥Æ¥£¤¬À¸À®¤µ¤ì¤¿¥Þ¥·¥ó¤Î¥Û¥¹¥ÈÌ¾¤Ç¤¢¤ë¡£</p>
+<p>ÀßÄê¥Õ¥¡¥¤¥ë¤Ë¤ª¤¤¤Æ 
+<strong><a href="#item_checkidfile">checkidfile</a></strong> ¥­¡¼¥ï¡¼¥É¤¬ÀßÄê¤µ¤ì¤¿¾ì¹ç¡¢¤½¤ÎÃÍ¤Ï 
+&quot;fingerprint (»ØÌæ)&quot; ¹Ô¤òµ­½Ò¤·¤¿¥Õ¥¡¥¤¥ë¤Î¥Õ¥¡¥¤¥ëÌ¾¤Ç¤¢¤ë¡£ ¤â¤·¡¢ÀÜÂ³
+Àè¤Î¥¢¥¤¥Ç¥ó¥Æ¥£¥Æ¥£¤¬¥Õ¥¡¥¤¥ëÃæ¤Î¤¤¤«¤Ê¤ëÃÍ¤È¤â°ìÃ×¤·¤Ê¤¤¾ì¹ç¡¢
+ÀÜÂ³¤ÏÀÚÃÇ¤µ¤ì¤ë¡£</p>
+<p>
+</p>
+<h2><a name="___îâ__î_____å_ê_æ___øï__îãíµ__notes_on_other_security_issues_">¤½¤ÎÂ¾¤Î¥»¥­¥å¥ê¥Æ¥£´ØÏ¢¤ÎÃíµ­(Notes on Other Security Issues)</a></h2>
+<dl>
+<dt><strong><a name="message_integrity" class="item">Message Integrity</a></strong></dt>
+
+<dd>
+<p>¥×¥í¥È¥³¥ë¤Î¥ª¡¼¥Ð¡¼¥Ø¥Ã¥É¤ò²ÄÇ½¤Ê¸Â¤ê¾®¤µ¤¯¤¹¤ë¤¿¤á¤Ë¡¢
+<strong>Zebedee</strong> ¤ÏÅÁÁ÷¤µ¤ì¤¿¥Ç¡¼¥¿¤ÎÀµ¤·¤µ¤ËÂÐ¤¹¤ë³ÎÇ§¤Ï²¿¤â¹Ô¤Ã¤Æ¤¤¤Ê¤¤¡£
+¤½¤Î¤¿¤á¡¢¥¢¥¿¥Ã¥«¡¼¤ÏÅÓÃæ¤Ç¥Ç¡¼¥¿¥Ñ¥±¥Ã¥È¤ò²þÊÑ¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+¤·¤«¤·¡¢°Å¹æ¤Î»ÈÍÑ¤Ï¥Ç¡¼¥¿¤òÇ¤°Õ¤ËÊÑ´¹¤¹¤ë¤³¤È¤ò¶Ë¤á¤Æº¤Æñ¤Ë¤·¤Æ¤¤¤ë¤Î¤Ç¤Ï¤Ê¤¤¤«
+(Îã¤¨¤Ð¡¢&quot;<code>ls -l</code>&quot;¤ò&quot;<code>rm -f</code>&quot;¤Ë½ñ¤­´¹¤¨¤é¤ì¤ë¤«¤¤¡©) ¡£
+¤·¤«¤·¡¢<strong>Zebedee</strong> ¤Ï¥é¥ó¥À¥à¤Ê¥Ç¡¼¥¿¤¬Á÷¤é¤ì¤¿¤³¤È¤Ë¤è¤ë±Æ¶Á¤«¤é
+¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ò¼é¤ë¤³¤È¤Ï¹Ô¤ï¤Ê¤¤¡£</p>
+</dd>
+<dt><strong><a name="replay_and_insertion_attacks" class="item">Replay and Insertion Attacks</a></strong></dt>
+
+<dd>
+<p>Â¿¤¯¤Î¥Í¥Ã¥È¥ï¡¼¥¯¥·¥¹¥Æ¥à¤Ë¤ª¤¤¤ÆÍ­¤êÆÀ¤ë¹¶·â¤Î°ì¤Ä¤Ï
+¥Ç¡¼¥¿¤Î¥­¥ã¥×¥Á¥ã¥ê¥ó¥°¤Ç¤¢¤ê¡¢ÎÉ¤¯ÃÎ¤é¤ì¤¿¸ú²Ì¤òµÚ¤Ü¤¹
+(Îã¤¨¤Ð¡¢´ÉÍý¼Ô¤Î <strong>telnet</strong> ¥»¥Ã¥·¥ç¥ó¤Ë¤Ï¤¢¤ë¼ï¤Î&quot;´í¸±¤Ê&quot;Áàºî¤¬È¼¤¤¡¢
+¤½¤ÎÁàºî¤ò¸å¤Ë·«¤êÊÖ¤µ¤ì¤¿¤é¤É¤¦¤Ê¤ë¤«)¡£
+¤³¤ì¤ò¹Ô¤¦¤Ë¤Ï¡¢°Å¹æ²½¤µ¤ì¤¿¥Ç¡¼¥¿¥¹¥È¥ê¡¼¥à¤ò²þÊÑ¤¹¤ëÉ¬Í×¤ÏÌµ¤¤¤¬¡¢
+¥µ¡¼¥Ð¤ËÁ÷¤é¤ì¤¿Æ±¤¸¥Í¥Ã¥È¥ï¡¼¥¯¥Ñ¥±¥Ã¥È¤Ï¡¢Æ±¤¸¥ì¥¹¥Ý¥ó¥¹¤ò°ú¤­½Ð¤¹¤À¤í¤¦¡£</p>
+<p><strong>Zebedee</strong> ¤¬ &quot;anonymous&quot; ¥â¡¼¥É¤ÇÆ°ºî¤·¤Æ¤¤¤ë¤È¤­¡¢
+¥»¥Ã¥·¥ç¥óËè¤Ë°Û¤Ê¤ë¸°¤¬À¸À®¤µ¤ì¤ë¤¿¤á¡¢
+¤³¤Î¤è¤¦¤Ê¥¢¥¿¥Ã¥¯¤¬À®¸ù¤¹¤ë´í¸±¤ÏÈó¾ï¤Ë¾®¤µ¤¤¡£ 
+¤·¤«¤·¡¢<a href="#identity_checking">identity checking</a>¤Îµ¡Ç½¤¬»È¤ï¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤Ï
+¸°¤Ï¸ÇÄê¤µ¤ì¤Æ¤¤¤ë¤Î¤Ç¡¢ºÆÀ¸¤Ï¼ÂºÝ¤Ë²ÄÇ½À­¤¬¤¢¤ë¡£ 
+<strong>Zebedee</strong>¤Ï¡¢°ì¤Ä°ì¤Ä¤ÎÀÜÂ³Ëè¤Ë¥æ¥Ë¡¼¥¯¤Ê¥»¥Ã¥·¥ç¥ó¥­¡¼¤òÀ¸À®¤¹¤ë¤³¤È¤Ç¡¢
+¤³¤ÎÌäÂê¤ËÂÐ½è¤·¤Æ¤¤¤ë¡£
+¤³¤ÎÊýË¡¤Ç¤Ï¡¢ÀÜÂ³¤Î¥»¥Ã¥È¥¢¥Ã¥×¤ÎºÇ¸å¤Ë¡¢¥Á¥ã¥ì¥ó¥¸-¥ì¥¹¥Ý¥ó¥¹¤Î¸ò´¹¤¬¹Ô¤Ê¤ï¤ì¡¢
+Áê¼êÂ¦¤Î¥·¥¹¥Æ¥à¤¬shared secret key¤òÊÝ»ý¤·¤Æ¤ª¤ê¡¢
+°ÊÁ°¤Ëµ­Ï¿¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¥ª¥¦¥àÊÖ¤·¤·¤Æ¤¤¤ë¤ï¤±¤Ç¤Ï¤Ê¤¤¤³¤È¤¬¡¢
+³ÎÇ§¤µ¤ì¤ë¡£</p>
+<p>²Ã¤¨¤Æ¡¢<strong>Zebedee</strong> ¤Ï Blowfish °Å¹æË¡¤ò &quot;cipher feedback&quot; ¥â¡¼¥É¤ÇÍÑ¤¤¤Æ¤ª¤ê¡¢
+¥Ç¡¼¥¿¤Î¤¢¤é¤æ¤ëÉôÊ¬¤ÎÊ£¹æ¤Ï¡¢
+¤½¤ì°ÊÁ°¤ÎÁ´¤Æ¤Î¥Ç¡¼¥¿¥Ñ¥±¥Ã¥È¤ÎÊ£¹æ¤¬À®¸ù¤·¤Æ¤¤¤ë¤«¤É¤¦¤«¤Ë°ÍÂ¸¤¹¤ë¡£ 
+¥Á¥ã¥ì¥ó¥¸¡¦¥ì¥¹¥Ý¥ó¥¹¤Ï¥Ç¡¼¥¿¥¹¥È¥ê¡¼¥à¤Î &quot;salts&quot; ¤ò¸ò´¹¤¹¤ë¤Î¤Ç¡¢
+¥È¥ó¥Í¥ë²½¤µ¤ì¤¿¥×¥í¥È¥³¥ë¤Ë &quot;known plain-text&quot; ¥¢¥¿¥Ã¥¯(¼­½ñ¹¶·â)¤ò²Ã¤¨¤ë¤Î¤Ï
+¤è¤êº¤Æñ¤Ë¤Ê¤ë¡£</p>
+</dd>
+<dt><strong><a name="key_generation" class="item">Key Generation</a></strong></dt>
+
+<dd>
+<p>ÎÉ¤¯¤Ê¤¤¸°¤Î»ÈÍÑ¤Ï¡¢ºÇ¶¯¤Î°Å¹æ²½¥á¥«¥Ë¥º¥à¤ò¤â±ø¤¹¤³¤È¤¬¤Ç¤­¤ë¡£ 
+¸°¤òÀ¸À®¤¹¤ë¤È¤­¡¢<strong>Zebedee</strong> ¤Ï²ÄÇ½¤Ê¸Â¤ê¿äÂ¬¤¬º¤Æñ¤Ê¥Ç¡¼¥¿¤ò¤«¤­½¸¤á¤Æ¡¢
+¤½¤ì¤ò SHA ¥Ï¥Ã¥·¥å¥¢¥ë¥´¥ê¥º¥à¤Ë¤è¤ê &quot;¥¹¥Æ¥¢ (¤«¤­º®¤¼¤ë)&quot; ¤¹¤ë¡£</p>
+<p>Windows¤Î¾ì¹ç¡¢¥¢¥¿¥Ã¥«¡¼¤¬´û¤Ë¥·¥¹¥Æ¥à¤Ë¥¢¥¯¥»¥¹¤·¤Æ¤¤¤ì¤Ð¡¢
+¼èÆÀ²ÄÇ½¤Ê¤¢¤é¤æ¤ë¥Ç¡¼¥¿¤ÏÍ½Â¬¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£ 
+¤·¤«¤·´û¤Ë¸ÀµÚ¤·¤¿¤è¤¦¤Ë¡¢
+¤Û¤È¤ó¤É¤ÎÍÑÅÓ¤Ë¤ª¤¤¤Æ¤³¤ì¤ÏµöÍÆ¤Ç¤­¤ë¤À¤í¤¦¡£
+¶½Ì£¤¬¤¢¤ë¤Ê¤é¤Ð¡¢¥×¥í¥°¥é¥àÃæ¤Î¥³¥á¥ó¥È¤Ë¾ÜºÙ¤¬ÀâÌÀ¤µ¤ì¤Æ¤¤¤ë¤Î¤Ç¡¢
+»²¾È¤µ¤ì¤¿¤¤¡£</p>
+<p>¤â¤·¡¢¸°¤ÎÀ¸À®¥á¥«¥Ë¥º¥à¤ËÉÔËþ¤¬¤¢¤ë¤Ê¤é¡¢
+ÀßÄê¥Õ¥¡¥¤¥ëÃæ¤Î<strong><a href="#item_keygencommand">keygencommand</a></strong> ¥ª¥×¥·¥ç¥ó¤òÍÑ¤¤¤Æ¡¢
+³°Éô¤Î¸°À¸À®¥×¥í¥°¥é¥à¤ò¸Æ¤Ù¤ÐÎÉ¤¤¡£ 
+ÁÈ¤ß¹þ¤Þ¤ì¤Æ¤¤¤ëÀ­Ç½¤ò²þÁ±¤¹¤ëÄó°Æ¤ÏÂç´¿·Þ¤À!</p>
+</dd>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="_è_é_ö_ë___å___æ___ó___troubleshooting_">¥È¥é¥Ö¥ë¥·¥å¡¼¥Æ¥£¥ó¥°(TROUBLESHOOTING)</a></h1>
+<p><strong>Zebedee</strong> ¤Ï¡ÖÈ¢¤«¤é½Ð¤·¤Æ¤¹¤°¤½¤Î¤Þ¤Þ¡×Æ°¤¯¤Ù¤­¤À¤¬¡¢¤¢¤Ê¤¿¤Ï¥È¥é¥Ö¥ë
+¤Ë¤¢¤¦¤«¤â¤·¤ì¤Ê¤¤¡£¤Û¤È¤ó¤É¤Î¥È¥é¥Ö¥ë¤ÏÀÜÂ³¤Î³ÎÎ©»þ¤Ëµ¯¤³¤ë
+(ÀÜÂ³¤µ¤¨¤¦¤Þ¤¯¤¤¤±¤Ð¡¢¥Ç¡¼¥¿Å¾Á÷¤Ï¥¹¥à¡¼¥º¤Ë¤¤¤¯¤³¤È¤¬Â¿¤¤)¡£
+(ÀÜÂ³¤Î)¥»¥Ã¥È¥¢¥Ã¥×¤Î¼ê½ç¤Ë²¿¤¬µ¯¤³¤Ã¤Æ¤¤¤ë¤«´ÊÃ±¤Ë¸«¤ë¤Ë¤Ï<strong>-v</strong>¥ª¥×¥·¥ç¥ó¤ò
+»È¤¨¤Ð¤è¤¤¡£<strong>-d</strong> <strong>-D</strong> ¤â¤¤¤Ã¤·¤ç¤Ë»È¤Ã¤Æ¡¢<strong>Zebedee</strong>¤òÃ¼Ëö¤«¤é½ªÎ»¤Ç¤­
+¤ë¤è¤¦¤Ë¤·¤Æ¡¢°ìÅÙ¤Ë°ì¤Ä¤ÎÀÜÂ³¤·¤«½èÍý¤·¤Ê¤¤¤è¤¦¤Ë¤·¤¿¤Û¤¦¤¬¤¤
+¤¤¤«¤â¤·¤ì¤Ê¤¤¡£¤À¤«¤é¡¢¤³¤ó¤Ê´¶¤¸¤Ë¤Ê¤ë¤À¤í¤¦¡£</p>
+<pre>
+ zebedee -dD -v 3 -s</pre>
+<p>¥í¥®¥ó¥°¥ì¥Ù¥ë¤ò3¤ËÀßÄê¤¹¤ë¤³¤È¤Ç¡¢
+ÀÜÂ³¤Î¥»¥Ã¥È¥¢¥Ã¥×¤Î¼ç¤Ê¤ä¤ê¤È¤ê¤ò¸«¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+ÌäÂê¤¬¤½¤Î¸å¤Ëµ¯¤­¤Æ¤ë¤È³Î¿®¤¬»ý¤Æ¤ë¤Ê¤é¤Ð¡¢
+¥ì¥Ù¥ë¤ò4¤«5¤Ë¤¹¤ì¤Ð¡¢
+(ÀÜÂ³»þ¤À¤±¤Ç¤Ê¤¯)¼ÂºÝ¤ÎÄÌ¿®¤Ç²¿¤¬¤ä¤ê¤È¤ê¤µ¤ì¤Æ¤¤¤ë¤«¤â¸«¤ë¤³¤È¤¬¤Ç¤­¤ë¡£</p>
+<p>
+</p>
+<hr />
+<h1><a name="examples">EXAMPLES</a></h1>
+<p><strong>Zebedee</strong> ¤Î¥Ñ¥Ã¥±¡¼¥¸¤Ë¤Ï¡¢¤¿¤¯¤µ¤ó¤Î¥µ¥ó¥×¥ë¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤¬´Þ¤Þ¤ì¤Æ¤¤¤ë¡£
+¤³¤³¤Ç¤Ï¡¢¤½¤ì¤é¤Î»ÈÍÑË¡¤È <strong>Zebedee</strong> ¤ò
+ÆÃÄê¤Î¤¤¤¯¤Ä¤«¤Î¥×¥í¥È¥³¥ë¤Ç»ÈÍÑ¤¹¤ë¶ñÂÎÅª¤ÊÊýË¡¤ò½Ò¤Ù¤ë¡£</p>
+<p>
+</p>
+<h2><a name="_µ___ðàßäê_îîã_example_server_configuration_">¥µ¡¼¥ÐÀßÄê¤ÎÎã(Example Server Configuration)</a></h2>
+<p><strong>Zebedee</strong>¤Î¥Ñ¥Ã¥±¡¼¥¸¤Ë´Þ¤Þ¤ì¤ë <em class="file">server.zbd</em> ¤È¤¤¤¦ÀßÄê¥Õ¥¡¥¤¥ë¤¬¤¢¤ë¡£
+¤³¤ì¤Ë¤Ï¤è¤¯»È¤ï¤ì¤ë¤Û¤È¤ó¤É¤Î¥ª¥×¥·¥ç¥ó¤ÎÀßÄêÎã¤¬¤¢¤ë¡£</p>
+<pre>
+ #
+ # Sample Zebedee server configuration file
+ #
+ # This shows the use of many, but not all, of the configuration file
+ # options available for use by a server.
+ #
+ 
+ verbosity 2            # Slightly more than basic messages
+ 
+ server true            # Yes, it&#146;s a server!
+ detached true          # Run detached from terminal
+ udpmode false          # Are we operating in UDP mode?
+ 
+ # Uncomment the following line to log messages to a file
+ #
+ #  logfile &#146;./server.log&#146;
+ #
+ # Or to log to the system logging facility uncomment this:
+ #
+ #  logfile SYSLOG
+ 
+ # Uncomment the following line if you want to use a fixed private
+ # key stored in a static file. The file should contain a line of
+ # the form &quot;privatekey hexadecimal-key-string&quot;
+ #
+ #  include &#146;./server.key&#146;
+ 
+ keygenlevel 2          # Generate maximum strength private keys
+ 
+ # To validate the identity of clients uncomment the following
+ # line:
+ #
+ #  checkidfile &#146;./clients.id&#146;
+ 
+ # Set up allowed redirection ports.
+ # These should be pretty safe -- but it&#146;s not a good idea
+ # to open up all ports.
+ 
+ redirect &quot;telnet ftp&quot;          # Basic services
+ redirect 5900-5999             # VNC traffic
+ redirect 6000-6010             # X Window System
+ redirect &quot;daytime chargen&quot;     # Ports useful for testing
+ 
+ targethost localhost           # Redirection is to the local machine
+ 
+ compression zlib:9             # Allow maximum zlib compression
+ keylength 256                  # Allow keys up to 256 bits
+ keylifetime 36000              # Shared keys last 10 hours
+ maxbufsize 16383               # Allow maximum possible buffer size</pre>
+<p>Ç§¾Ú¤Îµ¡Ç½¤ò¥Æ¥¹¥È¤¹¤ë¤¿¤á¤Ë¤Ï¡¢
+<strong><a href="#item_checkidfile">checkidfile</a></strong>¤Î¹Ô¤ò¥³¥á¥ó¥È¥¢¥¦¥È¤·¡¢
+¥Ñ¥Ã¥±¡¼¥¸¤Ë´Þ¤Þ¤ì¤ë<em class="file">client1.key</em>¤«<em class="file">client2.key</em>¤È¤¤¤¦¥Õ¥¡¥¤¥ë¤ò¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¤Ç»ÈÍÑ¤¹¤ì¤Ð¤è¤¤¡£</p>
+<p>
+</p>
+<h2><a name="vnc_î_èíñîã_use_with_vnc_">VNC¤Î»ÈÍÑÎã(Use with VNC)</a></h2>
+<p><strong>Zebedee</strong>¤òºî¤Ã¤¿ÍýÍ³¤Î°ì¤Ä¤È¤·¤Æ¡¢¥À¥¤¥¢¥ë¥¢¥Ã¥×¤ÇVNC¤ò»È¤¦¤È¤¤¤¦¤³¤È¤¬¤¢¤ë¡£
+VNC¤Ï¡Ö¥ê¥â¡¼¥È¥Õ¥ì¡¼¥à¥Ð¥Ã¥Õ¥¡¥³¥ó¥»¥×¥È¡×¤ò»È¤¤¡¢
+¥ê¥â¡¼¥È¥Ç¥£¥¹¥×¥ì¥¤¤òÄó¶¡¤¹¤ë¥Õ¥ê¡¼¤Î¥·¥¹¥Æ¥à¤Ç¤¢¤ë¡£
+Windows¤Î¥Ç¥¹¥¯¥È¥Ã¥×¤òÎ¥¤ì¤¿½ê¤ËÉ½¼¨¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¤·¡¢
+&quot;Xvnc&quot;¥µ¡¼¥Ð¤ò»È¤Ã¤Æ X ¤Î¥Ç¥¹¥¯¥È¥Ã¥×¤ò
+VNC¥¯¥é¥¤¥¢¥ó¥È¥Þ¥·¥ó¤«¤éÁàºî¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¤·¡¢
+Java¤ò»È¤¨¤ë¥Ö¥é¥¦¥¶¡¼¤ÎÃæ¤«¤éÁàºî¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£
+¾Ü¤·¤¯¤Ïhttp://www.uk.research.att.com/vnc/¤ò»²¾È¤Î¤³¤È¡£</p>
+<p>Äó¶¡¤µ¤ì¤ë¥µ¡¼¥Ð¤ÎÀßÄêÎã¤Ç¤¢¤ë<em class="file">server.zbd</em> ¤Ï 5900-5999 ¥Ý¡¼¥È¤ò
+¥ê¥À¥¤¥ì¥¯¥È¤·¤ÆVNC¥»¥Ã¥·¥ç¥ó¤ò¥È¥ó¥Í¥ê¥ó¥°¤¹¤ë¡£
+¤³¤Î¥Õ¥¡¥¤¥ë¤ÏUNIX¤Ç¤âWindows¤Ç¤â»ÈÍÑ¤Ç¤­¤ë¤¬¡¢
+Windows¤Ç»È¤¦¤¿¤á¤Ë¤Ï¡¢¥ì¥¸¥¹¥È¥ê¤Î&quot;AllowLoopback&quot;¥Õ¥é¥°¤ò
+¥»¥Ã¥È¤¹¤ëÉ¬Í×¤¬¤¢¤ë¤Î¤ÇÃí°Õ¡£
+°Ê²¼¤ÎÃÇÊÒ¤ò(ÀèÆ¬¤Î¥¹¥Ú¡¼¥¹¤ò¼è¤ê½ü¤¤¤Æ¤«¤é)¥Õ¥¡¥¤¥ë¤ËÊÝÂ¸¤·¤Æ 
+<strong>regedit</strong> ¤ËÆÉ¤Þ¤»¤ì¤Ð¡¢¤½¤Î¥È¥ê¥Ã¥¯¤ò¼Â¹Ô¤¹¤ë¡£</p>
+<pre>
+ REGEDIT4
+ 
+ [HKEY_LOCAL_MACHINE\SOFTWARE\ORL\WinVNC3]
+ &quot;AllowLoopback&quot;=dword:00000001
+ 
+ [HKEY_LOCAL_MACHINE\SOFTWARE\ORL\WinVNC3\Default]
+ &quot;AllowLoopback&quot;=dword:00000001</pre>
+<p>¤³¤ÎÆâÍÆ¤Ï <strong>Zebedee</strong> ¥Ñ¥Ã¥±¡¼¥¸¤ÎÃæ¤Î <em class="file">vncloopback.reg</em> ¤Ë¤â´Þ¤Þ¤ì¤Æ¤¤¤ë¡£
+¤³¤Î¥ì¥¸¥¹¥È¥ê¤òÀßÄê¤¹¤ì¤Ð¡¢¥³¥Þ¥ó¥É¥é¥¤¥ó¤ÇÍ¿¤¨¤é¤ì¤¿¥Û¥¹¥È¤Ë¥È¥ó¥Í¥ê¥ó¥°¤µ¤ì¤¿VNC ¥Ó¥å¡¼¥ï¤ò 
+<em class="file">vncviewer.zbd</em> ¤Çµ¯Æ°¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+°Ê²¼¤Ë <em class="file">vncviewer.zbd</em> ¤ÎÆâÍÆ¤ò¼¨¤¹¡£</p>
+<pre>
+ #
+ # Zebedee configuration file to start up a tunnelled VNC session
+ #
+ # Usage: zebedee -f vncviewer.zbd remote-host:vnc-port
+ #
+ 
+ verbosity 1         # Basic messages only
+ 
+ server false        # It&#146;s a client
+ detached true       # Detach from terminal
+ 
+ message &quot;Starting VNC viewer&quot;
+ 
+ # On Windows systems you might use the following:
+ 
+ command &#146;&quot;c:\Program Files\ORL\VNC\vncviewer.exe&quot; localhost:%d&#146;
+ 
+ # On UNIX systems you might use the following:
+ 
+ # command &#146;vncviewer localhost:%d&#146;
+ 
+ compression 6       # Request normal Zlib compression</pre>
+<p>°Ê²¼¤Î¤è¤¦¤Ë¤³¤Î¥Õ¥¡¥¤¥ë¤ò»ÈÍÑ¤¹¤ë¤È¡¢</p>
+<pre>
+ zebedee -f vncviewer.zbd somehost:5901</pre>
+<p><em>somehost</em>¤Î5901ÈÖ¥Ý¡¼¥È¤ÎVNC¥µ¡¼¥Ð¤Ë¥È¥ó¥Í¥ë¤·¤¿VNC¥Ó¥å¡¼¥ï¤òµ¯Æ°¤¹¤ë¡£
+(VNCÉ÷¤Î¤¤¤¤¤«¤¿¤Ç¡¢&quot;<strong>somehost:1</strong>&quot;¤È¤·¤Æ»²¾È¤µ¤ì¤ë¥µ¡¼¥Ð¤Ç¤¢¤ë)</p>
+<p>VNC¤ÏJava¤Î¥Ó¥å¡¼¥ï¤â¥µ¥Ý¡¼¥È¤·¤Æ¤¤¤ë¡£
+¤â¤·¥µ¡¼¥Ð¤¬¥Ý¡¼¥È59xx¤ÇÆ°ºî¤·¤Æ¤¤¤¿¤é¡¢
+¥Ó¥å¡¼¥ï¤ò58xx¤«¤é¥À¥¦¥ó¥í¡¼¥É¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+¤·¤«¤·¤Ê¤¬¤é¡¢
+¤É¤¦¤âJava¥Ó¥å¡¼¥ï¤Ï¥¯¥é¥¤¥¢¥ó¥È¤Ø¤Î¥á¥¤¥ó¤ÎVNC¥Ý¡¼¥ÈÈÖ¹æ¤ÇÄÌ¿®¤·¤Æ¤¤¤ë¤è¤¦¤À¡£
+¤½¤Î¤¿¤á¡¢Java¥Ó¥å¡¼¥ï¤Ç¤³¤ì¤ò¥È¥ó¥Í¥ë¤¹¤ë¤Ë¤Ï¡¢
+¥í¡¼¥«¥ë¤È¥ê¥â¡¼¥È¤ÇÆ±¤¸¥Ý¡¼¥ÈÈÖ¹æ¤ò»È¤¦É¬Í×¤¬¤¢¤ë¡£
+¤½¤Î¤¿¤á¡¢Îã¤¨¤Ð¡¢5901ÈÖ¤Î¥Ý¡¼¥È¤ò»È¤Ã¤Æ¤¤¤ëVNC¥µ¡¼¥Ð¤Ø¤Î¥È¥é¥Õ¥£¥Ã¥¯¤ò
+¥È¥ó¥Í¥ë¤¹¤ë¤Ë¤Ï¡¢¼¡¤Î¤è¤¦¤Ë¤¹¤ë¡£</p>
+<pre>
+ zebedee 5801,5901:remotehost:5801,5901</pre>
+<p>¤â¤·¥í¡¼¥«¥ë¥Þ¥·¥ó¤Ç¤â5901ÈÖ¥Ý¡¼¥È¤ò»È¤Ã¤¿VNC¥µ¡¼¥Ð¤¬Æ°¤¤¤Æ¤¤¤ë¤È¡¢
+¤³¤ì¤Ï¤¦¤Þ¤¯¤¤¤«¤Ê¤¤¡£
+¤·¤«¤·¡¢¥Ý¡¼¥È¤¬¾×ÆÍ¤·¤Ê¤¤¤è¤¦¤ËÎ¾¼Ô¤òÄ´À°¤¹¤ë¤³¤È¤Ï²ÄÇ½¤Ç¤¢¤ë¡£</p>
+<p>¤â¤¦¤Ò¤È¤Ä¤À¤±¸À¤Ã¤Æ¤ª¤¯¤³¤È¤¬¤¢¤ë¡£
+VNC¤ò¥Ç¡¼¥¿°µ½Ì¤È¤È¤â¤Ë»È¤ª¤¦¤È¤·¤Æ¤¤¤ë¤Ê¤é¡¢
+VNC¤Îprotocol encoding¤Ë´Ø¤·¤Æ¼Â¸³¤·¤¿¤Û¤¦¤¬¤è¤¤¡£
+»ä¤Ï¡¢&quot;raw&quot; encoding ¤¬°µ½Ì¤Î¸ú²Ì¤¬¹â¤¯¡¢
+ÃÙ¤¤²óÀþ¾å¤Ç¤Ï¤è¤ê¤è¤¤¥Ñ¥Õ¥©¡¼¥Þ¥ó¥¹¤ò¼¨¤¹¤³¤È¤òÈ¯¸«¤·¤¿¡£
+¤·¤«¤·¡¢¤¢¤Ê¤¿¤Î¾ì¹ç¤Ï°ã¤¦·ë²Ì¤È¤Ê¤ë¤«¤â¤·¤ì¤Ê¤¤¡£</p>
+<p>
+</p>
+<h2><a name="x_window_system_î_èíñîã_use_with_the_x_window_system_">X Window System¤Î»ÈÍÑÎã(Use with the X Window System)</a></h2>
+<p>X Window System¤Ï6000ÈÖ°Ê¾å¤Î¥Ý¡¼¥È¤ò»È¤¦¡£</p>
+<p><strong>xlocal</strong> ¤È¤¤¤¦¥í¡¼¥«¥ë¥Þ¥·¥ó¤Î¥Ý¡¼¥È6000¤ÇX ¥µ¡¼¥Ð¤¬Æ°ºî¤·¤Æ¤¤¤ë¤È¤¹¤ë¡£
+¤³¤ì¤ÏÄÌ¾ï¡¢<strong>xlocal:0</strong> ¤È¤¤¤¦¥Ç¥£¥¹¥×¥ì¥¤¤Ç»È¤ï¤ì¤Æ¤¤¤ë¥Ý¡¼¥È¤Ç¤¢¤ë¡£
+¤½¤·¤Æ¡¢<strong>xremote</strong>¤È¤¤¤¦(¥ê¥â¡¼¥È)¥Þ¥·¥ó¤«¤é¡¢
+¥í¡¼¥«¥ë¤Î¥Ç¥£¥¹¥×¥ì¥¤¤Ë°ÂÁ´¤Ê <strong>xterm</strong> ¤Î¥»¥Ã¥·¥ç¥ó¤òÁ÷¤êÊÖ¤·¤¿¤¤¤â¤Î¤È¤¹¤ë¡£
+¤³¤ì¤ò¹Ô¤Ê¤¦¤Ë¤Ï¡¢°Ê²¼¤Î¥³¥Þ¥ó¥É¤ò <strong>xlocal</strong> ¤Ç¼Â¹Ô¤¹¤ë¡£</p>
+<pre>
+ zebedee -r 6000 -s</pre>
+<p>¤½¤·¤Æ¡¢<strong>xremote</strong> ¤Ç¤Ï</p>
+<pre>
+ zebedee 6001:xlocal:6000</pre>
+<p>¤ò¼Â¹Ô¤¹¤ë¡£</p>
+<p>¤³¤Î¤³¤È¤Ï¡¢<strong>xremote</strong>¾å¤Ç¡¢´Ä¶­ÊÑ¿ô¤Î<strong>DISPLAY</strong>¤¬<code>localhost:1</code>¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ì¤Ð¡¢
+X¤Î¥È¥é¥Õ¥£¥Ã¥¯¤Ï<strong>xlocal</strong>¤ËÅþÃå¤¹¤ë¤³¤È¤ò°ÕÌ£¤¹¤ë¡£
+¤½¤Î¤¿¤á¡¢Îã¤¨¤Ð<strong>xterm</strong>¤ò°ÂÁ´¤Ë<strong>xremote</strong>¤«¤éÁ÷¤í¤¦¤È¤¹¤ë¤Ê¤é¡¢
+<strong>xremote</strong>¾å¤Ç¼¡¤Î¥³¥Þ¥ó¥É¤ò¼Â¹Ô¤¹¤ëÉ¬Í×¤¬¤¢¤ë¡£</p>
+<pre>
+ xterm -display localhost:1</pre>
+<p>¤³¤ì¤¬Àµ¤·¤¯Æ°ºî¤¹¤ë¤¿¤á¤Ë¤Ï¡¢ 
+<strong>xremote</strong>¤ÎX¥µ¡¼¥Ð¤Î¥¢¥¯¥»¥¹¥³¥ó¥È¥í¡¼¥ë¥ê¥¹¥È¤Ë<strong>localhost</strong>¤Î¥¨¥ó¥È¥ê¡¼¤ò
+ÄÉ²Ã¤·¤Ê¤¯¤Æ¤Ï¤Ê¤é¤Ê¤¤¡£
+¤³¤ì¤ò¹Ô¤¦¤Ë¤Ï¼¡¤Î¥³¥Þ¥ó¥É¤ò¼Â¹Ô¤¹¤ë¡£</p>
+<pre>
+ xhost +localhost</pre>
+<p>
+</p>
+<h2><a name="http_îäì___ò_âá__ë___ë_securing_http_traffic_">HTTP¤ÎÄÌ¿®¤ò°ÂÁ´¤Ë¤¹¤ë(Securing HTTP traffic)</a></h2>
+<p><strong>Zebedee</strong>¥¯¥é¥¤¥¢¥ó¥È¤ò&quot;multi-use&quot;¥â¡¼¥É¤ÇÆ°ºî¤µ¤»¤ë¤³¤È¤Ç¡¢
+Á´¤Æ¤ÎWeb¥µ¡¼¥Ð¤Ø¤ÎÄÌ¿®¤ò°ÂÁ´¤Ë¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+¤â¤·¡¢Web¥µ¡¼¥Ð¤¬ <strong>webhost</strong> ¤Î¥Ý¡¼¥È80¤ÇÆ°ºî¤·¤Æ¤ª¤ê¡¢
+¤½¤Î¥µ¡¼¥Ð¥Þ¥·¥ó¤Ç <strong>Zebedee</strong> ¥µ¡¼¥Ð¤âÆ°ºî¤·¤Æ¤¤¤ë¤È¤·¤¿¤é¡¢
+¼¡¤Î¥³¥Þ¥ó¥É¤¬¥í¡¼¥«¥ë¥Þ¥·¥ó¤Î8000ÈÖ¥Ý¡¼¥È·ÐÍ³¤Î¥È¥ó¥Í¥ë¤òÀßÄê¤¹¤ë¡£</p>
+<pre>
+ zebedee 8000:webhost:80</pre>
+<p>will set up a tunnel via port 8000 on the client host. Now any URLs that
+previously were addressed via <strong>webhost</strong>, for example:</p>
+<pre>
+ <a href="http://webhost/private/index.html">http://webhost/private/index.html</a></pre>
+<p>¤Ï¡¢¤³¤Î¾õÂÖ¤Ç¤Ï¼¡¤ÎURL¤Ç°ÂÁ´¤Ë¥¢¥¯¥»¥¹¤Ç¤­¤ë¡£</p>
+<pre>
+ <a href="http://localhost:8000/private/index.html">http://localhost:8000/private/index.html</a></pre>
+<p>&quot;<code>localhost:8000</code>&quot;¤ò¤¢¤Ê¤¿¤Î¥×¥í¥­¥·¡¼¤È¤·¤ÆÀßÄê¤¹¤ë¤³¤È¤Ç¡¢
+Á´¤Æ¤ÎHTTP¤Î¥È¥é¥Õ¥£¥Ã¥¯¤ò°ÂÁ´¤Ê¥È¥ó¥Í¥ë·ÐÍ³¤Ë¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£
+¤·¤«¤·¡¢Ãí°Õ¤¹¤Ù¤­¤³¤È¤Ï¡¢HTTP¤Î¥×¥í¥­¥·¡¼ÀßÄê°Ê³°¤Ë¤³¤ÎÀßÄê¤ò¤·¤Æ¤Ï¤¤¤±¤Ê¤¤¡£
+Secure HTTP¤ò´Þ¤àÂ¾¤Î¥×¥í¥È¥³¥ë¤ÏÂ¾¤ÎÊýË¡¤Ç¥ê¥À¥¤¥ì¥¯¥È¤¹¤ëÉ¬Í×¤¬¤¢¤ë¡£
+¤Û¤È¤ó¤É¤Î¥Ö¥é¥¦¥¶¤Ï°ã¤¦¥É¥á¥¤¥ó¤Ë°ã¤¦¥×¥í¥­¥·¡¼¤ò³ä¤ê¤¢¤Æ¤ëÀßÄê¤â²ÄÇ½¤Ç¤¢¤ë¡£
+¤½¤Î¤¿¤á¡¢É¬Í×¤Ê¤â¤Î¤À¤±Áª¤ó¤Ç¥¬¡¼¥É¤¹¤ë¤³¤È¤â¤Ç¤­¤ë¡£
+¤³¤ì¤ò¹Ô¤Ê¤¦ÊýË¡¤Ë¤Ä¤¤¤Æ¤Ï¥Ö¥é¥¦¥¶¤Î¥Þ¥Ë¥å¥¢¥ë¤ò»²¾È¤µ¤ì¤¿¤·¡£</p>
+<p>
+</p>
+<h2><a name="ftp_îäì___ò_âá__ë___ë_securing_ftp_traffic_">FTP¤ÎÄÌ¿®¤ò°ÂÁ´¤Ë¤¹¤ë(Securing FTP traffic)</a></h2>
+<p>°Ê²¼¤Î¼êÃÊ¤Ç¡¢
+<strong>Zebedee</strong>¤ò»È¤¤Â¿¤¯¤ÎFTP¥µ¡¼¥Ð¤Ø¤ÎFTP¥³¥ó¥È¥í¡¼¥ë¥³¥Í¥¯¥·¥ç¥ó
+(¥æ¡¼¥¶Ì¾¤È¥Ñ¥¹¥ï¡¼¥É¤¬Á÷¤é¤ì¤ë¥³¥Í¥¯¥·¥ç¥ó)¤ò¼é¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+¤µ¤é¤Ë¡¢<strong>Zebedee</strong>¥Ñ¥Ã¥±¡¼¥¸¤Ë´Þ¤Þ¤ì¤ë <strong>ftpgw.tcl</strong> ¥¹¥¯¥ê¥×¥È¤Ë¤è¤Ã¤Æ¡¢
+¥Ñ¥Ã¥·¥Ö¥â¡¼¥É¤Î¥Ç¡¼¥¿¥³¥Í¥¯¥·¥ç¥ó¤µ¤¨¤â¼é¤ë¤³¤È¤¬¤Ç¤­¤ë¡£</p>
+<p>FTP¥µ¡¼¥Ð¤ò°·¤¦ºÇ¤âÃ±½ã¤ÊÊýË¡¤Ï¡¢°Ê²¼¤Î¤è¤¦¤Ë <strong>Zebedee</strong> ¤òµ¯Æ°¤¹¤ë¤³¤È¤À¡£</p>
+<pre>
+ zebedee -s -r ftp ftpserverhost</pre>
+<p>FTP¥µ¡¼¥Ð¤ÈÆ±¤¸¥Þ¥·¥ó¤Ç <strong>Zebedee</strong> ¤òÆ°ºî¤µ¤»¤Æ¤¤¤Æ¤â¡¢¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç
+ÌÀ¼¨Åª¤Ë¥Û¥¹¥ÈÌ¾¤ò»ØÄê¤¹¤ëÉ¬Í×¤¬¤¢¤ë(¤Þ¤¿¤Ï
+<strong><a href="#item_redirecthost">redirecthost</a></strong>¥­¡¼¥ï¡¼¥É¤ò»ÈÍÑ)¡£¤½¤ì¤ò
+<strong>localhost</strong>¤È¤·¤Æ»²¾È¤·¤Æ¤Ï¤¤¤±¤Ê¤¤¡£¥¯¥é¥¤¥¢¥ó¥È¥·¥¹¥Æ¥à¤Ç¤Ï
+<strong>Zebedee</strong>¤ò¼¡¤Î¤è¤¦¤Ëµ¯Æ°¤·¤Æ¡¢¥Ý¡¼¥È10000ÈÖ·ÐÍ³¤Î¥Þ¥ë¥Á¥æ¡¼¥¹¥È¥ó¥Í¥ë
+¤ò¹½ÃÛ¤¹¤ë¡£</p>
+<pre>
+ zebedee 10000:ftpserverhost:ftp</pre>
+<p>FTP¥µ¡¼¥Ð¤ËÀÜÂ³¤¹¤ë¤Ë¤Ï¡¢¼¡¤Î¤è¤¦¤Ê¥³¥Þ¥ó¥É¤ò»ÈÍÑ¤¹¤ë¡£</p>
+<pre>
+ ftp clienthost 10000</pre>
+<p>¤¯¤É¤¤¤è¤¦¤À¤¬¡¢<strong>localhost</strong> ¤Ç¤Ê¤¯¥í¡¼¥«¥ë¥¯¥é¥¤¥¢¥ó¥È¤Î¥Û¥¹¥ÈÌ¾¤ò»È¤¦¤³¤È¡£
+¤â¤·¡¢windows¤ÎÉ¸½àFTP¥¯¥é¥¤¥¢¥ó¥È¤Î¤è¤¦¤Ë¡¢
+¤¢¤Ê¤¿¤ÎFTP¥¯¥é¥¤¥¢¥ó¥È¤¬¥³¥Þ¥ó¥É¥é¥¤¥ó¤Ç¥Ý¡¼¥È¤ò»ØÄê¤Ç¤­¤Ê¤¤»þ¤Ï¡¢
+¥×¥í¥°¥é¥à¤ÎÃæ¤Ç(FTP¥»¥Ã¥·¥ç¥ó¤ÎÃæ¤Ç) 
+&quot;<code>open clienthost 10000</code>&quot; ¤È¤¤¤¦¥³¥Þ¥ó¥É¤ò»È¤¦¤³¤È¤¬¤Ç¤­¤ë¡£
+¤â¤·¡¢¥¯¥é¥¤¥¢¥ó¥È¥Þ¥·¥ó¤ÇFTP¥µ¡¼¥Ð¤¬Î©¤Á¾å¤¬¤Ã¤Æ¤¤¤Ê¤±¤ì¤Ð¡¢ 
+<strong>Zebedee</strong> ¤ò¤³¤Î¤è¤¦¤Ëµ¯Æ°¤·¤Æ¤â¤è¤¤¡£</p>
+<pre>
+ zebedee <a href="ftp:ftpserverhost:ftp">ftp:ftpserverhost:ftp</a></pre>
+<p>¤³¤ì¤À¤ÈFTP¥¯¥é¥¤¥¢¥ó¥È¥×¥í¥°¥é¥à¤Ï¼¡¤Î¤è¤¦¤Ëµ¯Æ°¤Ç¤­¤ë¡£</p>
+<pre>
+ ftp clienthost</pre>
+<p>FTP¤Î¥³¥ó¥È¥í¡¼¥ë¥³¥Í¥¯¥·¥ç¥ó¤È¥Ç¡¼¥¿¥³¥Í¥¯¥·¥ç¥ó¤¬Æ±¤¸½ê¤«¤éÍè¤Æ¤¤¤ë¤«
+¤É¤¦¤«¥Á¥§¥Ã¥¯¤¹¤ëFTP¥µ¡¼¥Ð¤¬¤¢¤ë¤¬¡¢¤½¤¦¤¤¤¦¥µ¡¼¥Ð¤ËÂÐ¤·¤Æ¤Ï¾åµ­¤Î¼êË¡¤Ï
+¤¦¤Þ¤¯¤¤¤«¤Ê¤¤¡£<strong>wu-ftpd</strong> ¤Î¤è¤¦¤Ê¥á¥¸¥ã¡¼¤ÊFTP¥µ¡¼¥Ð¤Ï¤³¤ÎÅÀ¤Ë
+¤Ä¤¤¤Æ¸·¤·¤¯¥Á¥§¥Ã¥¯¤òÆþ¤ì¤ë(¥»¥­¥å¥ê¥Æ¥£ÌÌ¤«¤é¤ÏË¾¤Þ¤·¤¤¤³¤È¤À¤¬¡Ä)¡£
+¤â¤·¡¢¥µ¡¼¥Ð¤Ø¤ÎÀÜÂ³¤ÏÌÀ¤é¤«¤Ë¤¦¤Þ¤¯¤¤¤¯¤Î¤Ë¡¢
+¥Õ¥¡¥¤¥ë¤Î¥ê¥¹¥È¤äÆÉ¤ß½Ð¤·¤Ç¼ºÇÔ¤·¤¿¤ê¥Ï¥ó¥°¥¢¥Ã¥×¤¹¤ë¤Ê¤é¡¢
+¤½¤Î¥µ¡¼¥Ð¤¬¤³¤³¤ò¸·¤·¤¯¥Á¥§¥Ã¥¯¤¹¤ë¥¿¥¤¥×¤À¤Ã¤¿¡¢¤È¤¤¤¦¤³¤È¤À¡£</p>
+<p>¤³¤ÎÌäÂê¤ò¹îÉþ¤¹¤ë¤Î¤ò½õ¤±¤ë¤¿¤á¤Ë¡¢<strong>ftpgw.tcl</strong> ¤È¤¤¤¦FTP¥²¡¼¥È¥¦¥§¥¤¤Î
+¥¹¥¯¥ê¥×¥È¤¬ <strong>Zebedee</strong> ¥Ñ¥Ã¥±¡¼¥¸¤Ë¤Ï´Þ¤Þ¤ì¤Æ¤¤¤ë¡£
+¤³¤Î¥×¥í¥°¥é¥à¤Ï¥Õ¥ê¡¼¤ËÆþ¼ê²ÄÇ½¤Ç¤¢¤ëTcl¥¹¥¯¥ê¥×¥Æ¥£¥ó¥°¸À¸ì
+(http://www.scriptics.com»²¾È)¤Ç½ñ¤«¤ì¤Æ¤¤¤Æ¡¢
+FTP¤Î¥ê¥¯¥¨¥¹¥È¤òÃæ·Ñ¤·¤ÆºÆÁ÷¿®¤·¡¢¥µ¡¼¥Ð¤«¤é<strong>Zebedee</strong> ¤ÎÂ¸ºß¤ò±£¤¹¡£
+¤³¤ì¤Ï <strong>Zebedee</strong> ¥µ¡¼¥Ð¤ÈÆ±¤¸¥Þ¥·¥ó¤ÇÁö¤é¤»¤ëÉ¬Í×¤¬¤¢¤ë¡£
+FTP¥µ¡¼¥Ð¤âÆ±¤¸¥Þ¥·¥ó¤ÇÆ°¤¤¤Æ¤¤¤ë¤Ê¤é¡¢Ã±¤Ë¤³¤¦µ¯Æ°¤¹¤ì¤Ð¤è¤¤¡£</p>
+<pre>
+ tclsh ftpgw.tcl</pre>
+<p>¤³¤ì¤Ç¥²¡¼¥È¥¦¥§¥¤¤Ï¥Ý¡¼¥È2121¤ÇÂÔ¤Á¼õ¤±¤ë¡£ÌÀ¤é¤«¤Ë¡¢¼ÂºÝ¤Î»ÈÍÑ¤Ç¤Ï¤³¤ì
+¤ò¥Ð¥Ã¥¯¥°¥é¥¦¥ó¥É¤Çµ¯Æ°¤·¤¿¤¤¤À¤í¤¦¡£¤½¤ì¤«¤é¡¢<strong>Zebedee</strong>¥µ¡¼¥Ð¤ò</p>
+<pre>
+ zebedee -s -r 2121</pre>
+<p>¤È¤·¤Æµ¯Æ°¤¹¤ë¡£</p>
+<p>¤³¤Î¥±¡¼¥¹¤Ç¤Ï¥í¡¼¥«¥ë¥Û¥¹¥ÈÌ¾¤ò»ØÄê¤¹¤ëÉ¬Í×¤Ï¤Ê¤¤
+(¤·¤¿¤±¤ì¤Ð¤·¤Æ¤â¤«¤Þ¤ï¤Ê¤¤¤¬)¡£
+¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¤Ç¤Ï¤³¤¦¤¹¤ë¡£</p>
+<pre>
+ zebedee 2121:ftpserverhost:2121</pre>
+<p>¤½¤ì¤«¤é¤³¤¦¤¹¤ë¡£</p>
+<pre>
+ ftp clienthost 2121</pre>
+<p>¤³¤Á¤é¤Ç¤Ï¡¢¤³¤Î¾ì¹ç¤Ç¤â¥¯¥é¥¤¥¢¥ó¥È¥Û¥¹¥ÈÌ¾¤ò»È¤¦¡£</p>
+<p>¤³¤ÎÀßÄê¤Ç¤Ï¡¢FTP¤Î¥³¥ó¥È¥í¡¼¥ë¥³¥Í¥¯¥·¥ç¥ó¤Ï¥È¥ó¥Í¥ë¤µ¤ì¤ë¤¬¡¢
+¥Ç¡¼¥¿¥³¥Í¥¯¥·¥ç¥ó¤Ë¤Ï°ìÀÚ±Æ¶Á¤òÍ¿¤¨¤Ê¤¤¡£
+¤â¤·¡¢¤¢¤Ê¤¿¤ÎFTP¥¯¥é¥¤¥¢¥ó¥È¤¬¥Ñ¥Ã¥·¥Ö¥â¡¼¥É¤ò¥µ¥Ý¡¼¥È¤·¤Æ¤¤¤ì¤Ð¡¢ 
+<strong>ftpgw.tcl</strong> ¤Ç¥Ç¡¼¥¿¥Á¥ã¥ó¥Í¥ë¤â°ÂÁ´¤Ë¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+Netscape Navigator ¤ä WindowsÍÑ¤ÎWS_FTP¤Ê¤É¤Ï¤½¤ì¤ò¥µ¥Ý¡¼¥È¤·¤Æ¤¤¤ë¡£</p>
+<p>¥Ñ¥Ã¥·¥Ö¥â¡¼¥É¤Î¥Ç¡¼¥¿¥³¥Í¥¯¥·¥ç¥ó¤ò°ÂÁ´¤Ë¤¹¤ë¤¿¤á¤Ë¤Ï¡¢
+¤Þ¤º¥Ç¡¼¥¿¥³¥Í¥¯¥·¥ç¥ó¤Ë»È¤¦¥Ý¡¼¥ÈÈÖ¹æ¤ÎÈÏ°Ï¤òÁª¤Ð¤Ê¤¯¤Æ¤Ï¤¤¤±¤Ê¤¤¡£
+¤³¤ÎÎã¤Ç¤Ï¡£30000¤«¤é30100ÈÖ¤ò»È¤¦¤â¤Î¤È¤¹¤ë¡£
+¤Þ¤º¡¢<strong>ftpgw.tcl</strong> ¤ò µ¯Æ°¤¹¤ë»þ¤Ë¡¢¤³¤Î¥Ý¡¼¥ÈÈÏ°Ï¤ò»ØÄê¤¹¤ë¤¿¤á¤Ë¡¢
+<strong>-p</strong>¥ª¥×¥·¥ç¥ó¤ò»ÈÍÑ¤¹¤ë¡£</p>
+<pre>
+ tclsh ftpgw.tcl -p 30000-30100</pre>
+<p><strong>Zebedee</strong>¥µ¡¼¥Ð¤Ï¤³¤Î¤è¤¦¤Ëµ¯Æ°¤¹¤ë¡£</p>
+<pre>
+ zebedee -s -r 2121,30000-30100</pre>
+<p>¥¯¥é¥¤¥¢¥ó¥È¤Ï¤³¤¦¤À¡£</p>
+<pre>
+ zebedee 2121,30000-30100:ftpserverhost:2121,30000-30100</pre>
+<p>Netscape¤ò»È¤Ã¤Æ¥³¥ó¥È¥í¡¼¥ë¥³¥Í¥¯¥·¥ç¥ó¤È¥Ç¡¼¥¿¥³¥Í¥¯¥·¥ç¥ó¤ò
+Î¾Êý°ÂÁ´¤Ë¥¢¥¯¥»¥¹¤¹¤ë¤Ë¤Ï¡¢¤³¤Î¤è¤¦¤ÊURL¤òÆþÎÏ¤¹¤ë¡£</p>
+<pre>
+ <a href="ftp://username@clienthost:2121/">ftp://username@clienthost:2121/</a></pre>
+<p>¤³¤³¤Ç<em>username</em>¤ÏFTP¥µ¡¼¥Ð¤Ç¤Î¥æ¡¼¥¶Ì¾¤Ç¤¢¤ë¡£</p>
+<p>
+</p>
+<hr />
+<h1><a name="credits_and_legalities">CREDITS AND LEGALITIES</a></h1>
+<p>The following information can also be found in the file <em class="file">LICENCE.txt</em> in the
+<strong>Zebedee</strong> distribution.</p>
+<pre>
+ Copyright (c) 1999, 2000, 2001 by Neil Winton. All Rights Reserved.</pre>
+<pre>
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.</pre>
+<pre>
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.</pre>
+<pre>
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
+ USA.</pre>
+<p>A copy of the GNU General Public License can be found in the file <em class="file">GPL2.txt</em>.</p>
+<p>You may obtain the latest copy of <strong>Zebedee</strong>, including full source code from
+<a href="http://www.winton.org.uk/zebedee/">http://www.winton.org.uk/zebedee/</a> and other enquiries about <strong>Zebedee</strong>
+can be e-mailed to the author at <a href="mailto:zebedee@winton.org.uk">zebedee@winton.org.uk</a></p>
+<p><strong>Zebedee</strong> would not have been possible without the use of a large amount of
+freely-available software to do all the really hard stuff. I gratefully
+acknowledge the contributions made by the authors of the following software
+packages.</p>
+<p><strong>Zebedee</strong> uses the &quot;Blowfish&quot; encryption algorithm devised by Bruce Schneier.
+For more information on Blowfish see <a href="http://www.counterpane.com/blowfish.html">http://www.counterpane.com/blowfish.html</a> .
+The implementation used is by Eric Young and is covered by the following
+copyright:</p>
+<pre>
+ Copyright (C) 1995-1997 Eric Young (eay@mincom.oz.au)
+ All rights reserved.
+ 
+ This package is an Blowfish implementation written
+ by Eric Young (eay@mincom.oz.au).
+ 
+ This library is free for commercial and non-commercial use as long as
+ the following conditions are aheared to.  The following conditions
+ apply to all code found in this distribution.
+ 
+ Copyright remains Eric Young&#146;s, and as such any Copyright notices in
+ the code are not to be removed.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 1. Redistributions of source code must retain the copyright
+ notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ 3. All advertising materials mentioning features or use of this software
+ must display the following acknowledgement:
+ This product includes software developed by Eric Young (eay@mincom.oz.au)
+ 
+ THIS SOFTWARE IS PROVIDED BY ERIC YOUNG &#147;AS IS&#148; AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+ 
+ The license and distribution terms for any publically available version or
+ derivative of this code cannot be changed.  i.e. this code cannot simply be
+ copied and put under another distrubution license
+ [including the GNU Public License.]
+ 
+ The reason behind this being stated in this direct manner is past
+ experience in code simply being copied and the attribution removed
+ from it and then being distributed as part of other packages. This
+ implementation was a non-trivial and unpaid effort.</pre>
+<p><strong>Zebedee</strong> uses the <strong>zlib</strong> compression library by Jean-loup Gailly and
+Mark Adler. It is covered by the following copyright notice:</p>
+<pre>
+ (C) 1995-1998 Jean-loup Gailly and Mark Adler</pre>
+<pre>
+ This software is provided &#146;as-is&#146;, without any express or implied
+ warranty.  In no event will the authors be held liable for any damages
+ arising from the use of this software.</pre>
+<pre>
+ Permission is granted to anyone to use this software for any purpose,
+ including commercial applications, and to alter it and redistribute it
+ freely, subject to the following restrictions:</pre>
+<pre>
+ 1. The origin of this software must not be misrepresented; you must not
+ claim that you wrote the original software. If you use this software
+ in a product, an acknowledgment in the product documentation would be
+ appreciated but is not required.
+ 2. Altered source versions must be plainly marked as such, and must not be
+ misrepresented as being the original software.
+ 3. This notice may not be removed or altered from any source distribution.</pre>
+<pre>
+ Jean-loup Gailly        Mark Adler
+ jloup@gzip.org          madler@alumni.caltech.edu</pre>
+<p><strong>Zebedee</strong> may use the <strong>bzip2</strong> compression library by Julian Seward which is
+covered by the following licence:</p>
+<pre>
+ This program, &quot;bzip2&quot; and associated library &quot;libbzip2&quot;, are
+ copyright (C) 1996-1999 Julian R Seward.  All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 
+ 2. The origin of this software must not be misrepresented; you must 
+    not claim that you wrote the original software.  If you use this 
+    software in a product, an acknowledgment in the product 
+    documentation would be appreciated but is not required.
+ 
+ 3. Altered source versions must be plainly marked as such, and must
+    not be misrepresented as being the original software.
+ 
+ 4. The name of the author may not be used to endorse or promote 
+    products derived from this software without specific prior written 
+    permission.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR &#147;AS IS&#148; AND ANY EXPRESS
+ OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ Julian Seward, Cambridge, UK.
+ jseward@acm.org
+ bzip2/libbzip2 version 1.0 of 21 March 2000</pre>
+<p>By default <strong>Zebedee</strong> is built using an aribtrary precision integer arithmetic
+library derived from the sources to <code>mirrordir-0.10.49</code> which in turn derived
+this from the <strong>Python</strong> sources. The copyright is as follows:</p>
+<pre>
+
+ huge-number.c: arbitrary precision integer library from Python sources
+ This has nothing to do with cryptography.
+ Copyright (C) 1998 Paul Sheer</pre>
+<pre>
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.</pre>
+<pre>
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.</pre>
+<pre>
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.</pre>
+<pre>
+
+ This file was taken from the Python source for `long&#146; type
+ integers. I have changed it to compile independently of the
+ Python source, and added the optimisation that GNU C can
+ use 31 bit digits instead of Python&#146;s 15 bit. You can download
+ the original from www.python.org. This file bears little
+ resemblance to the original though - paul</pre>
+<pre>
+
+ Copyright 1991-1995 by Stichting Mathematisch Centrum, Amsterdam,
+ The Netherlands.</pre>
+<pre>
+
+                         All Rights Reserved</pre>
+<pre>
+
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
+ provided that the above copyright notice appear in all copies and that
+ both that copyright notice and this permission notice appear in
+ supporting documentation, and that the names of Stichting Mathematisch
+ Centrum or CWI or Corporation for National Research Initiatives or
+ CNRI not be used in advertising or publicity pertaining to
+ distribution of the software without specific, written prior
+ permission.</pre>
+<pre>
+
+ While CWI is the initial source for this software, a modified version
+ is made available by the Corporation for National Research Initiatives
+ (CNRI) at the Internet address <a href="ftp://ftp.python.org">ftp://ftp.python.org</a>.
+</pre>
+<pre>
+
+ STICHTING MATHEMATISCH CENTRUM AND CNRI DISCLAIM ALL WARRANTIES WITH
+ REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL STICHTING MATHEMATISCH
+ CENTRUM OR CNRI BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL
+ DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+ PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ PERFORMANCE OF THIS SOFTWARE.</pre>
+<p><strong>Zebedee</strong> uses the Secure Hash Algorith (SHA) the code for which was derived
+from Uwe Hollerbach&#146;s SHA module for <strong>perl</strong>. The code contains the following
+statement:</p>
+<pre>
+ NIST Secure Hash Algorithm
+ heavily modified by Uwe Hollerbach &lt;uh@alumni.caltech edu&gt;
+ from Peter C. Gutmann&#146;s implementation as found in
+ Applied Cryptography by Bruce Schneier
+
+</pre>
+<pre>
+ This code is in the public domain
+
+</pre>
+<p>Under Windows, <strong>Zebedee</strong> uses an implementation of the <em class="file">getopt</em> function
+covered by the following copyright:</p>
+<pre>
+ Copyright (c) 1987, 1993, 1994
+        The Regents of the University of California.  All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 1. Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ 3. All advertising materials mentioning features or use of this software
+ must display the following acknowledgement:
+        This product includes software developed by the University of
+        California, Berkeley and its contributors.
+ 4. Neither the name of the University nor the names of its contributors
+ may be used to endorse or promote products derived from this software
+ without specific prior written permission.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS &#147;AS IS&#148; AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+</pre>
+<p>
+</p>
+<h2><a name="thanks">Thanks</a></h2>
+<p>Special thanks go to those people who have taken the trouble to give me
+feedback and suggestions for improvement!</p>
+<pre>
+ $Id: zebedee.pod,v 1.1.1.1 2001/04/12 18:08:29 ndwinton Exp $
+</pre>
+
+</body>
+
+</html>
