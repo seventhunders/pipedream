@@ -1,0 +1,12 @@
+cd blowfish-0.9.5a
+make clean
+cd ..
+cd bzip2-1.0.3
+make clean
+cd ..
+cd zebedee-2.4.1A
+make clean
+cd ..
+cd zlib-1.2.3
+make clean
+cd ..

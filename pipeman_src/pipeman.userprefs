@@ -3,26 +3,25 @@
   <MonoDevelop.Ide.DebuggingService>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService>
-  <MonoDevelop.Ide.Workbench ActiveDocument="pipette/msgBase.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workbench ActiveDocument="pipette/pipe.cs" ctype="Workbench">
     <Files>
-      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeServiceAccept.cs" Line="71" Column="3" />
-      <File FileName="pipette/pipe.cs" Line="106" Column="47" />
+      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeServiceAccept.cs" Line="54" Column="50" />
+      <File FileName="pipette/pipe.cs" Line="143" Column="92" />
       <File FileName="pipette/m0ther/m0therpipe.cs" Line="23" Column="39" />
       <File FileName="pipette/magic.cs" Line="15" Column="20" />
-      <File FileName="pipette/PipeEndTypes/PipeEndTypeLocalBind.cs" Line="91" Column="7" />
+      <File FileName="pipette/PipeEndTypes/PipeEndTypeLocalBind.cs" Line="146" Column="56" />
       <File FileName="pipette/AuthenticationTypes/AuthenticationType.cs" Line="39" Column="151" />
-      <File FileName="pipette/PipeEndTypes/PipeEndType.cs" Line="57" Column="51" />
+      <File FileName="pipette/PipeEndTypes/PipeEndType.cs" Line="52" Column="5" />
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeSpecialBackhaul.cs" Line="22" Column="16" />
-      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeNone.cs" Line="18" Column="34" />
+      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeNone.cs" Line="36" Column="35" />
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeServiceConnect.cs" Line="28" Column="49" />
-      <File FileName="pipette/PipeEndTypes/PipeEndTypeTCPClient.cs" Line="23" Column="21" />
-      <File FileName="logger/logger.cs" Line="93" Column="18" />
-      <File FileName="pipette/msgBase.cs" Line="52" Column="25" />
-      <File FileName="pipette/PipeEndTypes/deepID.cs" Line="54" Column="18" />
+      <File FileName="pipette/msgBase.cs" Line="56" Column="39" />
+      <File FileName="pipette/PipeEndTypes/deepID.cs" Line="56" Column="4" />
       <File FileName="pipette/m0ther_api_request.cs" Line="20" Column="1" />
-      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeSpecialGateway.cs" Line="27" Column="44" />
-      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeAESLike.cs" Line="85" Column="21" />
       <File FileName="pipette/AuthenticationTypes/AuthenticationTypeSpecialM0ther.cs" Line="38" Column="4" />
+      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeAESLike.cs" Line="1" Column="1" />
+      <File FileName="pipette/AuthenticationTypes/AuthenticationTypeSpecialGateway.cs" Line="33" Column="5" />
+      <File FileName="pipette/PipeEndTypes/PipeEndTypeTCPClient.cs" Line="90" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -34,7 +33,7 @@
             <Node name="AuthenticationTypes" expanded="True" />
             <Node name="m0ther" expanded="True" />
             <Node name="PipeEndTypes" expanded="True" />
-            <Node name="msgBase.cs" selected="True" />
+            <Node name="pipe.cs" selected="True" />
           </Node>
         </State>
       </Pad>

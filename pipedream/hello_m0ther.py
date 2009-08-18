@@ -41,6 +41,7 @@ def try_gateway(ip,port):
     from subprocess import Popen
     args = [
         zebedee_path,
+        "-d",
         "-T %d" % port,
         '-x',
         "checkidfile %s" % os.path.expanduser("~/.pipedream/m0ther-key"),
@@ -51,8 +52,9 @@ def try_gateway(ip,port):
     motherpid = Popen(args)
     set_setting("last-mother-pid",str(motherpid.pid))
     try:
-        return api_get("/api/areyouthere",{}=="YES")
-    except:
+        return api_get("/api/areyouthere",{})=="YES"
+    except Exception as ex:
+        print ex
         pass
     print "That gateway wouldn't work"
     motherpid.kill()
@@ -80,6 +82,83 @@ def api_url(apiurl,data,method,request=None):
     response = request.getresponse().read()
     request.close()
     return response
+def api_post(apiurl,data):
+    return api_body(apiurl,data,"POST")
+def api_body(apiurl,data,method):
+    request = get_mother_request()
+    import urllib
+    realdata = urllib.urlencode(data)
+    headers = {"Content-Type":"application/x-www-form-urlencoded","Host":"pipem0ther.appspot.com"}
+    request.request(method,apiurl,realdata,headers)
+    response = request.getresponse().read()
+    request.close()
+    return response
+
+
+from BaseHTTPServer import BaseHTTPRequestHandler
+class TransparentMother(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path=="/favico.ico":
+            self.send_response(404)
+        else:
+            self.send_response(200)
+        self.send_header('Content-type','text/html')
+        self.end_headers()
+        import urlparse
+        from cgi import parse_qs
+        #o = urlparse.urlparse(self.path)
+        #print o
+        print self.path
+        pathparts = self.path.split("?")
+        if len(pathparts)>=2:
+            data = parse_qs(self.path.split("?")[1])
+            real_data = {}
+            for key in data:
+                real_data[key]=(data[key][0])
+            data = real_data
+        else:
+            data = {}
+        print data
+        print "about tu query"
+        self.wfile.write(api_get(pathparts[0],data))
+        print "done"
+        #print self.path
+    def do_POST(self):
+        self.send_response(200)
+        self.send_header('Content-type','text/html')
+        self.end_headers()
+        length = int(self.headers.getheader('content-length'))
+        import cgi
+            
+        pdict = cgi.parse_qs(self.rfile.read(length))
+        real_data = {}
+        for key in pdict:
+            real_data[key]=(pdict[key][0])
+        pdict = real_data
+        print pdict
+        import urlparse
+        self.wfile.write(api_post(self.path,pdict))
+def transparent_mother():
+    from BaseHTTPServer import HTTPServer
+    server = HTTPServer(('127.0.0.1',3547),TransparentMother)
+    server.serve_forever()
+    
+def bind_chat():
+    #transparent_mother()
+    import urllib2
+    from environment import get_setting
+    
+    identity = get_setting("identity")
+    if api_get("/chat/nickname",{"identity":identity})=="NOTSET":
+        print "You don't have a nickname set.  Choose one below.  This is PERMANENT and cannot be changed"
+        nickname = raw_input("Nickname: ")
+        print api_post("/chat/nickname",data={"identity":identity,"nickname":nickname})
+    openurl = "http://localhost:3547/chat/?identity=%s" % identity
+    import thread
+    print "Right, try connecting to %s" % openurl
+    from environment import super_open
+    super_open(openurl)
+    transparent_mother()
     
 """def machine_readable_regex(id):
     import re
