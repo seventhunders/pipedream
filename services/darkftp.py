@@ -102,7 +102,7 @@ def client_thread(clientsocket,none):
                     else:
                         print "chdiring to %s" % pathitem
                         s.send("chdir %s\n" % pathitem)
-                        t = r.readline()
+                        t = r.readline().strip()
                         if t != "0":
                             raise Exception ("Read %s" % t )
                         
@@ -138,9 +138,11 @@ def client_thread(clientsocket,none):
                 cd_dirs = my_chdir.split("/")[2:]
                 for dir in cd_dirs:
                     print "chdirng to %s" % dir.strip()
-                    s.send("chdir %s" % dir.strip())
-                    r.readline()
-                    r.readline()
+                    s.send("chdir %s\n" % dir.strip())
+                    slines = r.readline()
+                    print "Burning %s lines" % slines
+                    for i in range(0,int(slines)):
+                        print "burning %s" % r.readline()
                     print "done"
                 s.send("ls\n")
                 sitems = r.readline()
