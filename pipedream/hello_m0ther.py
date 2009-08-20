@@ -79,9 +79,9 @@ def try_gateway(ip,port):
     return False
 def ensure_m0thers_there():
     try:
-        if api_get("/api/areyouthere",{},ensure=False)=="YES": return True
-    except:
-        logging.info("Unable to connect right off the bat.")
+        if api_url("/api/areyouthere",{},"GET",ensure=False)=="YES": return True
+    except Exception as ex:
+        logging.info("Unable to connect right off the bat: %s." % ex)
     for (ip,port) in known_gateways:
         if try_gateway(ip,port): return True
     raise Exception("Couldn't find m0ther")

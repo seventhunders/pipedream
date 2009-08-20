@@ -4,7 +4,7 @@ if __name__ == "__main__":
     #this is a clever hack to treat "services" as if it's in the parent branch
     #for the purposes of loading modules, etc.
     sys.path.append(os.path.join(sys.path[0],"../"))
-
+from pipedream.environment import random_port
 def passive_th(s,none):
     
     print "Sup!  PASV"
@@ -143,7 +143,11 @@ def client_thread(clientsocket,none):
                     r.readline()
                     print "done"
                 s.send("ls\n")
-                items = int(r.readline())
+                sitems = r.readline()
+                try:
+                    items = int(sitems)
+                except:
+                    logging.error("I expected to get an integer, but instead I got %s" % sitems)
                 lines = []
                 for i in range(0,items):
                     line = r.readline().strip()
@@ -215,7 +219,7 @@ def client_thread(clientsocket,none):
     pass
 import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-port = 1420
+port = random_port()
 s.bind(('127.0.0.1',port))
 s.listen(5)
 print "Bound on %d" % port

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from hello_m0ther import redirect
-def connect_to(svcname,permission=None):
+def connect_to(svcname,permission=None,evaporate=True):
     from environment import get_setting, get_lan_addr, random_port
     from hello_m0ther import api_post, zebedee_path
     id = get_setting("identity")
@@ -23,10 +23,15 @@ def connect_to(svcname,permission=None):
 
     print host,control_port,remote_port
     from subprocess import Popen, PIPE
+        
     connect_to = random_port()
-    args = [
-        "-T","%s" % control_port,
-        "-x", "sharedkey %s" % otp,
+    args = ["-d", #can't close sockets if popen doesn't kill all the kids... removing this prevents darkftp from working.
+        "-T","%s" % control_port]
+    
+    evap = ["-x","multiuse " + (evaporate and "false" or "true")]
+    args += evap
+    args += [
+        "-x", "sharedkey '%s'" % (otp),
         "%d:%s:%s" % (connect_to,host,remote_port)
     ]
     print "otp is %s" % otp
