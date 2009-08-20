@@ -1,1 +1,33 @@
 *.pyc
+*.o
+zebedee_src/zebedee-2.4.1A/zebedee.html
+zebedee_src/zebedee-2.4.1A/zebedee.ja_JP.html
+zebedee_src/zlib-1.2.3/example
+zebedee_src/zlib-1.2.3/libz.a
+zebedee_src/zlib-1.2.3/minigzip
+
+zebedee_src/.DS_Store
+zebedee_src/blowfish-0.9.5a/lib
+zebedee_src/blowfish-0.9.5a/libblowfish.a
+zebedee_src/bzip2-1.0.3/bzip2
+zebedee_src/bzip2-1.0.3/bzip2recover
+zebedee_src/bzip2-1.0.3/libbz2.a
+zebedee_src/bzip2-1.0.3/sample1.rb2
+zebedee_src/bzip2-1.0.3/sample1.tst
+zebedee_src/bzip2-1.0.3/sample2.rb2
+zebedee_src/bzip2-1.0.3/sample2.tst
+zebedee_src/bzip2-1.0.3/sample3.rb2
+zebedee_src/bzip2-1.0.3/sample3.tst
+zebedee_src/zebedee-2.4.1A/.DS_Store
+zebedee_src/zebedee-2.4.1A/ftpgw.tcl.1
+zebedee_src/zebedee-2.4.1A/ftpgw.tcl.html
+zebedee_src/zebedee-2.4.1A/pod2htmd.tmp
+zebedee_src/zebedee-2.4.1A/pod2htmi.tmp
+zebedee_src/zebedee-2.4.1A/zebedee
+zebedee_src/zebedee-2.4.1A/zebedee.1
+	zebedee_src/zebedee-2.4.1A/zebedee.html
+	zebedee_src/zebedee-2.4.1A/zebedee.ja_JP.html
+	zebedee_src/zlib-1.2.3/example
+	zebedee_src/zlib-1.2.3/libz.a
+	zebedee_src/zlib-1.2.3/minigzip
+

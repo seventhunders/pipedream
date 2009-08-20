@@ -122,9 +122,9 @@ class ConnectHandler(webapp.RequestHandler):
         svc = get_service(self,id)
         logging.info(self.request.get("connecting_uri"))
         logging.info(str(svc.key()))
-        otp = OneTimePad.all().filter("connecting_from_uri =",self.request.get("connecting_uri")).filter("for_svc =",svc).get()
+        otp = OneTimePad.all().filter("for_svc =",svc).order("-created").get()
         if otp != None:
-            self.response.out.write("OK")
+            self.response.out.write(otp.one_time_pad)
         else:
             self.response.out.write("NO")
             logging.info("Computer says no")

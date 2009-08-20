@@ -2,8 +2,8 @@
 
 from hello_m0ther import redirect
 def connect_to(svcname,permission=None):
-    from environment import get_setting, get_lan_addr
-    from hello_m0ther import api_post, pipeman_path, machine_readable_regex
+    from environment import get_setting, get_lan_addr, random_port
+    from hello_m0ther import api_post, zebedee_path
     id = get_setting("identity")
     data = {"identity":id, "service":svcname,
             "connecting_from_uri":"tcp://" + get_lan_addr()}
@@ -15,35 +15,26 @@ def connect_to(svcname,permission=None):
     (key,otp,uri) = result.split("\n")
     import re
     tcphost = re.compile("(?<=tcp://).+?(?=/)")
-    tcpport = re.compile("(?<=/)\d+$")
+    rport = re.compile("\d+(?=/\d+$)")
+    lport = re.compile("(?<=/)\d+$")
     host = tcphost.search(uri).group(0)
-    port = tcpport.search(uri).group(0)
-    print host,port
-    from subprocess import Popen, PIPE
-    args = ["connectsvc",
-        "--rsa=%s" % get_setting("m0ther-key"),
-        "--identity=%s" % id,
-        "--otp=%s" % otp,
-        "--otp-key=%s" % key,
-        "--remote-hostname=%s" % host,
-        "--remote-port=%s" % port
-    ]
-    pipeman = Popen(["mono"] + [pipeman_path] + args,stdout=PIPE,stderr=PIPE)
-    r = machine_readable_regex("connectbound")
-    while True:
-            #guido's not going to like this, but
+    control_port = rport.search(uri).group(0)
+    remote_port =  lport.search(uri).group(0)
 
-        line = pipeman.stdout.readline()
-        print line,
-        result = r.search(line)
-        if result!=None:
-            port = int(result.group(0))
-            print "Try connecting to localhost:%d" % port
-            break
+    print host,control_port,remote_port
+    from subprocess import Popen, PIPE
+    connect_to = random_port()
+    args = [
+        "-T","%s" % control_port,
+        "-x", "sharedkey %s" % otp,
+        "%d:%s:%s" % (connect_to,host,remote_port)
+    ]
+    print "otp is %s" % otp
+    pipeman = Popen([zebedee_path] + args,stdout=PIPE,stderr=PIPE)
     import thread
     thread.start_new_thread(redirect,(pipeman.stdout,None))
     thread.start_new_thread(redirect,(pipeman.stderr,None))
-
-    return (port,pipeman)
+    print "Try connecting to localhost:%d" % connect_to
+    return (connect_to,pipeman)
     
     

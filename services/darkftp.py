@@ -4,9 +4,7 @@ if __name__ == "__main__":
     #this is a clever hack to treat "services" as if it's in the parent branch
     #for the purposes of loading modules, etc.
     sys.path.append(os.path.join(sys.path[0],"../"))
-def random_port():
-    from random import randint
-    return randint(1025,65535)
+
 def passive_th(s,none):
     
     print "Sup!  PASV"

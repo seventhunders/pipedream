@@ -20,6 +20,7 @@ def usage():
     print "chat"
     print "selfupdate"
     print "rungateway"
+    print "acceptotk"
     exit(1)
 import sys
 if len(sys.argv)==1:
@@ -84,6 +85,10 @@ elif cmd=="selftest":
 elif cmd=="selfupdate":
     from pipedream.updates import do_update
     do_update()
+elif cmd=="acceptotk":
+    from pipedream.environment import expect_arg, get_setting
+    from pipedream.hello_m0ther import api_get
+    print api_get("/api/connect",{"identity":get_setting("identity"),"service":expect_arg("service")})
     
 else:
     usage()

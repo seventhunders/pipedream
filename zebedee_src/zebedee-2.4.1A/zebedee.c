@@ -2724,18 +2724,23 @@ runKeyGenCommand(char *keyGenCmd)
     {
 	if ((result = (char *)malloc(strlen(buf) + 1)) != NULL)
 	{
-	    if (sscanf(buf, "%[0-9a-fA-F]", result) != 1 ||
+	    if (sscanf(buf, "%s", result) != 1 ||
 		strlen(buf) < (MIN_KEY_BYTES * 2))
 	    {
 		free(result);
 		result = NULL;
 	    }
+		else
+		{
+			message(3,0,"key generated: %s",result);
+		}
 	}
     }
 
     fclose(fp);
 
     message(3, 0, "key generation result %s", (result ? "not null" : "NULL"));
+	
     return result;
 }
 

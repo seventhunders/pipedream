@@ -4,6 +4,7 @@ known_gateways = [("69.197.162.44",1234)]
 #first, we should find pipeman
 import logging
 import sys, os
+zebedee_path = None
 for p in sys.path:
     tryt = os.path.realpath(os.path.join(p,"zebedee_src/zebedee-2.4.1A/zebedee"))
   #  print tryt
@@ -41,18 +42,35 @@ def try_gateway(ip,port):
     from subprocess import Popen
     args = [
         zebedee_path,
-        "-d",
         "-T %d" % port,
         '-x',
         "checkidfile %s" % os.path.expanduser("~/.pipedream/m0ther-key"),
+        '-o',
+        '/tmp/pipe-m0ther.log',
         ip,
         "1337:pipem0ther.appspot.com:80"
     ]
     print " ".join(args)
     motherpid = Popen(args)
-    set_setting("last-mother-pid",str(motherpid.pid))
+    motherpid.wait()
+    #get the real motherpid, because zebedee detached
+    #on osx it's just motherpid++, but that's not guaranteed
+    #for posix.  Of course, on Windows the entire exercise is fail, good luck
+    f = open("/tmp/pipe-m0ther.log")
+    result = f.read()
+    f.close()
+    #grab the last line
+    lines = result.split("\n")
+    last = lines[len(lines)-2]
+    print "last is %s" % last
+    import re
+    pidregex = re.compile("(?<=zebedee\()\d+")
+    print last
+    rmotherpid = pidregex.search(last).group(0)
+    print "Real motherpid is %s" % rmotherpid
+    set_setting("last-mother-pid",rmotherpid)
     try:
-        return api_get("/api/areyouthere",{})=="YES"
+        return api_url("/api/areyouthere",{},"GET",ensure=False)=="YES"
     except Exception as ex:
         print ex
         pass
@@ -61,20 +79,22 @@ def try_gateway(ip,port):
     return False
 def ensure_m0thers_there():
     try:
-        if api_get("/api/areyouthere",{})=="YES": return True
+        if api_get("/api/areyouthere",{},ensure=False)=="YES": return True
     except:
         logging.info("Unable to connect right off the bat.")
     for (ip,port) in known_gateways:
         if try_gateway(ip,port): return True
-    pass
+    raise Exception("Couldn't find m0ther")
 
 def api_get(apiurl,data):
     return api_url(apiurl,data,"GET")
-def get_mother_request():
+def get_mother_request(ensure=True):
+    if ensure:
+        ensure_m0thers_there()
     import httplib
     return httplib.HTTPConnection(host="localhost",port=mother_bind_port)
-def api_url(apiurl,data,method,request=None):
-    request = get_mother_request()
+def api_url(apiurl,data,method,ensure=True):
+    request = get_mother_request(ensure)
     import urllib
     apiurl += "?" + urllib.urlencode(data)
     logging.critical("invoking method %s" % method)

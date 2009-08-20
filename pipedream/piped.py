@@ -185,13 +185,17 @@ def maybe_config(section,option):
     return None
 def up_svc(name):
     global running_svcs
-    from hello_m0ther import api_post, pipeman_path, machine_readable_regex
+    from hello_m0ther import api_post, zebedee_path
     from subprocess import Popen, PIPE
     from environment import get_setting, get_lan_addr
     import sys
-    args = ["acceptsvc","--identity=%s" % get_setting("identity"),
-            "--rsa=%s" % get_setting("m0ther-key"),
-            "--service-name=%s" % name]
+    from environment import random_port
+    control_port = random_port()
+    import os
+    path_to_pipe = sys.path[0].split("/")
+    path_to_pipe = "/".join(path_to_pipe[0:len(path_to_pipe)])
+    logging.info("and the path is: " + path_to_pipe)
+
     info = config()
     
     extern = maybe_config(name,"extern")
@@ -211,22 +215,19 @@ def up_svc(name):
         
     else:
         raise Exception("Can't understand this service type.  Try extern?")
-    args += ["--remote-hostname=%s" % rhost, "--remote-port=%s" % rport]
-    pipeman = Popen(["mono"] + [pipeman_path] + args,stdout=PIPE,stderr=PIPE)
-    r = machine_readable_regex("svcbound")
-    while True:
-            #guido's not going to like this, but
-
-        line = pipeman.stdout.readline()
-        logging.info( line)
-        result = r.search(line)
-        if result!=None:
-            port = int(result.group(0))
-            logging.info( "Service bound on %d" % port)
-            import thread
-            thread.start_new_thread(redirect,(pipeman.stderr,None))
-            thread.start_new_thread(redirect,(pipeman.stdout,None))
-            break
+    from commands import getstatusoutput
+    (status,output) = getstatusoutput("which python")
+        
+    args = ["-d", #don't detach
+            "-s",
+            "-T","%d" % control_port,
+            "-v","3",
+            "-x","sharedkeygencommand \"%s\"" % (output + " " + path_to_pipe + "/acceptotk.py " + name),
+            "%s:%s" % (rhost,rport)
+            ]
+    pipeman = Popen([zebedee_path] + args,stdout=PIPE,stderr=PIPE)
+    thread.start_new_thread(redirect,(pipeman.stderr,None))
+    thread.start_new_thread(redirect,(pipeman.stdout,None))
     
             #print "result is none..."
     
@@ -234,7 +235,7 @@ def up_svc(name):
     data = {"visibility":info.get(name,"visibility"),
             "online":"YES",
             "identity":get_setting("identity"),
-            "official_uri":"tcp://%s/%d" % (get_lan_addr(),port),
+            "official_uri":"tcp://%s/%d/%s" % (get_lan_addr(),control_port,rport),
             "service":name}
     api_post("/api/service",data)
     

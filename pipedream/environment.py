@@ -44,3 +44,6 @@ def get_lan_addr():
         return get_setting("override-ip")
     import socket
     return socket.gethostbyname(socket.gethostname())
+def random_port():
+    from random import randint
+    return randint(1025,65535)
