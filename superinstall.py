@@ -21,6 +21,8 @@ def make(str):
     print "Building %s..." % str,
     os.chdir(str)
     import commands
+    if os.path.exists("configure"):
+	please_dont_fail("./configure")
     (status,output)=commands.getstatusoutput("make")
     if status != 0:
         print output
@@ -42,6 +44,8 @@ def build_zebedee():
         what_os = "macosx"
     elif sys.platform=="linux2":
         what_os = "linux"
+    elif sys.platform=="cygwin":
+	what_os = "win32"
     else:
         raise Exception("Can't make zebedee on platform %s" % sys.platform)
     please_dont_fail("make OS=%s" % what_os)

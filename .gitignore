@@ -1,1 +1,8 @@
 *.pyc
+*.o
+*.a
+*.exe
+*.tst
+*.rb2
+zebedee_src/zebedee-2.4.1A/tmp
+zebedee_src/blowfish-0.9.5a/lib

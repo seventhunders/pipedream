@@ -4,9 +4,13 @@ known_gateways = [("69.197.162.44",1234)]
 #first, we should find pipeman
 import logging
 import sys, os
+if sys.platform == "win32":
+    zebedee_bin="zebedee.exe"
+else:
+    zebedee_bin = "zebedee"
 for p in sys.path:
-    tryt = os.path.realpath(os.path.join(p,"zebedee_src/zebedee-2.4.1A/zebedee"))
-  #  print tryt
+    tryt = os.path.realpath(os.path.join(p,"zebedee_src/zebedee-2.4.1A/%s" % (zebedee_bin)))
+    #print tryt
     if os.path.exists(tryt):
         zebedee_path = tryt
         break
