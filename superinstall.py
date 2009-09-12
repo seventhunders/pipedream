@@ -29,6 +29,8 @@ def make(str):
         raise Exception("That didn't work")
     print "OK"
     os.chdir("../")
+    
+    '''
 def build_zebedee():
     print "Right, let's build zebedee"
     import os
@@ -52,13 +54,16 @@ def build_zebedee():
     os.chdir("../")
     os.chdir("../")
     print "Well, that was swell"
+    '''
+    
 def install_path():
     import os
-    prefix = "/opt/local/bin"
+    prefix = ""
     folder = "pipedream"
     path = os.path.join(prefix,folder)
     print "Installing to %s (probably requires root)" % path
     if not os.path.exists(path):
+	print "No path exists, creating new path"
         os.mkdir(path)
     import commands
     if os.getcwd()!=path:
@@ -163,8 +168,8 @@ def upgrade_piped():
 
 #require_mono()
 require_python()
-build_zebedee()
+#build_zebedee()
 install_path()
-upgrade_piped()
+#upgrade_piped()
 
 

@@ -48,7 +48,7 @@ def try_gateway(ip,port):
         "-d",
         "-T %d" % port,
         '-x',
-        "checkidfile %s" % os.path.expanduser("~/.pipedream/m0ther-key"),
+        "checkidfile %s" % os.path.expanduser("~\.pipedream\m0ther-key"),
         ip,
         "1337:pipem0ther.appspot.com:80"
     ]

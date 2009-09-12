@@ -36,7 +36,8 @@ def needs_update():
 def do_update():
     from commands import getstatusoutput
     (status,output) = getstatusoutput("whoami")
-    if output != "root":
+    import sys
+    if output != "root" and not sys.platform=="win32":
         print "Not root.  Giving up..."
         return
     from os import chdir
