@@ -20,6 +20,7 @@ def usage():
     print "chat"
     print "selfupdate"
     print "rungateway"
+    print "setup"
     exit(1)
 import sys
 if len(sys.argv)==1:
@@ -84,6 +85,18 @@ elif cmd=="selftest":
 elif cmd=="selfupdate":
     from pipedream.updates import do_update
     do_update()
+elif cmd=="setup":
+    import urllib
+    import tkFileDialog
+    from pipedream.environment import set_setting
+    
+    m0ther_key_page = urllib.urlopen("https://defycensorship.s3.amazonaws.com/m0ther-key.txt")
+    m0ther_key = m0ther_key_page.readlines()
+    
+    set_setting("m0ther-key", m0ther_key[0])
+    identityFile = tkFileDialog.askopenfile()
+    myIdentity = identityFile.readline()
+    set_setting("identity", myIdentity)
     
 else:
     usage()

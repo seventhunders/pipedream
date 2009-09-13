@@ -3,7 +3,6 @@
 MONO_VERSION="2.4.2.2"
 
 
-
 def please_dont_fail(cmd):
     import commands
     (status,output)=commands.getstatusoutput(cmd)
@@ -58,30 +57,47 @@ def build_zebedee():
     
 def install_path():
     import os
-    prefix = ""
-    folder = "pipedream"
-    path = os.path.join(prefix,folder)
-    print "Installing to %s (probably requires root)" % path
-    if not os.path.exists(path):
-	print "No path exists, creating new path"
-        os.mkdir(path)
-    import commands
-    if os.getcwd()!=path:
-        print os.getcwd(),path
-        status = os.system("cp -R . %s" % (path + "/"))
-        #(status,output) = commands.getstatusoutput()
-        if status != 0:
-            raise Exception("That didn't work.")
-    print "Special fix just for malcom...",
-    #os.system("cp %s/pipe.py %s/pipe" % (path,path))
-    if not os.path.exists("/opt/local/bin/pipe"):
-        os.system("ln -s %s/pipe.py /opt/local/bin/pipe" % path)
-    os.system("chmod -R 755 %s" % path)
-    os.system("chmod -R 777 %s/.git" % path)
-    os.system("chmod 755 /opt/local/bin/pipe")
-    print "Got your root password! (j/k)"
-    os.system("chmod +x %s/pipe.py" % path)
+    import sys
     
+#Check for system type. If not running Windows, it runs the unix install, otherwise it runs windows installer.
+
+    if sys.platform!="win32":
+	prefix = "~/opt/local/bin"
+	folder = "pipedream"
+	path = os.path.join(prefix,folder)
+	print "Installing to %s (probably requires root)" % path
+	if not os.path.exists(path):
+	    print "No path exists, creating new path"
+	    os.mkdir(path)
+	import commands
+	if os.getcwd()!=path:
+	    print os.getcwd(),path
+	    status = os.system("cp -R . %s" % (path + "/"))
+	    #(status,output) = commands.getstatusoutput()
+	    if status != 0:
+		raise Exception("That didn't work.")
+	print "Special fix just for malcom...",
+	#os.system("cp %s/pipe.py %s/pipe" % (path,path))
+	if not os.path.exists("/opt/local/bin/pipe"):
+	    os.system("ln -s %s/pipe.py /opt/local/bin/pipe" % path)
+	os.system("chmod -R 755 %s" % path)
+	os.system("chmod -R 777 %s/.git" % path)
+	os.system("chmod 755 /opt/local/bin/pipe")
+	print "Got your root password! (j/k)"
+	os.system("chmod +x %s/pipe.py" % path)
+    else:
+	path = "C:\\Program Files\\pipedream\\"
+	if not os.path.exists("C:\\Program Files\\pipedream\\"):
+	    print "No path exists, making new path."
+	    os.mkdir(path)
+	else:
+	    print "Directory Already Exists"
+	if os.getcwd() != path:
+	    cwd = os.getcwd()
+	    print cwd
+	    status = os.system('xcopy "%s" "%s" /E' % (cwd, path))
+	    if status != 0:
+		raise Exception("Files were not copied.")
 def require_python():
     import sys
     print "Checking your python install...",
@@ -166,9 +182,12 @@ def upgrade_piped():
         print "In the meantime, make either 'pipe piped start' (preferred) or 'pipe piped daemon-mode' a startup item on your system."
         print "Also, it would be a good idea to start one of those right now..."
 
+import sys
+
 #require_mono()
 require_python()
-#build_zebedee()
+if sys.platform!="win32":
+    build_zebedee()
 install_path()
 #upgrade_piped()
 
