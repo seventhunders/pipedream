@@ -61,7 +61,11 @@ def install_path():
     path = os.path.join(prefix,folder)
     print "Installing to %s (probably requires root)" % path
     if not os.path.exists(path):
-        os.mkdir(path)
+        pathparts = path.split(os.path.pathsep)
+        for i in range(0,len(pathparts)-1):
+            dir = pathparts[0:i]
+            print "Making directory %s" % dir
+            #os.mkdir(pathparts[0:i])
     import commands
     if os.getcwd()!=path:
         print os.getcwd(),path
