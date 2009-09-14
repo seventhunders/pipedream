@@ -156,11 +156,10 @@ def upgrade_piped():
         print "You're running mac, assuming you want to use launchd..."
         upgrade_launchd()
     elif sys.platform=="linux2":
-        pass
-    import os
-    if os.path.exists("/etc/init.d"):
-        print "Looks like init to me..."
-        install_init()
+        import os
+        if os.path.exists("/etc/init.d"):
+            print "Looks like init to me..."
+            install_init()
     else:
         print "I don't know how to install piped on dubious platforms like '%s'" % sys.platform
         print "Perhaps you can tell me how?"
