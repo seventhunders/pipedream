@@ -71,11 +71,16 @@ def try_gateway(ip,port):
     set_setting("last-mother-pid",rmotherpid)
     try:
         return api_url("/api/areyouthere",{},"GET",ensure=False)=="YES"
-    except Exception as ex:
-        print ex
-        pass
-    print "That gateway wouldn't work"
-    motherpid.kill()
+    except:
+        print sys.exc_info()
+        print "That gateway wouldn't work"
+        from os import kill
+        from signal import SIGKILL
+        try:
+            pass
+            kill(int(rmotherpid), SIGKILL)
+        except:
+            print "couldn't kill runaway zebedee process"
     return False
 def ensure_m0thers_there():
     try:
