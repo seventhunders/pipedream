@@ -10,7 +10,7 @@
 	<true/>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/opt/local/bin/python</string>
+		<string>/Library/Frameworks/Python.framework/Versions/2.6/bin/python</string>
 		<string>/opt/local/bin/pipe</string>
 		<string>piped</string>
 		<string>daemon-mode</string>

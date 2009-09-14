@@ -47,3 +47,7 @@ def get_lan_addr():
 def random_port():
     from random import randint
     return randint(1025,65535)
+def which_python():
+    from commands import getstatusoutput
+    (status,output) = getstatusoutput("which python")
+    return output
