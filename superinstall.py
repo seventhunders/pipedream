@@ -44,7 +44,13 @@ def build_zebedee():
         what_os = "linux"
     else:
         raise Exception("Can't make zebedee on platform %s" % sys.platform)
-    please_dont_fail("make OS=%s" % what_os)
+    #snow leopard needs some extra lines on the make config
+    from commands import getstatusoutput
+    (status,output) = getstatusoutput("uname -r")
+    if "10." in output:
+        please_dont_fail("make OS=%s POD2MAN=/usr/bin/pod2man POD2HTML=/usr/bin/pod2html" % what_os)
+    else:
+        please_dont_fail("make OS=%s" % what_os)
     os.chdir("../")
     os.chdir("../")
     print "Well, that was swell"

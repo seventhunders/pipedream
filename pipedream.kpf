@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Komodo Project File - DO NOT EDIT -->
 <project id="7220b084-8332-014e-a842-5bf50d83a62c" kpf_version="4" name="pipedream.kpf">
+<file id="1e648b2d-83f7-a241-9dbc-aaa92b5924c9" idref="7220b084-8332-014e-a842-5bf50d83a62c" name="assign1.py" url="file:///Volumes/y/drew/Dropbox/Code/numerical/assign1.py">
+</file>
+<file id="6749d5e1-6521-0840-8cf7-e88bcbac9e22" idref="7220b084-8332-014e-a842-5bf50d83a62c" name="win7crash.py" url="file:///Volumes/y/drew/Dropbox/Code/numerical/win7crash.py">
+</file>
 <preference-set idref="7220b084-8332-014e-a842-5bf50d83a62c">
   <string id="import_exclude_matches">*.*~;*.bak;*.tmp;CVS;.#*;*.pyo;*.pyc;.svn;*%*;tmp*.html;.DS_Store</string>
   <string id="import_include_matches"></string>
