@@ -1,5 +1,5 @@
-REM Git-1.6.4-preview20090730.exe
-REM python-2.6.2.msi
+Git-1.6.4-preview20090730.exe
+python-2.6.2.msi
 mkdir C:\dnet
 xcopy "zebedee-2.4.1A" "C:\dnet\zebedee-2.4.1A\"
 cd C:\dnet\
