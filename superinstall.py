@@ -59,16 +59,12 @@ def build_zebedee():
     print "Well, that was swell"
 def install_path():
     import os
+    """
     prefix = "/opt/local/bin"
     folder = "pipedream"
     path = os.path.join(prefix,folder)
     print "Installing to %s (probably requires root)" % path
-    if not os.path.exists(path):
-        pathparts = path.split("/")
-        for i in range(2,len(pathparts)+1):
-            dir = "/" + "/".join(pathparts[1:i])
-            print "Making directory %s" % dir
-            os.mkdir(dir)
+  
     import commands
     if os.getcwd()!=path:
         print os.getcwd(),path
@@ -86,17 +82,23 @@ def install_path():
     print "Got your root password! (j/k)"
     os.system("chmod +x %s/pipe.py" % path)
     import sys
-    
+    """
 #Check for system type. If not running Windows, it runs the unix install, otherwise it runs windows installer.
 
     if sys.platform!="win32":
-	prefix = "~/opt/local/bin"
+	prefix = "/opt/local/bin"
 	folder = "pipedream"
 	path = os.path.join(prefix,folder)
 	print "Installing to %s (probably requires root)" % path
-	if not os.path.exists(path):
-	    print "No path exists, creating new path"
-	    os.mkdir(path)
+        if not os.path.exists(path):
+            pathparts = path.split("/")
+            for i in range(2,len(pathparts)+1):
+                dir = "/" + "/".join(pathparts[1:i])
+                print "Making directory %s" % dir
+                try:
+                    os.mkdir(dir)
+                except:
+                    pass
 	import commands
 	if os.getcwd()!=path:
 	    print os.getcwd(),path

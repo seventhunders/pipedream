@@ -2,16 +2,19 @@
 import os
 import sys
 
+
 if sys.platform != "win32":
     setting_dir = os.path.expanduser("~/.pipedream")
+    pathsep = "/"
 else:
     setting_dir = os.path.expanduser("~\\.pipedream")
+    pathsep = "\\"
 def check_dir():
     if not os.path.exists(setting_dir):
         os.mkdir(setting_dir)
 def get_setting(setting):
     check_dir()
-    file = setting_dir + "\\" + setting
+    file = setting_dir + pathsep + setting
     if not os.path.exists(file):
         return None
     f = open(file)
@@ -20,7 +23,7 @@ def get_setting(setting):
     return t.strip()
 def set_setting(setting,value):
     check_dir()
-    file = setting_dir + "\\" + setting
+    file = setting_dir + pathsep + setting
     f = open(file,"w")
     f.write(value)
     f.close()

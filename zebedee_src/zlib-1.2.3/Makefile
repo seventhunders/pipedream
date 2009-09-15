@@ -29,15 +29,15 @@ LDSHARED=gcc
 CPP=gcc -E
 
 LIBS=libz.a
-SHAREDLIB=libz.so
-SHAREDLIBV=libz.so.1.2.3
-SHAREDLIBM=libz.so.1
+SHAREDLIB=libz.dylib
+SHAREDLIBV=libz.1.2.3.dylib
+SHAREDLIBM=libz.1.dylib
 
 AR=ar rc
 RANLIB=ranlib
 TAR=tar
 SHELL=/bin/sh
-EXE=.exe
+EXE=
 
 prefix =/usr/local
 exec_prefix =${prefix}

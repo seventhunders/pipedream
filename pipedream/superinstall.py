@@ -29,8 +29,7 @@ def make(str):
         raise Exception("That didn't work")
     print "OK"
     os.chdir("../")
-    
-    '''
+
 def build_zebedee():
     print "Right, let's build zebedee"
     import os
@@ -54,7 +53,6 @@ def build_zebedee():
     os.chdir("../")
     os.chdir("../")
     print "Well, that was swell"
-    '''
     
 def install_path():
     import os
