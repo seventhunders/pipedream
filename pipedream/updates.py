@@ -2,17 +2,19 @@
 
 #test
 def what_branch():
-    from commands import getstatusoutput
-    from os import chdir
+    from os import chdir, popen
     from sys import path
     chdir(path[0])
-    (status,output) = getstatusoutput("git branch | grep '*' | cut -f 2 -d ' '")
-    return output
+    gitBranch = popen("git branch").read()
+    gitBranch = gitBranch[gitBranch.find('*') + 2:]
+    gitBranch = gitBranch[:gitBranch.find('\n')]
+    #print gitBranch
+    return gitBranch
 def whats_new():
     from sys import path
-    from os import chdir
-    from commands import getstatusoutput
-    (status,lines) = getstatusoutput("git log HEAD..origin/" + what_branch() + " --format='%s'")
+    from os import chdir, popen
+    lines = popen("git log HEAD..origin/" + what_branch() + " --format='%s'").read()
+    print lines
     return lines.split("\n")
 def get_local_version():
     from sys import path
@@ -34,20 +36,28 @@ def needs_update():
         #print local, remote
     return local!=remote
 def do_update():
-    from commands import getstatusoutput
-    (status,output) = getstatusoutput("whoami")
     import sys
-    if output != "root" and not sys.platform=="win32":
-        print "Not root.  Giving up..."
-        return
-    from os import chdir
-    from sys import path
-    chdir(path[0])
-    (status,output) = getstatusoutput("git pull --rebase")
-    if status != 0:
-        raise Exception(output)
-    from os import system
-    status = system("./superinstall.py")
-    if status != 0:
-        raise Exception("That didn't work")
-#
+    if sys.platform != "win32":
+        from commands import getstatusoutput
+        (status,output) = getstatusoutput("whoami")
+        if output != "root" and not sys.platform=="win32":
+            print "Not root.  Giving up..."
+            return
+        from os import chdir
+        from sys import path
+        chdir(path[0])
+        (status,output) = getstatusoutput("git pull --rebase")
+        if status != 0:
+            raise Exception(output)
+        from os import system
+        status = system("./superinstall.py")
+        if status != 0:
+            raise Exception("That didn't work")
+    else:
+        import os
+        gitPullStatus = os.system("git pull --rebase")
+        if gitPullStatus != 0:
+            raise Exception("git pull failed")
+        status = os.system("./superinstall.py")
+        if status != 0:
+            raise Exception("That didn't work")

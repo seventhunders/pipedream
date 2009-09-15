@@ -98,6 +98,7 @@ def install_path():
 	    status = os.system('xcopy "%s" "%s" /E' % (cwd, path))
 	    if status != 0:
 		raise Exception("Files were not copied.")
+		
 def require_python():
     import sys
     print "Checking your python install...",
