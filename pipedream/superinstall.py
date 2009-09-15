@@ -166,8 +166,15 @@ def upgrade_piped():
 
 #require_mono()
 require_python()
-#build_zebedee()
+import sys
+if sys.platform!="win32":
+    build_zebedee()
+else:
+    print "This is Windows; not building zebedee"
 install_path()
-#upgrade_piped()
+if sys.platform != "win32":
+    upgrade_piped()
+else:
+    print "This is Windows; not upgrading piped yet because it isn't supported"
 
 
