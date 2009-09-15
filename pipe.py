@@ -21,6 +21,7 @@ def usage():
     print "selfupdate"
     print "rungateway"
     print "acceptotk"
+    print "setup"
     exit(1)
 import sys
 if len(sys.argv)==1:
@@ -89,6 +90,18 @@ elif cmd=="acceptotk":
     from pipedream.environment import expect_arg, get_setting
     from pipedream.hello_m0ther import api_get
     print api_get("/api/connect",{"identity":get_setting("identity"),"service":expect_arg("service")})
+elif cmd=="setup":
+    import urllib
+    import tkFileDialog
+    from pipedream.environment import set_setting
+    
+    m0ther_key_page = urllib.urlopen("https://defycensorship.s3.amazonaws.com/m0ther-key.txt")
+    m0ther_key = m0ther_key_page.readlines()
+    
+    set_setting("m0ther-key", m0ther_key[0])
+    identityFile = tkFileDialog.askopenfile()
+    myIdentity = identityFile.readline()
+    set_setting("identity", myIdentity)
     
 else:
     usage()

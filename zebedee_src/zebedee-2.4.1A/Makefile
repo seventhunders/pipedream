@@ -1,4 +1,4 @@
-#
+ #
 # Makefile for Zebedee
 #
 # $Id: Makefile,v 1.13 2002/05/29 17:42:08 ndwinton Exp $
@@ -134,7 +134,7 @@ ISCOMP = "c:/Program Files/Inno Setup 4/compil32.exe"
 #   The default is 32k but this can be overridded with the THREAD_STACK_SIZE
 #   definition. Currently this has only been found to be necessary on MacOSX.
 
-DEFINES_win32 =
+DEFINES_win32 = -DDONT_HAVE_BZIP2
 DEFINES_linux = -DHAVE_PTHREADS
 DEFINES_solaris = -D_REENTRANT -DHAVE_PTHREADS
 DEFINES_freebsd = -DHAVE_PTHREADS -DBUGGY_FORK_WITH_THREADS
