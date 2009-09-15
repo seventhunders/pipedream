@@ -10,11 +10,10 @@ def what_branch():
     gitBranch = gitBranch[:gitBranch.find('\n')]
     #print gitBranch
     return gitBranch
-def whats_new():
+def whats_new(branch):
     from sys import path
     from os import chdir, popen
     lines = popen("git log HEAD..origin/" + what_branch() + " --format='%s'").read()
-    print lines
     return lines.split("\n")
 def get_local_version():
     from sys import path
