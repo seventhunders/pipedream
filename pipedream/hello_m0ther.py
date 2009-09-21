@@ -55,21 +55,24 @@ def try_gateway(ip,port):
     ]
     print " ".join(args)
     motherpid = Popen(args)
-    motherpid.wait()
-    #get the real motherpid, because zebedee detached
-    #on osx it's just motherpid++, but that's not guaranteed
-    #for posix.  Of course, on Windows the entire exercise is fail, good luck
-    f = open("/tmp/pipe-m0ther.log")
-    result = f.read()
-    f.close()
-    #grab the last line
-    lines = result.split("\n")
-    last = lines[len(lines)-2]
-    print "last is %s" % last
-    import re
-    pidregex = re.compile("(?<=zebedee\()\d+")
-    print last
-    rmotherpid = pidregex.search(last).group(0)
+    if (sys.platform!="win32"):
+        motherpid.wait()
+        #get the real motherpid, because zebedee detached
+        #on osx it's just motherpid++, but that's not guaranteed
+        #for posix.  Of course, on Windows the entire exercise is fail, good luck
+        f = open("/tmp/pipe-m0ther.log")
+        result = f.read()
+        f.close()
+        #grab the last line
+        lines = result.split("\n")
+        last = lines[len(lines)-2]
+        print "last is %s" % last
+        import re
+        pidregex = re.compile("(?<=zebedee\()\d+")
+        print last
+        rmotherpid = pidregex.search(last).group(0)
+    else:
+        motherpid=motherpid.pid
     print "Real motherpid is %s" % rmotherpid
     set_setting("last-mother-pid",rmotherpid)
     try:
