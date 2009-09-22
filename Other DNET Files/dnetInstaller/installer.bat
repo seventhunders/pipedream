@@ -5,6 +5,7 @@ mkdir C:\dnet
 xcopy checkout.bat c:\dnet\
 xcopy branch.bat c:\dnet\
 cd C:\dnet\
+PATH = %PATH%;"C:\program files\git\bin\git.exe;"
 cmd.exe /c c:\dnet\checkout.bat
 cd pipedream
 cmd.exe /c ..\branch.bat
