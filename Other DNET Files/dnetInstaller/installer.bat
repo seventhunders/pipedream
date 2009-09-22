@@ -3,9 +3,10 @@ python-2.6.2.msi
 rmdir /S c:\dnet
 mkdir C:\dnet
 xcopy checkout.bat c:\dnet\
+xcopy branch.bat c:\dnet\
 cd C:\dnet\
 cmd.exe /c c:\dnet\checkout.bat
 cd pipedream
-git checkout -b windows origin/windows
+cmd.exe /c ..\branch.bat
 superinstall.py
 pause
