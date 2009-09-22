@@ -116,8 +116,8 @@ def install_path():
 	print "Got your root password! (j/k)"
 	os.system("chmod +x %s/pipe.py" % path)
     else:
-	path = "C:\\Program Files\\pipedream\\"
-	if not os.path.exists("C:\\Program Files\\pipedream\\"):
+	path = "C:\\Program Files\\pipedream"
+	if not os.path.exists("C:\\Program Files\\pipedream"):
 	    print "No path exists, making new path."
 	    os.mkdir(path)
 	else:
