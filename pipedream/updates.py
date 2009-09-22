@@ -59,6 +59,9 @@ def do_update():
         gitPullStatus = os.system("git pull --rebase")
         if gitPullStatus != 0:
             raise Exception("git pull failed")
-        status = os.system("./superinstall.py")
+        if sys.platform != "win32":
+            status = os.system("./superinstall.py")
+        else:
+            status = os.system("superinstall.py")
         if status != 0:
             raise Exception("That didn't work")
