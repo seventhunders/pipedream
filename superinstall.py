@@ -125,9 +125,15 @@ def install_path():
 	if os.getcwd() != path:
 	    cwd = os.getcwd()
 	    print cwd
-	    status = os.system('xcopy "%s" "%s" /E' % (cwd, path))
-	    if status != 0:
-		raise Exception("Files were not copied.")
+	    copyStatus = os.system('xcopy "%s" "%s" /E' % (cwd, path))
+	    permissionStatus = os.system("icacls ..\\pipedream\\* /grant %s:(D,WDAC)" % os.path.expanduser("~\\").split("\\")[2])
+	    if permissionStatus != 0:
+		raise Exception("Permissions were not elevated")
+	    else:
+		print "Elevation Success!"
+	    if copyStatus != 0:
+		#raise Exception("Files were not copied.")
+		pass
 		
 def require_python():
     import sys
