@@ -10,4 +10,8 @@ cmd.exe /c c:\dnet\checkout.bat
 cd pipedream
 cmd.exe /c ..\branch.bat
 superinstall.py
+cd c:\program files\pipdream\
+pipe.py setup
+pipe.pt selftest
+pipe.py chat
 pause
