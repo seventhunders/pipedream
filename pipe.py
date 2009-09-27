@@ -22,6 +22,7 @@ def usage():
     print "rungateway"
     print "acceptotk"
     print "setup"
+    print "gui"
     exit(1)
 import sys
 if len(sys.argv)==1:
@@ -102,6 +103,8 @@ elif cmd=="setup":
     identityFile = tkFileDialog.askopenfile()
     myIdentity = identityFile.readline()
     set_setting("identity", myIdentity)
-    
+elif cmd=="gui":
+    print "YAY GUI!!!!"
+    raw_input("press enter to quit...")
 else:
     usage()

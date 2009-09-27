@@ -117,6 +117,16 @@ def install_path():
 	os.system("chmod +x %s/pipe.py" % path)
     else:
 	path = "C:\\Program Files\\pipedream"
+	startMenuPath = "C:\\programdata\\microsoft\\windows\\start menu\\"
+	if not os.path.exists(startMenuPath):
+	    startMenuPath = "C:\\programdata\\microsoft\\windows\\start menu\\programs\\"
+	if not os.path.exists(startMenuPath):
+	    startMenuPath = "C:\\Documents and Settings\\all users\\start menu\\programs\\"
+	if not os.path.exists(startMenuPath):
+	    raise Exeption("Start Menu Folder FAIL!")
+	pipedreamBatch = open(startMenuPath + "Pipedream.bat", "w")
+	pipedreamBatch.write("cd c:\\program files\\pipedream\\ \npipe.py gui")
+	pipedreamBatch.close()
 	if not os.path.exists("C:\\Program Files\\pipedream"):
 	    print "No path exists, making new path."
 	    os.mkdir(path)
@@ -125,12 +135,12 @@ def install_path():
 	if os.getcwd() != path:
 	    cwd = os.getcwd()
 	    print cwd
-	    copyStatus = os.system('xcopy "%s" "%s" /E' % (cwd, path))
-	    permissionStatus = os.system("icacls ..\\pipedream\\* /grant %s:(D,WDAC)" % os.path.expanduser("~\\").split("\\")[2])
+	    permissionStatus = os.system('icacls "C:\\program files\\pipedream\\*" /grant %s:(D,WDAC)' % os.path.expanduser("~\\").split("\\")[2])
 	    if permissionStatus != 0:
 		raise Exception("Permissions were not elevated")
 	    else:
 		print "Elevation Success!"
+	    copyStatus = os.system('xcopy "%s" "%s" /E' % (cwd, path))
 	    if copyStatus != 0:
 		#raise Exception("Files were not copied.")
 		pass
