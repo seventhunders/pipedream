@@ -105,6 +105,5 @@ elif cmd=="setup":
     set_setting("identity", myIdentity)
 elif cmd=="gui":
     print "YAY GUI!!!!"
-    os.system("pipe.py chat")
 else:
     usage()
