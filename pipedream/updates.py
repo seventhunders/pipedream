@@ -32,7 +32,7 @@ def needs_update():
     remote = popen("git ls-remote . origin/" + what_branch()).read()
     remote = remote.split("\n")[0]
     remote = remote[:remote.find('\t')]
-    print local, remote
+    #print local, remote
     #if local == remote:
         #print local, remote
     return local!=remote

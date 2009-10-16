@@ -9,8 +9,13 @@ class Service:
     
 def piped(args):
     if args[0]=="daemon-mode":
+        import sys
+        if sys.platform == "win32":
+            pipedLogPath = "C:\\program files\\pipedream\\piped.log" 
+        else:
+            pipedLogPath = "/tmp/piped.log"
         import logging.handlers
-        handler = logging.handlers.RotatingFileHandler("/tmp/piped.log",maxBytes=1024*1024*20,backupCount=4)
+        handler = logging.handlers.RotatingFileHandler(pipedLogPath,maxBytes=1024*1024*20,backupCount=4)
         handler.setLevel(logging.DEBUG)
         logging.getLogger().addHandler(handler)
         logging.getLogger().setLevel(logging.DEBUG)
@@ -20,7 +25,7 @@ def piped(args):
     elif args[0]=="up":
         import socket
         s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        s.connect(("localhost",2575))
+        s.connect(("127.0.0.1",2575))
         s.send("up %s\n" % args[1])
         print s.recv(1024)
         s.shutdown(0)
@@ -216,15 +221,21 @@ def up_svc(name):
     else:
         raise Exception("Can't understand this service type.  Try extern?")
     from commands import getstatusoutput
-    (status,output) = getstatusoutput("which python")
-        
+    
+    if (sys.platform == "win32"):
+        slashChar = "\\"
+        output = "c:\\python26\\python.exe"
+    else:
+        slashChar = "/"
+        (status,output) = getstatusoutput("which python")
     args = ["-d", #don't detach
             "-s",
             "-T","%d" % control_port,
             "-v","3",
-            "-x","sharedkeygencommand \"%s\"" % (output + " " + path_to_pipe + "/acceptotk.py " + name),
+            "-x","sharedkeygencommand \" %s\"" % (output + " " + path_to_pipe + slashChar + "acceptotk.py " + name),
             "%s:%s" % (rhost,rport)
             ]
+    logging.info("zebedee with args %s" % args)
     pipeman = Popen([zebedee_path] + args,stdout=PIPE,stderr=PIPE)
     thread.start_new_thread(redirect,(pipeman.stderr,None))
     thread.start_new_thread(redirect,(pipeman.stdout,None))

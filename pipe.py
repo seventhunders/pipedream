@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import logging
 logging.basicConfig(level=logging.DEBUG)
+
 from pipedream.updates import needs_update, whats_new
 if needs_update():
     print "Your pipedream version is out of date.  Please update ASAP.  Just run pipe selfupdate!"
@@ -28,7 +29,6 @@ import sys
 if len(sys.argv)==1:
     usage()
 cmd = sys.argv[1]
-
 if cmd=="set":
     c = "".join(sys.argv[2:])
     c = c.split("=")

@@ -43,16 +43,28 @@ def try_gateway(ip,port):
     except:
         logging.warning("Couldn't shutdown last mother pid.")
     from subprocess import Popen
-    args = [
-        zebedee_path,
-        "-T %d" % port,
-        '-x',
-        "checkidfile %s" % os.path.expanduser("~/.pipedream/m0ther-key"),
-        '-o',
-        '/tmp/pipe-m0ther.log',
-        ip,
-        "1337:pipem0ther.appspot.com:80"
-    ]
+    if sys.platform != "win32":
+        args = [
+            zebedee_path,
+            "-T %d" % port,
+            '-x',
+            "checkidfile %s" % os.path.expanduser("~/.pipedream/m0ther-key"),
+            '-o',
+            '/tmp/pipe-m0ther.log',
+            ip,
+            "1337:pipem0ther.appspot.com:80"
+        ]
+    else:
+        args = [
+            zebedee_path,
+            "-T %d" % port,
+            '-x',
+            "checkidfile %s" % os.path.expanduser("~\\.pipedream\\m0ther-key"),
+            '-o',
+            "c:\\program files\\pipedream\\pipe-m0ther.log",
+            ip,
+            "1337:pipem0ther.appspot.com:80"
+        ]
     print " ".join(args)
     motherpid = Popen(args)
     if (sys.platform!="win32"):
@@ -71,10 +83,13 @@ def try_gateway(ip,port):
         pidregex = re.compile("(?<=zebedee\()\d+")
         print last
         rmotherpid = pidregex.search(last).group(0)
+        print "Real motherpid is %s" % rmotherpid
+        set_setting("last-mother-pid",rmotherpid)
     else:
         motherpid=motherpid.pid
-    print "Real motherpid is %s" % rmotherpid
-    set_setting("last-mother-pid",rmotherpid)
+        print "running correct block!"
+        print "Real motherpid is %s" % motherpid
+        set_setting("last-mother-pid",str(motherpid))
     try:
         return api_url("/api/areyouthere",{},"GET",ensure=False)=="YES"
     except:
