@@ -1834,6 +1834,7 @@ proxyConnection(const char *host, const unsigned short port,
     if ((fd = makeConnection(ProxyHost, ProxyPort, 0, 0, NULL, toAddrP)) == -1)
     {
 	message(0, errno, "can't connect to proxy server at %s:%hu", ProxyHost, ProxyPort);
+
 	return -1;
     }
 
@@ -4922,6 +4923,7 @@ client(FnArgs_t *argP)
 	if ((serverFd = makeConnection(serverHost, serverPort, 0, 1, NULL, NULL)) == -1)
 	{
 	    message(0, errno, "can't connect to %s port %hu", serverHost, serverPort);
+            message(0,0,"Actual result was %d",fd);
 	    goto fatal;
 	}
 	message(3, 0, "connected to %s:%hu", serverHost, serverPort);

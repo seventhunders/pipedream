@@ -5,6 +5,7 @@ if __name__ == "__main__":
     #for the purposes of loading modules, etc.
     sys.path.append(os.path.join(sys.path[0],"../"))
 from pipedream.environment import random_port
+import logging
 def passive_th(s,none):
     
     print "Sup!  PASV"
@@ -34,8 +35,14 @@ def client_thread(clientsocket,none):
         elif cmd.startswith("PWD"):
             clientsocket.send('257 "%s"\r\n' % my_chdir)
         elif cmd.startswith("CWD"):
-            my_chdir = cmd[4:].strip()
-            clientsocket.send("250 OK\r\n")
+            new_dir = cmd[4:].strip()
+            if new_dir.startswith("/"):
+                my_chdir = new_dir
+            elif my_chdir.endswith("/"):
+                my_chdir += new_dir
+            else:
+                my_chdir += "/" + new_dir
+            clientsocket.send("250 hello OK\r\n")
         elif cmd.startswith("SYST"):
             clientsocket.send("215 UNIX Type: I\r\n") #WTF!  FIREFOX WON'T CONNECT WITHOUT UNIX HERE, I HATE YOU MOZILLA
             #print "Oh hey there",file.read()
@@ -58,6 +65,7 @@ def client_thread(clientsocket,none):
                 # figure out what service
                 clientsocket.send ("125 Here's that file you wanted\r\n")
                 print cache_services
+                print my_chdir
                 service_key = cache_services[my_chdir.split("/")[1].strip()]
                 from pipedream.client import connect_to
                 retrieve_path = os.path.join(my_chdir,what)
@@ -128,7 +136,9 @@ def client_thread(clientsocket,none):
             
                 from pipedream.client import connect_to
                 if not my_chdir.startswith("/"): #prepend with a /, makes things more standardsey
-                    my_chdir = "/"+my_chdir 
+                    my_chdir = "/"+my_chdir
+                print cache_services
+                print my_chdir
                 service_key = cache_services[my_chdir.split("/")[1].strip()]
                 print "I should connect to %s" % service_key
                 (port,kill) = connect_to(service_key) #why does this line break everything?
@@ -148,12 +158,13 @@ def client_thread(clientsocket,none):
                 sitems = r.readline()
                 try:
                     items = int(sitems)
+                    print "expecting %d items" % items
                 except:
                     logging.error("I expected to get an integer, but instead I got %s" % sitems)
                 lines = []
                 for i in range(0,items):
                     line = r.readline().strip()
-                    print line
+                    print i,line
                     lines.append(line)
                 s.shutdown(0)
                 s.close()

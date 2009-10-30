@@ -146,7 +146,9 @@ def client_thread(clientsocket,nothing):
         elif cmd.startswith("ls"):
             dirs = []
             files = []
+            from types import StringType
             for base in os.listdir(my_chdir):
+                #if not isinstance(base, StringType):
                 name = os.path.join(my_chdir,base)
                 if os.path.isdir(name):
                     dirs.append(base)
@@ -155,8 +157,10 @@ def client_thread(clientsocket,nothing):
             clientsocket.send(str(len(dirs)+len(files))+"\n")
             for dir in dirs:
                 clientsocket.send('"%s" d %d\n' % (dir,os.path.getsize(os.path.join(my_chdir,dir))))
+                #print '"%s" d %d\n' % (dir,os.path.getsize(os.path.join(my_chdir,dir)))
             for file in files:
                 clientsocket.send('"%s" f %d\n' % (file,os.path.getsize(os.path.join(my_chdir,file))))
+                #print '"%s" f %d\n' % (file,os.path.getsize(os.path.join(my_chdir,file)))
         elif cmd.startswith("chdir"):
             where=cmd[6:]
             if super_check(where,daemon_dir,my_chdir,clientsocket):
